@@ -19,6 +19,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('apikh', 'apiKhachHangController@index');
+Route::apiResource('khachang', 'apiKhachHangController');
 
-Route::post('postkh', 'apiKhachHangController@store');
+Route::apiResource('ben', 'apiBenController');
+
+Route::apiResource('tuyen', 'apiTuyenController');
+
+Route::apiResource('chucvu', 'apiChucVuController');
+
+Route::apiResource('sodoghe', 'apiSoDoGheController');
+
+Route::apiResource('chitietghe', 'apiChiTietGheController');
+
+Route::apiResource('xe', 'apiXeController');
+
+Route::apiResource('nhanvien', 'apiNhanVienController');
+
+Route::apiResource('users', 'apiUsersController');
+

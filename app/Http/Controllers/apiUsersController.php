@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\khachhang;
+use App\User;
 
-class apiKhachHangController extends Controller
+class apiUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class apiKhachHangController extends Controller
      */
     public function index()
     {
-        return khachhang::all();
+        return User::all();
     }
 
     /**
@@ -26,7 +26,7 @@ class apiKhachHangController extends Controller
      */
     public function store(Request $request)
     {
-        return khachhang::create($request->all());
+        //
     }
 
     /**
@@ -37,7 +37,7 @@ class apiKhachHangController extends Controller
      */
     public function show($id)
     {
-        return khachhang::find($id);
+        //
     }
 
     /**
