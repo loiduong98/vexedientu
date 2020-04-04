@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('khachang', 'apiKhachHangController');
+Route::apiResource('khachhang', 'apiKhachHangController');
 
 Route::apiResource('ben', 'apiBenController');
 

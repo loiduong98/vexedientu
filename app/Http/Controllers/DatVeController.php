@@ -181,27 +181,6 @@ class DatVeController extends Controller
             $chitietve->save();
         }
         
-
-        
-        // add more detail ticket
-        
-        // $chitietve = [];
-        // foreach($chitietve as $ctv){               
-        //     $tenghe = [];
-        //     $ctv = new chitietve;
-        //     $ctv->idVe = $id_ve;
-        //     $ctv->idGhe = $tenghe[] = $request->input('TenGhe');
-        //     $ctv->Gia = $TongTien = $request->input('Gia'); 
-        //     $ctv->SoLuong = $Soluong = $request->input('SoLuong'); 
-        //     $ctv->MaBiMat =  $id_ve."$"."_".str_random(32).($request->MaBiMat); 
-        //     $ctv->save();    
-        //     $chitietve[] = $ctv;
-        // }
-        // dd($chitietve);
-        
-    
-
-    
         Mail::send(['html'=>'page.layout.mailfb'],['name','Lợi Dương'],function($message){
             $message->to('loiduong0511@yahoo.com')->subject("Chúc mừng bạn đã đặt vé thành công");
             $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD');

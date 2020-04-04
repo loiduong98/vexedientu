@@ -9,8 +9,9 @@ class KhachHangController extends Controller
 {
     public function getDanhSach()
     {
+
     	$khachhang = khachhang::orderBy('id','DESC')->get();
-        return view('admin.khachhang.danhsach', ['khachhang'=>$khachhang]);
+    	return view('admin.khachhang.danhsach', ['khachhang'=>$khachhang]);
     }
 
     public function getThem()

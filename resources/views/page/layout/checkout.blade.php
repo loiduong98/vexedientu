@@ -123,9 +123,7 @@
                                 <div class="form-group">
 
                                     <label for="">Giờ khởi hành</label>
-                                    
                                     <select name="GioKhoiHanh" id="GioKhoiHanh">
-                                    <option value="">Mời bạn chọn giờ</option>
                                         <option value="8h00">8h00</option>
                                         <option value="13h00">13h00</option>
                                         <option value="20h00">20h00</option>
@@ -524,7 +522,7 @@
                     <div class="panel" style="min-height: 390px">
                         <h4 class="text-center text-primary text-uppercase">Thông tin khách hàng</h4>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-ms-12">
                                 <div class="form-group clearfix">
                                     <label>Họ Tên</label>
                                     <div class="controls no-icon">
@@ -533,7 +531,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-ms-12">
                                 <div class="form-group clearfix">
                                     <label>Di Động</label>
                                     <div class="controls no-icon">
@@ -544,7 +542,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-ms-12">
                                 <div class="form-group clearfix">
                                     <label>Email</label>
                                     <div class="controls no-icon">
@@ -553,7 +551,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-ms-12">
                                 <div class="form-group clearfix">
                                     <label>Địa chỉ</label>
                                     <div class="controls no-icon">
@@ -844,52 +842,42 @@ document.addEventListener('DOMContentLoaded', function() {
 $(document).ready(function() {
     $( "#slStart" ).on( "change", function( event ) {
         var a1 = $(this).val();
-        console.log(a1);
         $('.show_end .tuyendi_show').text(a1);
     });
     $( "#slEnd" ).on( "change", function( event ) {
         var a2 = $(this).val();
-        console.log(a2);
         $('.show_end .tuyenden_show').text(a2);
     });
     $( "#datepicker" ).on( "change", function( event ) {
         var a3 = $(this).val();
-        console.log(a3);
         $('.show_end .date_show').text(a3);
     });
     $( "#GioKhoiHanh" ).on( "change", function( event ) {
         var a4 = $(this).val();
-        console.log(a4);
         $('.show_end .time_show').text(a4);
     });
     $( "#TenGhe" ).on( "change", function( event ) {
         var a5 = $(this).val();
-        console.log(a5);
         $('.show_end .ghe_show').text(a5);
     });
     $( "#HoTen" ).on( "change", function( event ) {
         var a6 = $(this).val();
-        console.log(a6);
         $('.show_end .name_show').text(a6);
     });
     $( "#SDT" ).on( "change", function( event ) {
         var a7 = $(this).val();
-        console.log(a7);
         $('.show_end .phone_show').text(a7);
     });
     $( "#Email" ).on( "change", function( event ) {
         var a8 = $(this).val();
-        console.log(a8);
         $('.show_end .mail_show').text(a8);
     });
     $( "#DiaChi" ).on( "change", function( event ) {
         var a9 = $(this).val();
-        console.log(a9);
         $('.show_end .add_show').text(a9);
     });
     $( "#TenHTTT" ).on( "change", function( event ) {
         var a10 = $(this).val();
-        console.log(a10);
         $('.show_end .httt_show').text(a10);
     
     });
