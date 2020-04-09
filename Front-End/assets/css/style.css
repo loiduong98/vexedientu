@@ -1,0 +1,37 @@
+/* YOUR CUSTOM STYLES */
+
+.section {
+  height: 100vh;
+}
+
+.section .section-center {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#booking {
+  font-family: "PT Sans", sans-serif;
+  background-image: url("../img/background.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.booking-form {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.booking-form form {
+  margin-bottom: 0px;
+}
+
+.booking-form input[type="text"],
+.booking-form input[type="date"] {
+  color: white;
+}
