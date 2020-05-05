@@ -25,18 +25,19 @@
                         <form action="admin/users/them" method="POST" enctype="multipart/form-data">
                              <input type="hidden" name="_token" value="{{csrf_token()}}" />
                             <div class="form-group">
-                                <label>username</label>
-                                <input class="form-control" name="username" placeholder="Nhập username" />
+                                <label>Họ Tên</label>
+                                <input class="form-control" name="name" placeholder="Nhập họ tên" />
                             </div>
                             <div class="form-group">
-                                <label>password</label>
-                                <input class="form-control" type="password"  name="password" placeholder="Nhập password" />
+                                <label>Email</label>
+                                <input class="form-control" type="email"  name="email" placeholder="Nhập email" />
                             </div>
                             <div class="form-group">
-                                <label>Group</label>
-                                <select class="form-control" name="idGroup" id="idGroup">                                   
-                                    <option value="Users">Users</option>
-                                    <option value="Admin">Admin</option>
+                                <label>Chức vụ</label>
+                                <select class="form-control" name="level" id="level">                                   
+                                    <option value="3">Thành viên</option>
+                                    <option value="2">Admin</option>
+                                    <option value="1">Super Admin</option>
                                 </select>
                             </div>                            
                             <div class="form-group">
