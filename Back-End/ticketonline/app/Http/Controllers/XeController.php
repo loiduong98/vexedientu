@@ -8,6 +8,10 @@ use App\sodoghe;
 
 class XeController extends Controller
 {
+	public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function getDanhSach()
     {
 		$sodoghe = sodoghe::all();

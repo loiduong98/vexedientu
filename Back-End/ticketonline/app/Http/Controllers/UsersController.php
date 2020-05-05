@@ -8,6 +8,10 @@ use App\khachhang;
 
 class UsersController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function getDanhSach()
     {
 
@@ -25,12 +29,12 @@ class UsersController extends Controller
     {
         $this->validate($request,
             [
-                'username'=>'required|min:3|max:100|unique:users',
+                'email'=>'required|min:3|max:100|unique:users',
                 'password'=>'required|min:3|max:100|unique:users',
-                'idGroup'=>'required',
+                'level'=>'required',
             ],
             [
-                'idGroup.required'=>'Bạn chưa chọn group',
+                'level.required'=>'Bạn chưa chọn level',
                 'username.required'=>'Bạn chưa nhập username',
                 'username.min'=>'Username quá ngắn',
                 'username.max'=>'Username quá dài',
@@ -39,9 +43,9 @@ class UsersController extends Controller
                 'password.max'=>'password quá dài'
             ]);
         $users = new User;
-        $users->username = $request->username;
+        $users->email = $request->email;
         $users->password = md5($request->password);
-        $users->idGroup = $request->idGroup;
+        $users->level = $request->level;
         if($request->hasFile('urlHinh'))
         {
             $file = $request->file('urlHinh');  
@@ -76,23 +80,23 @@ class UsersController extends Controller
     {
         $users = User::find($id);
         $this->validate($request,
-            [
-                'username'=>'required|min:3|max:100:users',
-                'password'=>'required|min:3|max:100:users',
-                'idGroup'=>'required',
-            ],
-            [
-                'idGroup.required'=>'Bạn chưa chọn group',               
-                'username.required'=>'Bạn chưa nhập username',
-                'username.min'=>'Username quá ngắn',
-                'username.max'=>'Username quá dài',
-                'password.required'=>'Bạn chưa nhập password',
-                'password.min'=>'password quá ngắn',
-                'password.max'=>'password quá dài'
-            ]);
-        $users->username = $request->username;
+        [
+            'email'=>'required|min:3|max:100|unique:users',
+            'password'=>'required|min:3|max:100|unique:users',
+            'level'=>'required',
+        ],
+        [
+            'level.required'=>'Bạn chưa chọn level',
+            'username.required'=>'Bạn chưa nhập username',
+            'username.min'=>'Username quá ngắn',
+            'username.max'=>'Username quá dài',
+            'password.required'=>'Bạn chưa nhập password',
+            'password.min'=>'password quá ngắn',
+            'password.max'=>'password quá dài'
+        ]);
+        $users->email = $request->email;
         $users->password = md5($request->password);
-        $users->idGroup = $request->idGroup;
+        $users->level = $request->level;
         if($request->hasFile('urlHinh'))
         {
             $file = $request->file('urlHinh');  
@@ -122,29 +126,5 @@ class UsersController extends Controller
         $users = User::find($id);
         $users->delete();
         return redirect('admin/users/danhsach')->with('thongbao','Xóa thành công');
-    }
-    public function getLogin()
-    {
-        return view('login');
-    }
-    public function postLogin(Request $request)
-    {
-        $arr = [
-            'username'=>$request->$username,
-            'password'=>$request->$password,       
-        ];
-        if(Auth::attempt($arr))
-        {            
-            return redirect('admin/index');
-        }else
-        {
-            return redirect('admin/login');
-        }
-        
-    }
-    public function getLogout()
-    {
-        Auth::logout();
-        return redirect('admin.login');
     }
 }

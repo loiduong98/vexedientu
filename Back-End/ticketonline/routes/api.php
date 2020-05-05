@@ -37,3 +37,5 @@ Route::apiResource('nhanvien', 'apiNhanVienController');
 
 Route::apiResource('users', 'apiUsersController');
 
+Route::apiResource('ve', 'apiVeController');
+
