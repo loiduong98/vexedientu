@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
     <link rel="stylesheet" href="./assets/css/material-kit.css?v=2.0.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <!-- Documentation extras -->
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="./assets/assets-for-demo/demo.css" rel="stylesheet" />
@@ -23,127 +24,93 @@
 </head>
 
 <body class="index-page ">
-    <nav
-      class="navbar navbar-color-on-scroll fixed-top navbar-expand-lg navbar-transparent"
-      color-on-scroll="100"
-      id="sectionsNav"
-    >
-      <div class="container">
-        <div class="navbar-translate">
-          <a class="navbar-brand" href="./index.html">Vé xe rẻ</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+    <nav class="navbar navbar-color-on-scroll fixed-top navbar-expand-lg navbar-transparent" color-on-scroll="100" id="sectionsNav">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="./index.html">Vé xe rẻ</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             <span class="navbar-toggler-icon"></span>
             <span class="navbar-toggler-icon"></span>
           </button>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="material-icons">apps</i> Giới thiệu
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="material-icons">view_day</i> Liên hệ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./login.html" class="nav-link">
+                            <i class="material-icons">view_carousel</i> Đăng nhập
+                        </a>
+                    </li>
+                    <li class="button-container nav-item">
+                        <a href="./dangky.html" target="_blank" class="btn btn-rose btn-round btn-block">
+                            <i class="material-icons">how_to_reg</i> Đăng ký
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a
-                href="#"
-                class="nav-link"
-              >
-                <i class="material-icons">apps</i> Giới thiệu
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                href="#"
-                class="nav-link"
-              >
-                <i class="material-icons">view_day</i> Liên hệ
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                href="./login.html"
-                class="nav-link"
-              >
-                <i class="material-icons">view_carousel</i> Đăng nhập
-              </a>
-            </li>
-            <li class="button-container nav-item">
-              <a
-                href="./dangky.html"
-                target="_blank"
-                class="btn btn-rose btn-round btn-block"
-              >
-                <i class="material-icons">how_to_reg</i> Đăng ký
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
     </nav>
 
     <!-- start secton search -->
     <div id="booking" class="section">
-      <div class="section-center">
-        <div class="container">
-          <div class="row">
-            <div class="booking-form z-indept-2">
-              <form>
+        <div class="section-center">
+            <div class="container">
                 <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <input
-                        class="form-control"
-                        type="text"
-                        placeholder="TP.HCM"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <input
-                        class="form-control"
-                        type="text"
-                        placeholder="Đà Lạt - Lâm Đồng"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <input class="form-control" type="date" required />
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-btn">
-                      <button
-                        class="btn btn-warning btn-block btn-lg waves-effect waves-light z-indept-1"
-                      >
+                    <div class="booking-form z-indept-2">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" placeholder="TP.HCM" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" placeholder="Đà Lạt - Lâm Đồng" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input class="form-control" type="date" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-btn">
+                                        <button class="btn btn-warning btn-block btn-lg waves-effect waves-light z-indept-1">
                         Mua vé
                       </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                  </div>
                 </div>
-              </form>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 
     <!-- end section search -->
 
     <div class="cd-section" id="projects">
-      <!--     *********    PROJECTS 1     *********      -->
-      <div class="projects-1" id="projects-1">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-8 ml-auto mr-auto text-center">
-              <h2 class="title">Some of Our Awesome Products - 1</h2>
-              <ul class="nav nav-pills nav-pills-rose">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#pill1" data-toggle="tab"
-                    >All</a
+        <!--     *********    PROJECTS 1     *********      -->
+        <div class="projects-1" id="projects-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 ml-auto mr-auto text-center">
+                        <h2 class="title">Some of Our Awesome Products - 1</h2>
+                        <ul class="nav nav-pills nav-pills-rose">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#pill1" data-toggle="tab">All</a
                   >
                 </li>
                 <li class="nav-item">
@@ -189,62 +156,50 @@
                       The Best Productivity Apps on Market
                     </h3>
                   </a>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the
-                    human foundation in truth And I love you like Kanye loves
-                    Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <a href="#pablo" class="btn btn-danger btn-round">
-                    <i class="material-icons">content_copy</i> View App
-                  </a>
+                                <p class="card-description">
+                                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                                </p>
+                                <a href="#pablo" class="btn btn-danger btn-round">
+                                    <i class="material-icons">content_copy</i> View App
+                                </a>
+                    </div>
                 </div>
-              </div>
             </div>
             <div class="col-md-6">
-              <div
-                class="card card-raised card-background"
-                style="
+                <div class="card card-raised card-background" style="
                   background-image: url('assets/img/examples/card-blog3.jpg');
-                "
-              >
-                <div class="card-body">
-                  <h6 class="card-category text-info">Design</h6>
-                  <h3 class="card-title">The Sculpture Where Details Matter</h3>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the
-                    human foundation in truth And I love you like Kanye loves
-                    Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <a href="#pablo" class="btn btn-info btn-round">
-                    <i class="material-icons">build</i> View Project
-                  </a>
+                ">
+                    <div class="card-body">
+                        <h6 class="card-category text-info">Design</h6>
+                        <h3 class="card-title">The Sculpture Where Details Matter</h3>
+                        <p class="card-description">
+                            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                        </p>
+                        <a href="#pablo" class="btn btn-info btn-round">
+                            <i class="material-icons">build</i> View Project
+                        </a>
+                    </div>
                 </div>
-              </div>
             </div>
             <div class="col-md-12">
-              <div
-                class="card card-raised card-background"
-                style="
+                <div class="card card-raised card-background" style="
                   background-image: url('assets/img/examples/card-project6.jpg');
-                "
-              >
-                <div class="card-body">
-                  <h6 class="card-category text-info">Marketing</h6>
-                  <h3 class="card-title">0 to 100.000 Customers in 6 months</h3>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the
-                    human foundation in truth And I love you like Kanye loves
-                    Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <a href="#pablo" class="btn btn-warning btn-round">
-                    <i class="material-icons">subject</i> Case Study
-                  </a>
+                ">
+                    <div class="card-body">
+                        <h6 class="card-category text-info">Marketing</h6>
+                        <h3 class="card-title">0 to 100.000 Customers in 6 months</h3>
+                        <p class="card-description">
+                            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                        </p>
+                        <a href="#pablo" class="btn btn-warning btn-round">
+                            <i class="material-icons">subject</i> Case Study
+                        </a>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+    </div>
     </div>
     <!--     *********    END PROJECTS 1      *********      -->
 
@@ -275,14 +230,11 @@
     <script src="./assets/assets-for-demo/js/modernizr.js"></script>
     <script src="./assets/assets-for-demo/js/vertical-nav.js"></script>
     <!--  Google Maps Plugin    -->
-    <script
-      type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
-    ></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
     <script type="text/javascript">
-      $(document).ready(function () {
-        materialKitDemo.presentationAnimations();
-      });
+        $(document).ready(function() {
+            materialKitDemo.presentationAnimations();
+        });
     </script>
 </body>
 
