@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đăng bài viết</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/news.css">
+
+</head>
+
+<body>
+
+    <section class="menu-search">
+        <div class="row">
+            <div class="col-md-9 pull-left search">
+                <form class="form-inline search-form" action="#">
+                    <div class="form-group search-category">
+                        <select class="form-control" name="DanhMuc" id="DanhMuc">
+                <option value="">Danh mục</option>
+                <option value="1">Vé xe khách</option>
+              </select>
+                    </div>
+                    <div class="form-group search-location">
+                        <select class="form-control" name="Tuyen" id="Tuyen">
+                <option value="">Danh sách tuyến</option>
+                <option value="1">Đà Lạt</option>
+                <option value="1">Cần Thơ</option>
+              </select>
+                    </div>
+                    <div class="form-group search-text">
+                        <input class="form-control" type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm" />
+                    </div>
+                    <div class="btn-search">
+                        <button class="btn btn-primary">Tìm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="new-post">
+        <div class="container">
+            <div class="row">
+                <form class="col" action="#" method="post" id="insert-form">
+                    <div class="insert-content">1. Nội Dung Tin
+                        <span class="insert-alert hidden-xs">(Vui lòng điền đầy đủ tất cả các mục có dấu <span class="insert-require">*</span>)
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tuyến*</label>
+                        <div class="list-tuyen">
+                            <select name="TenTuyen" id="" class="form-control">
+                                <option value="0">--Chọn tuyến bán (đổi)--</option>
+                                <option value="1">Thành Phố Hồ Chí Minh - Đà Lạt</option>
+                                <option value="2">Thành Phố Hồ Chí Minh - Đà </option>
+                                <option value="3">Thành Phố Hồ Chí Minh - Đà Lạt</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Vùng*</label>
+                        <div class="list-vung">
+                            <select name="TenVung" id="" class="form-control">
+                                <option value="">--Chọn nơi bán--</option>
+                                <option value="">Thành Phố Hồ Chí Minh</option>
+                                <option value="">Đà Lạt</option>
+                                <option value="">Cần Thơ</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tiêu đề*</label>
+                        <div class="title">
+                            <input class="form-control" type="text" placeholder="Mời bạn nhập tiêu đề" name="TieuDe">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Mô tả*</label>
+                        <div class="content">
+                            <textarea class="form-control" name="MoTa" id=MoTa cols="30" rows="10" placeholder="Mời bạn nhập mô tả"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Giá*</label>
+                        <div class="price">
+                            <input id="" class="form-control" type="text" name="price" placeholder="Mời bạn nhập giá" maxlength="17" autocomplete="off" data-error="Vui lòng điền đúng giá của sản phẩm">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Địa chỉ*</label>
+                        <div class="address">
+                            <input id="" class="form-control" type="text" name="address" placeholder="Mời bạn nhập địa chỉ" maxlength="100" autocomplete="off" data-error="Vui lòng điền đúng địa chỉ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Hình ảnh*</label>
+                        <div class="address">
+                            <input type="file" name="urlhinh" id="">
+                        </div>
+                    </div>
+                    <div class="insert-content">2. Thông tin liên hệ
+                        <span class="insert-alert hidden-xs">(Vui lòng điền chính xác thông tin của bạn)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Họ và tên*</label>
+                        <div class="name">
+                            <input id="" class="form-control" type="text" name="name" placeholder="Mời bạn nhập họ tên" maxlength="100" autocomplete="off" data-error="Vui lòng điền đúng họ tên">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Email*</label>
+                        <div class="name">
+                            <input id="" class="form-control" type="email" name="email" placeholder="Mời bạn nhập email" maxlength="100" autocomplete="off" data-error="Vui lòng điền đúng email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Số điện thoại*</label>
+                        <div class="phonenumber">
+                            <input id="" class="form-control" type="text" name="phonenumber" placeholder="Mời bạn nhập số điện thoại" maxlength="10" autocomplete="off" data-error="Vui lòng điền đúng số điện thoại">
+                        </div>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Hoàn tất">
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
