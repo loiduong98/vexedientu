@@ -9,6 +9,10 @@ use App\chitietghe;
 
 class ChiTietVeController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function getDanhSach()
     {
         $chitietve = chitietve::orderBy('id','DESC')->get();

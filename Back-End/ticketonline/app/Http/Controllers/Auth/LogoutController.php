@@ -12,5 +12,9 @@ class LogoutController extends Controller
     	$this->middleware('auth');
     }
 		
-	
+	public function getLogout() {
+		Auth::logout();
+		return redirect('login');
+	}
+
 }

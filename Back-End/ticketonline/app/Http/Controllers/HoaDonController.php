@@ -10,6 +10,10 @@ use App\ct_hoadon;
 
 class HoaDonController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function getDanhSach()
     {
         $hoadon = hoadon::orderBy('id','DESC')->get();

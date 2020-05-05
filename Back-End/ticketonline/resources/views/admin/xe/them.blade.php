@@ -31,7 +31,7 @@
                             
                             <div class="form-group">
                                 <label>ID Sơ đồ ghế</label>
-                               <select class="form-control" name="idCV">
+                               <select class="form-control" name="idSoDoGhe">
                                    
                                     <option value="1">Xe Limousine</option>
                                     <option value="2">Xe giường nằm</option>
