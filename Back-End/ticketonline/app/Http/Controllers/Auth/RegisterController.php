@@ -107,6 +107,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'level' => '3',
             'password' => bcrypt($data['password']),
+            'urlHinh' => $data['urlHinh'],
         ]);
     }
 }

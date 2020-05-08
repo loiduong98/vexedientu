@@ -15,8 +15,7 @@ class NhanVienController extends Controller
     
     public function getDanhSach()
     {
-
-    	$nhanvien = nhanvien::orderBy('id','DESC')->get();
+        $nhanvien = nhanvien::orderBy('id','DESC')->get();
     	return view('admin.nhanvien.danhsach', ['nhanvien'=>$nhanvien]);
     }
 

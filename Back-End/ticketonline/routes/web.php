@@ -268,3 +268,4 @@ Route::post('login', [ 'as' => 'login', 'uses' => 'Auth\LoginController@postLogi
 // Đăng xuất
 Route::get('logout', [ 'as' => 'logout', 'uses' => 'Auth\LogoutController@getLogout']);
 
+

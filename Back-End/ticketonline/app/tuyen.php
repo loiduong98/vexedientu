@@ -19,4 +19,3 @@ class tuyen extends Model
             return $this->belongsTo('App\ben','idBenDen','id');
         }
 }
-

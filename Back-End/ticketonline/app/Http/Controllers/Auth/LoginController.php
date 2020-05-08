@@ -35,7 +35,7 @@ class LoginController extends Controller
     
     protected function redirectTo($request)
 {
-    return route('auth.login');
+    return route('login');
     
 }
 
@@ -60,8 +60,7 @@ class LoginController extends Controller
             'password.min' => 'Mật khẩu phải chứa ít nhất 6 ký tự',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        
-        
+       
         if ($validator->fails()) {
             // Điều kiện dữ liệu không hợp lệ sẽ chuyển về trang đăng nhập và thông báo lỗi
             return redirect('login')->withErrors($validator)->withInput();
@@ -70,14 +69,16 @@ class LoginController extends Controller
             $email = $request->input('email');
             $password = $request->input('password');
             
-     
-            if( Auth::attempt(['email' => $email, 'password' =>$password])) {
+            if(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>1])) {
                 // Kiểm tra đúng email và mật khẩu sẽ chuyển trang
-                
                 return redirect('admin/index');
-            } else {
+            }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>2])){
+                return redirect('admin/index');
+            }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>3])){
+                return redirect('admin/index');
+            }else {
                 // Kiểm tra không đúng sẽ hiển thị thông báo lỗi
-                dd($email,$password);
+                
                 Session::flash('error', 'Email hoặc mật khẩu không đúng!');
                 return redirect('login');
             }

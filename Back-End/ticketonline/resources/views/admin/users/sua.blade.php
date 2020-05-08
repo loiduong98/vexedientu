@@ -25,18 +25,23 @@
                         <form action="admin/users/sua/{{$users->id}}" method="POST" enctype="multipart/form-data">
                              <input type="hidden" name="_token" value="{{csrf_token()}}" />
                              <div class="form-group">
-                                <label>username</label>
-                                <input class="form-control" name="username" placeholder="Nhập username" value="{{$users->username}}"/>
+                                <label>Họ tên</label>
+                                <input class="form-control" name="name" placeholder="Nhập họ tên" value="{{$users->name}}"/>
                             </div>
                             <div class="form-group">
-                                <label>password</label>
+                                <label>Email</label>
+                                <input class="form-control" type="email"  name="email" placeholder="Nhập email" value="{{$users->email}}"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
                                 <input class="form-control" type="password"  name="password" placeholder="Nhập password" value="{{$users->password}}"/>
                             </div>
                             <div class="form-group">
-                                <label>Group</label>
-                                <select class="form-control" name="idGroup" id="idGroup">                                   
-                                    <option value="Users">Users</option>
-                                    <option value="Admin">Admin</option>
+                                <label>Chức vụ</label>
+                                <select class="form-control" name="level" id="level">                                   
+                                    <option value="3">Thành viên</option>
+                                    <option value="2">Admin</option>
+                                    <option value="1">Super Admin</option>
                                 </select>
                             </div>    
                             <div class="form-group">
