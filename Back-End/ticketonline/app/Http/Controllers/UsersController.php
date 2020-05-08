@@ -44,7 +44,7 @@ class UsersController extends Controller
             ]);
         $users = new User;
         $users->email = $request->email;
-        $users->password = md5($request->password);
+        $users->password = bcrypt($request->password);
         $users->level = $request->level;
         if($request->hasFile('urlHinh'))
         {
@@ -79,23 +79,24 @@ class UsersController extends Controller
     public function postSua(Request $request,$id)
     {
         $users = User::find($id);
-        $this->validate($request,
-        [
-            'email'=>'required|min:3|max:100|unique:users',
-            'password'=>'required|min:3|max:100|unique:users',
-            'level'=>'required',
-        ],
-        [
-            'level.required'=>'Bạn chưa chọn level',
-            'username.required'=>'Bạn chưa nhập username',
-            'username.min'=>'Username quá ngắn',
-            'username.max'=>'Username quá dài',
-            'password.required'=>'Bạn chưa nhập password',
-            'password.min'=>'password quá ngắn',
-            'password.max'=>'password quá dài'
-        ]);
+        // $this->validate($request,
+        // [
+        //     'email'=>'required|min:3|max:100|unique:users',
+        //     'password'=>'required|min:3|max:100|unique:users',
+        //     'level'=>'required',
+        // ],
+        // [
+        //     'level.required'=>'Bạn chưa chọn level',
+        //     'username.required'=>'Bạn chưa nhập username',
+        //     'username.min'=>'Username quá ngắn',
+        //     'username.max'=>'Username quá dài',
+        //     'password.required'=>'Bạn chưa nhập password',
+        //     'password.min'=>'password quá ngắn',
+        //     'password.max'=>'password quá dài'
+        // ]);
+        $users->name = $request->name;
         $users->email = $request->email;
-        $users->password = md5($request->password);
+        $users->password = bcrypt($request->password);
         $users->level = $request->level;
         if($request->hasFile('urlHinh'))
         {

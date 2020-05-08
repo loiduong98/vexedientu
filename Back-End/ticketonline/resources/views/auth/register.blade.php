@@ -69,6 +69,10 @@
 							</div>
 						</div>
 						<div class="form-group">
+                                <label>Ảnh đại diện</label>
+                                <input type="file" name="urlHinh">
+                            </div>
+						<div class="form-group">
 							<button type="submit" class="btn btn-lg btn-primary btn-block">Đăng ký</button>
 						</div>
 						<center><a href="/{{ url('/login') }}">Quay về đăng nhập</a></center>

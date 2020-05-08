@@ -19,7 +19,6 @@
                                 <th>Địa chỉ</th>
                                 <th>Ngày sinh</th>
                                 <th>Chức vụ</th>
-                                <th>Username</th>
                                 <th>Giới Tính</th>
                                 <th>Tình trạng</th>
                                 <th>Xóa</th>
@@ -36,7 +35,6 @@
                                 <td>{{$nv->DiaChi}}</td>
                                 <td>{{$nv->NgaySinh}}</td>
                                 <td>{{$nv->chucvu->TenCV}}</td>
-                                <td>{{$nv->users->username}}</td>
                                 <td>{{$nv->GioiTinh}}</td>
                                 <td>{{$nv->TinhTrang}}</td>
                                 <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/nhanvien/xoa/{{$nv->id}}"> Xóa</a></td>
