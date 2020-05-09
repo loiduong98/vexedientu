@@ -94,9 +94,15 @@ class UsersController extends Controller
         //     'password.min'=>'password quá ngắn',
         //     'password.max'=>'password quá dài'
         // ]);
-        $users->name = $request->name;
-        $users->email = $request->email;
-        $users->password = bcrypt($request->password);
+        $users->name    = $request->name;
+        $users->email   = $request->email;
+        $password       = $users->password;
+        $new_password   = $request->password;
+        if($new_password == $password){
+            $users->password = $password;
+        }else{
+            $users->password = bcrypt($request->password);
+        }
         $users->level = $request->level;
         if($request->hasFile('urlHinh'))
         {
