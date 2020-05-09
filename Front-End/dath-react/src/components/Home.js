@@ -61,7 +61,7 @@ class Home extends Component {
                           /> */}
                           <DatePicker
                             className="form-control"
-                            selected={new Date()}
+                            selected={this.state.startDate}
                             onChange={this.handleChange}
                             minDate={new Date()}
                             name="startDate"
