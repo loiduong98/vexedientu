@@ -81,16 +81,14 @@ class DatVeController extends Controller
         $SDT = $request->SDT;
         $Email = $request->Email;
         $DiaChi = $request->DiaChi;
-        $TenHTTT = $request->TenHTTT; 
-        
-        
-
+        $TenHTTT = $request->TenHTTT;       
+dd($Soluong);
         foreach($tuyen as $keytuyen){
             $tuyen_di = $keytuyen->idBenDi;
             $tuyen_den = $keytuyen->idBenDen;
             $tuyen_id = $keytuyen->id;
 
-            if($idBenDi == $tuyen_di && $idBenDen == $tuyen_den)
+            if(($idBenDi == $tuyen_di) && ($idBenDen == $tuyen_den))
             {
                 $id_tuyen = $tuyen_id;
             }
@@ -152,8 +150,19 @@ class DatVeController extends Controller
         $ve->GioKhoiHanh = $GioKhoiHanh;
         $ve->TrangThai = '0';
         $ve->idXe = $id_Xe;
+        
+        $array_a = [
+            'ngaydatve' => $NgayDatVe,
+            'id_KH'     => $id_KH,
+            'id_LC'     => $idLC,
+            'id_HD'     => $id_HD
+        ];
+        dd($array_a);
+        
         $ve->save();
         $id_ve = $ve->id;
+
+        
         
         // foreach($chitietve as $keyCTV){
         //     $CTV_id = $keyCTV->id;
@@ -193,7 +202,7 @@ class DatVeController extends Controller
             // Session::flash('flash_message', 'Send message successfully!');
 
         // QrCode::generate($CTV_mbm);
-        return Redirect('page/checkout')->with('thongbao','Đặt vé thành công');
+        return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
         
         
     }
