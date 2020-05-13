@@ -71,7 +71,7 @@
         {{session('thongbao')}}
     </div>
     @endif
-    <form id='datve' action="/checkout" method="POST" enctype="multipart/form-data">
+    <form id='datve' action="page/checkout" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="{{csrf_token()}}" />
         <div class="container" id="chontuyen">
             <div class="row">
@@ -166,7 +166,7 @@
                     <div
                         class="table-responsive|table-responsive-sm|table-responsive-md|table-responsive-lg|table-responsive-xl">
                         <table
-                            class="table table-striped|table-dark|table-bordered|table-borderless|table-hover|table-sm">
+                            class="table table-striped|table-dark|table-bordered|table-borderless|table-hover|table-sm" name="TenGhe" id="TenGhe">
                             <thead class="thead-dark|thead-light">
                                 <tr>
                                     <th scope="col" style="color: red">Sơ đồ ghế</th>
@@ -479,11 +479,8 @@
                                     <h5 id="tongTien" style="font-weight: 300;">
                                         Tổng số tiền là: <span style="color: red; font-weight: bold">(000,000)</span> đ
                                     </h5>
-                                    <h5  id="soluong">
+                                    <h5 style="display: none;" id="soluong">
                                         <input value="0" name="SoLuong">
-                                    </h5>
-                                    <h5  id="TenGhe">
-                                        <input value="" name="TenGhe">
                                     </h5>
                                 </tr>
                             </tbody>
@@ -491,9 +488,9 @@
                     </div>
 
                     <div id="pushGhe">
-                        <!-- <select name="TenGhe" id="TenGhe">
+                        <select name="TenGhe" id="TenGhe">
                             <option value="1" selected="selected"></option>
-                        </select> -->
+                        </select>
                     </div>
 
                 </div>
@@ -794,7 +791,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var maGheDangChon = [];
     var pushGhe = document.getElementById('pushGhe');
     var idGheDangChon = [];
-    var tenghe = document.getElementById('TenGhe');
 
     for (var i = ghe.length - 1; i >= 0; i--) {
         ghe[i].onclick = function() {
@@ -814,8 +810,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 pushGhe.innerHTML = ('<select name="TenGhe" id="TenGhe"><option value="' + idGheDangChon[
                     0] + '" selected="selected"></option></select>')
                 soLuong.innerHTML = ('<input value="' + soGheDangChon + '" name="SoLuong">')
-                tenghe.innerHTML = ("ghế là: <span style='color: red; font-weight: bold;'>" +
-                    maGheDangChon.toString() + "</span>")
             } else {
                 soGheDangChon--;
                 var gheBoChon = this.getAttribute('data-maGhe');

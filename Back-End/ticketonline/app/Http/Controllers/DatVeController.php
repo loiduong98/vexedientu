@@ -20,7 +20,6 @@ use QrCode;
 
 class DatVeController extends Controller
 {
-    
     public function getTT()
     {
         $tuyen = tuyen::all();
@@ -45,7 +44,6 @@ class DatVeController extends Controller
         
     }
 
-   
     public function postTT(Request $request)
     {     
         $this->validate($request,
@@ -81,14 +79,16 @@ class DatVeController extends Controller
         $SDT = $request->SDT;
         $Email = $request->Email;
         $DiaChi = $request->DiaChi;
-        $TenHTTT = $request->TenHTTT;       
-dd($Soluong);
+        $TenHTTT = $request->TenHTTT; 
+        
+        
+
         foreach($tuyen as $keytuyen){
             $tuyen_di = $keytuyen->idBenDi;
             $tuyen_den = $keytuyen->idBenDen;
             $tuyen_id = $keytuyen->id;
 
-            if(($idBenDi == $tuyen_di) && ($idBenDen == $tuyen_den))
+            if($idBenDi == $tuyen_di && $idBenDen == $tuyen_den)
             {
                 $id_tuyen = $tuyen_id;
             }
@@ -128,7 +128,6 @@ dd($Soluong);
             }
         }
 
-        
         $khachhang->save();
         $id_KH = $khachhang->id;
         $TongTien = $giaLC * $Soluong;
@@ -150,28 +149,8 @@ dd($Soluong);
         $ve->GioKhoiHanh = $GioKhoiHanh;
         $ve->TrangThai = '0';
         $ve->idXe = $id_Xe;
-        
-        $array_a = [
-            'ngaydatve' => $NgayDatVe,
-            'id_KH'     => $id_KH,
-            'id_LC'     => $idLC,
-            'id_HD'     => $id_HD
-        ];
-        dd($array_a);
-        
         $ve->save();
         $id_ve = $ve->id;
-
-        
-        
-        // foreach($chitietve as $keyCTV){
-        //     $CTV_id = $keyCTV->id;
-        //     $CTV_ve = $keyCTV->idVe;
-        //     $CTV_mbm = $keyCTV->MaBiMat;
-        //     if($CTV_id = $id_ve){
-        //         $CTV_mbm == $CTV_qrcode;
-                
-        // }
 
         $ct_hoadon = new ct_hoadon;
         $ct_hoadon->id_hoadon = $id_HD;      
@@ -179,7 +158,6 @@ dd($Soluong);
         $ct_hoadon->SoLuong = $Soluong;
         $ct_hoadon->save();
       
-
         for ($i=0; $i < $Soluong; $i++) { 
             $chitietve = new chitietve;
             $chitietve->idVe = $id_ve;
@@ -194,15 +172,8 @@ dd($Soluong);
             $message->to('loiduong0511@yahoo.com')->subject("Chúc mừng bạn đã đặt vé thành công");
             $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD');
         });
-            // $HoTen = $request->all();
-            // $Email = $request->all();
-            // Mail::send(['html'=>'page.layout.mailfb'], array('HoTen'=>$HoTen,'Email'=>$Email), function($message){
-            //     $message->to('loiduong0511@yahoo.com')->subject('Visitor Feedback!');
-            // });
-            // Session::flash('flash_message', 'Send message successfully!');
-
-        // QrCode::generate($CTV_mbm);
-        return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
+    
+        return Redirect('page/checkout')->with('thongbao','Đặt vé thành công');
         
         
     }
