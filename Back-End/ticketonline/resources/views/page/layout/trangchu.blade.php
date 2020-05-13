@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-5 col-md-5 col-sm-6 col-xs-6 col-ms-12">
-                                            <a href="page/checkout" class="btn btn-primary btn-block btn-flat btn-booking">Tiếp Tục</a>
+                                            <a href="/checkout" class="btn btn-primary btn-block btn-flat btn-booking">Tiếp Tục</a>
                                             <!-- <button type="button" class=" btn btn-primary btn-block btn-flat btn-booking ">Mua vé</button> -->
                                         </div>
                                     </div>
