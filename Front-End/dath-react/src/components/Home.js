@@ -1,22 +1,54 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from "react-redux";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date(),
+      ngayDi: new Date(),
+      idBenDi: 0,
+      idBenDen: 0,
     };
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(date) {
+  // bắt sự kiện thay đổi ngày
+  handleDateChange = (date) => {
     this.setState({
-      startDate: date,
+      ngayDi: date,
+    });
+  };
+
+  //bắt sự kiện thay đổi tuyến đi, tuyến đến
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: parseInt(event.target.value),
     });
   }
+
+  // sự kiện nhấn button submit
+  handleSubmit(event) {
+    alert("Bạn vừa nhấn nút Submit ");
+    event.preventDefault();
+  }
   render() {
+    if (this.state.idBenDi === 0) {
+      console.log("Chưa chọn bến đi");
+    } else {
+      console.log(
+        "Đã cập nhật bến đi ID ben di khach hang chon:" + this.state.idBenDi
+      );
+      this.props.dstuyenData.map((item, index) => {
+        if (this.state.idBenDi === item.idBenDi) {
+          console.log(item.TenTuyen);
+        }
+      });
+    }
+
     return (
       <div>
         <div id="booking" className="section">
@@ -31,38 +63,45 @@ class Home extends Component {
                           <select
                             className="form-control selectpicker"
                             data-style="btn btn-link"
-                            id="exampleFormControlSelect1"
+                            id="benDi"
+                            name="idBenDi"
+                            onChange={(event) => this.handleChange(event)}
                           >
-                            <option>Hà Nội</option>
-                            <option>Đà Lạt</option>
-                            <option>TP.HCM</option>
+                            <option value={this.state.idBenDi}>
+                              Chọn điểm đi
+                            </option>
+                            {this.props.dsbenData.map((item, index) => {
+                              return (
+                                <option key={index} value={item.id}>
+                                  {item.TenBen}
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
                       <div className="col-md-4">
                         <div className="form-group bmd-form-group">
                           <select
+                            onChange={(event) => this.handleChange(event)}
                             className="form-control selectpicker"
                             data-style="btn btn-link"
-                            id="exampleFormControlSelect1"
+                            id="benDen"
+                            name="idBenDen"
                           >
-                            <option>Cần Thơ</option>
-                            <option>Bến Tre</option>
-                            <option>Tiền Giang</option>
+                            <option value={this.state.idBenDen}>
+                              Chọn điểm đến
+                            </option>
                           </select>
                         </div>
                       </div>
                       <div className="col-md-2">
                         <div className="form-group bmd-form-group">
-                          {/* <input
-                            className="form-control"
-                            type="date"
-                            required
-                          /> */}
                           <DatePicker
+                            name="date"
                             className="form-control"
-                            selected={this.state.startDate}
-                            onChange={this.handleChange}
+                            selected={this.state.ngayDi}
+                            onChange={this.handleDateChange}
                             minDate={new Date()}
                             name="startDate"
                             dateFormat="MM/dd/yyyy"
@@ -71,7 +110,10 @@ class Home extends Component {
                       </div>
                       <div className="col-md-2">
                         <div className="form-btn">
-                          <button className="btn btn-warning btn-block btn-lg waves-effect waves-light z-indept-1">
+                          <button
+                            onClick={(event) => this.handleSubmit(event)}
+                            className="btn btn-warning btn-block btn-lg waves-effect waves-light z-indept-1"
+                          >
                             Mua vé
                           </button>
                         </div>
@@ -215,4 +257,22 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    dsbenData: state.dsbenReducer.dsbenData,
+    dstuyenData: state.dstuyenReducer.dstuyenData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    testConnectDsBen: () => {
+      dispatch({ type: "TEST" });
+    },
+    testConnectDsTuyen: () => {
+      dispatch({ type: "TEST_CONNECT" });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -20,6 +20,7 @@ class Footer extends Component {
               <div className="col-md-4">
                 <h5>Bản đồ</h5>
                 <iframe
+                  title="Bản đồ"
                   src="https://www.google.com/maps/d/embed?mid=1uMtv-l9SvwpUDlr0EcGG6h9vtSA"
                   width="100%"
                   height="auto"
