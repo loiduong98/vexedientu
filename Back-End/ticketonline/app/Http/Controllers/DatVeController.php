@@ -192,7 +192,7 @@ dd($Soluong);
         
         Mail::send(['html'=>'page.layout.mailfb'],['name','Lợi Dương'],function($message){
             $message->to('loiduong0511@yahoo.com')->subject("Chúc mừng bạn đã đặt vé thành công");
-            $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD');
+            $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD.');
         });
             // $HoTen = $request->all();
             // $Email = $request->all();
@@ -202,6 +202,7 @@ dd($Soluong);
             // Session::flash('flash_message', 'Send message successfully!');
 
         // QrCode::generate($CTV_mbm);
+        //check ok
         return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
         
         
