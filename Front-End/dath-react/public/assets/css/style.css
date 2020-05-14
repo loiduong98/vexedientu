@@ -36,6 +36,10 @@
   color: white;
 }
 
-#booking .col-md-4 .form-group.bmd-form-group {
-  padding-top: 17px;
+#booking .col-md-4 .form-group {
+  padding-top: 26px;
+}
+
+#booking .col-md-4 .form-group select {
+  color: white;
 }

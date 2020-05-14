@@ -11,7 +11,6 @@ class Home extends Component {
       ngayDi: new Date(),
       idBenDi: 0,
       idBenDen: 0,
-      idBenDenCoTheDen: [],
     };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -89,6 +88,7 @@ class Home extends Component {
       });
     }
 
+    // in ra giao diện các danh sách bến có thể đi
     var dsbenden = this.props.dsbenData.map((item, index) => {
       if (this.a1.indexOf(item.id) !== -1) {
         console.log(item.TenBen);
@@ -101,14 +101,6 @@ class Home extends Component {
       }
     });
 
-    // var row = this.props.dsbenData.map((item, index) =>
-    //   this.a1.indexOf(item.id) !== -1 ? (
-    //     <option key={index}>{item.TenBen}</option>
-    //   ) : (
-    //     <option>1</option>
-    //   )
-    // );
-
     return (
       <div>
         <div id="booking" className="section">
@@ -116,16 +108,15 @@ class Home extends Component {
             <div className="container">
               <div className="row">
                 <div className="booking-form z-indept-2">
-                  <form>
+                  <form method="get">
                     <div className="row">
                       <div className="col-md-4">
-                        <div className="form-group bmd-form-group">
+                        <div className="form-group">
                           <select
-                            className="form-control selectpicker"
-                            data-style="btn btn-link"
+                            className="form-control"
+                            onChange={(event) => this.handleChange(event)}
                             id="benDi"
                             name="idBenDi"
-                            onChange={(event) => this.handleChange(event)}
                           >
                             <option value={this.state.idBenDi}>
                               Chọn điểm đi
@@ -137,16 +128,14 @@ class Home extends Component {
                                 </option>
                               );
                             })}
-                            {console.log(this.a1)}
                           </select>
                         </div>
                       </div>
                       <div className="col-md-4">
-                        <div className="form-group bmd-form-group">
+                        <div className="form-group">
                           <select
+                            className="form-control"
                             onChange={(event) => this.handleChange(event)}
-                            className="form-control selectpicker"
-                            data-style="btn btn-link"
                             id="benDen"
                             name="idBenDen"
                           >
@@ -312,6 +301,12 @@ class Home extends Component {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="row">
+            {this.props.dsbenData.map((item, index) => {
+              return item.TenBen;
+            })}
           </div>
         </div>
       </div>
