@@ -10,6 +10,7 @@ class Home extends Component {
       ngayDi: new Date(),
       idBenDi: 0,
       idBenDen: 0,
+      idBenDenCoTheDen: [],
     };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -35,19 +36,47 @@ class Home extends Component {
     alert("Bạn vừa nhấn nút Submit ");
     event.preventDefault();
   }
+
+  // mảng a1 lưu trữ các bến có thể chọn
+  a1 = [];
+
   render() {
+    // lấy id những bến có thể đến sau khi chọn bến đi
     if (this.state.idBenDi === 0) {
       console.log("Chưa chọn bến đi");
     } else {
       console.log(
         "Đã cập nhật bến đi ID ben di khach hang chon:" + this.state.idBenDi
       );
+      this.a1 = [];
       this.props.dstuyenData.map((item, index) => {
         if (this.state.idBenDi === item.idBenDi) {
           console.log(item.TenTuyen);
+          this.a1.push(item.idBenDen);
+          //= [...this.a1, item.idBenDen];
         }
       });
     }
+
+    var dsbenden = this.props.dsbenData.map((item, index) => {
+      if (this.a1.indexOf(item.id) !== -1) {
+        console.log(item.TenBen);
+        console.log(document.getElementById("benDen"));
+        return (
+          <option key={index} value={item.id}>
+            {item.TenBen}
+          </option>
+        );
+      }
+    });
+
+    // var row = this.props.dsbenData.map((item, index) =>
+    //   this.a1.indexOf(item.id) !== -1 ? (
+    //     <option key={index}>{item.TenBen}</option>
+    //   ) : (
+    //     <option>1</option>
+    //   )
+    // );
 
     return (
       <div>
@@ -77,6 +106,7 @@ class Home extends Component {
                                 </option>
                               );
                             })}
+                            {console.log(this.a1)}
                           </select>
                         </div>
                       </div>
@@ -92,6 +122,7 @@ class Home extends Component {
                             <option value={this.state.idBenDen}>
                               Chọn điểm đến
                             </option>
+                            {dsbenden}
                           </select>
                         </div>
                       </div>
