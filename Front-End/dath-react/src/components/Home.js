@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
+import Axios from "axios";
 
 class Home extends Component {
   constructor(props) {
@@ -15,6 +16,36 @@ class Home extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  // get danh sách tuyến và danh sách bến từ API
+  getAll() {
+    Axios.all([
+      Axios.get("http://localhost:8000/api/ben"),
+      Axios.get("http://localhost:8000/api/tuyen"),
+    ])
+      .then((resArr) => {
+        console.log(resArr[0].data); // in ra danh sách bến để test
+        console.log(resArr[1].data); // in ra danh sách tuyến để test
+        // đẩy danh sách bên lấy từ API vào state trong reducer
+        this.props.dispatch({
+          type: "FETCH_DSBEN",
+          payload: resArr[0].data,
+        });
+        // đẩy danh sách tuyến lấy từ API vào state trong reducer
+        this.props.dispatch({
+          type: "FETCH_DSTUYEN",
+          payload: resArr[1].data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // force update HTML
+  componentDidMount() {
+    this.getAll();
   }
 
   // bắt sự kiện thay đổi ngày
@@ -288,22 +319,11 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     dsbenData: state.dsbenReducer.dsbenData,
     dstuyenData: state.dstuyenReducer.dstuyenData,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    testConnectDsBen: () => {
-      dispatch({ type: "TEST" });
-    },
-    testConnectDsTuyen: () => {
-      dispatch({ type: "TEST_CONNECT" });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);
