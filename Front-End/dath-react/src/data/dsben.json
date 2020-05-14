@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "TenBen": "Thành phố Hồ Chí Minh"
+  },
+  {
+    "id": 2,
+    "TenBen": "Đà Lạt"
+  },
+  {
+    "id": 3,
+    "TenBen": "Phan Thiết"
+  },
+  {
+    "id": 4,
+    "TenBen": "Cần Thơ"
+  },
+  {
+    "id": 5,
+    "TenBen": "Đà nẵng"
+  },
+  {
+    "id": 11,
+    "TenBen": "Nha Trang"
+  },
+  {
+    "id": 14,
+    "TenBen": "Bạc Liêu"
+  }
+]
