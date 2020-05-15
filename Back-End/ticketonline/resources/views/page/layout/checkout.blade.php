@@ -473,7 +473,7 @@
                                 </tr>
                                 <!-- end 1 row -->
                                 <tr>
-                                    <h5 id="text-confirm" style="font-weight: 300;">
+                                    <h5 id="text-confirm" style="font-weight: 300;" name="test_ghe">
                                         Bạn đã chọn <span style="color: red; font-weight: bold;">0</span> ghế
                                     </h5>
                                     <h5 id="tongTien" style="font-weight: 300;">
@@ -482,8 +482,8 @@
                                     <h5  id="soluong">
                                         <input value="0" name="SoLuong">
                                     </h5>
-                                    <h5  id="TenGhe">
-                                        <input value="" name="TenGhe">
+                                    <h5 id="TenGhe">
+                                        
                                     </h5>
                                 </tr>
                             </tbody>
@@ -814,8 +814,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pushGhe.innerHTML = ('<select name="TenGhe" id="TenGhe"><option value="' + idGheDangChon[
                     0] + '" selected="selected"></option></select>')
                 soLuong.innerHTML = ('<input value="' + soGheDangChon + '" name="SoLuong">')
-                tenghe.innerHTML = ("ghế là: <span style='color: red; font-weight: bold;'>" +
-                    maGheDangChon.toString() + "</span>")
+                tenghe.innerHTML = ("ghế là: <span style='color: red; font-weight: bold;'> <input value='" + maGheDangChon.toString() + "' name='TenGhe' type='text'></span>")
             } else {
                 soGheDangChon--;
                 var gheBoChon = this.getAttribute('data-maGhe');
@@ -862,8 +861,9 @@ $(document).ready(function() {
         var a4 = $(this).val();
         $('.show_end .time_show').text(a4);
     });
-    $( "#TenGhe" ).on( "change", function( event ) {
+    $( "#TenGhe>input" ).on( "change", function( event ) {
         var a5 = $(this).val();
+        console.log(a5);
         $('.show_end .ghe_show').text(a5);
     });
     $( "#HoTen" ).on( "change", function( event ) {
