@@ -70,11 +70,14 @@ class LoginController extends Controller
             $password = $request->input('password');
             
             if(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>1])) {
+                dd('loi lon 1');
                 // Kiểm tra đúng email và mật khẩu sẽ chuyển trang
                 return redirect('admin/index');
-            }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>2])){
+            }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>2])) {
+                dd('loi lon 2');
                 return redirect('admin/index');
-            }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>3])){
+            }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>3])) {
+                dd('loi lon 3');
                 return redirect('admin/index');
             }else {
                 // Kiểm tra không đúng sẽ hiển thị thông báo lỗi

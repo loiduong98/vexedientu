@@ -20,7 +20,6 @@ use QrCode;
 
 class DatVeController extends Controller
 {
-    
     public function getTT()
     {
         $tuyen = tuyen::all();
@@ -45,7 +44,6 @@ class DatVeController extends Controller
         
     }
 
-   
     public function postTT(Request $request)
     {     
         $this->validate($request,
@@ -92,7 +90,7 @@ class DatVeController extends Controller
             $tuyen_den = $keytuyen->idBenDen;
             $tuyen_id = $keytuyen->id;
 
-            if(($idBenDi == $tuyen_di) && ($idBenDen == $tuyen_den))
+            if($idBenDi == $tuyen_di && $idBenDen == $tuyen_den)
             {
                 $id_tuyen = $tuyen_id;
             }
@@ -132,7 +130,6 @@ class DatVeController extends Controller
             }
         }
 
-        
         $khachhang->save();
         $id_KH = $khachhang->id;
         $TongTien = $giaLC * $Soluong;
@@ -154,28 +151,8 @@ class DatVeController extends Controller
         $ve->GioKhoiHanh = $GioKhoiHanh;
         $ve->TrangThai = '0';
         $ve->idXe = $id_Xe;
-        
-        $array_a = [
-            'ngaydatve' => $NgayDatVe,
-            'id_KH'     => $id_KH,
-            'id_LC'     => $idLC,
-            'id_HD'     => $id_HD
-        ];
-        dd($array_a);
-        
         $ve->save();
         $id_ve = $ve->id;
-
-        
-        
-        // foreach($chitietve as $keyCTV){
-        //     $CTV_id = $keyCTV->id;
-        //     $CTV_ve = $keyCTV->idVe;
-        //     $CTV_mbm = $keyCTV->MaBiMat;
-        //     if($CTV_id = $id_ve){
-        //         $CTV_mbm == $CTV_qrcode;
-                
-        // }
 
         $ct_hoadon = new ct_hoadon;
         $ct_hoadon->id_hoadon = $id_HD;      
@@ -183,7 +160,6 @@ class DatVeController extends Controller
         $ct_hoadon->SoLuong = $Soluong;
         $ct_hoadon->save();
       
-
         for ($i=0; $i < $Soluong; $i++) { 
             $chitietve = new chitietve;
             $chitietve->idVe = $id_ve;
