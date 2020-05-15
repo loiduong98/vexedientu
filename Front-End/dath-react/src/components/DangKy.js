@@ -1,6 +1,33 @@
 import React, { Component } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as yup from "yup";
+import Axios from "axios";
+
+const signupUserSchema = yup.object().shape({
+  taiKhoan: yup.string().required("Field is required!"),
+  matKhau: yup.string().required("Field is required!"),
+  hoTen: yup.string().required("Field is required!"),
+  email: yup.string().required("Field is required!").email("Email is invalid!"),
+  soDT: yup.string().required("Field is required!").matches(/^[0-9]+$/)
+})
 
 class DangKy extends Component {
+
+  _handleSubmit = (values) => {
+   Axios ({
+     method: "POST",
+     url: "",
+     data: values
+   }).then(res => {
+     console.log(res);
+     
+   }).catch(err => {
+     console.log(err);
+     
+   })
+    
+  }
+
   render() {
     return (
       <div className="signup-page">
@@ -59,92 +86,141 @@ class DangKy extends Component {
                           </div>
                         </div>
                       </div>
+
                       <div className="col-md-5 mr-auto">
-                        <form className="form" method action>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">face</i>
-                              </span>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Họ và tên"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">email</i>
-                              </span>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Email..."
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">phone</i>
-                              </span>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Số điện thoại..."
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">lock_outline</i>
-                              </span>
-                              <input
-                                type="password"
-                                placeholder="Mật khẩu..."
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">lock_outline</i>
-                              </span>
-                              <input
-                                type="password"
-                                placeholder="Nhập lại mật khẩu..."
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-check">
-                            <label className="form-check-label">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                defaultValue
-                                defaultChecked
-                              />
-                              <span className="form-check-sign">
-                                <span className="check" />
-                              </span>
-                              I agree to the
-                              <a href="#something">terms and conditions</a>.
-                            </label>
-                          </div>
-                          <div className="text-center">
-                            <a
-                              href="#pablo"
-                              className="btn btn-primary btn-round"
-                            >
-                              Get Started
-                            </a>
-                          </div>
-                        </form>
+
+                        <Formik
+                          initialValues = {{
+                            taiKhoan:'',
+                            matKhau:'',
+                            hoTen:'',
+                            email:'',
+                            soDT:''
+                          }}
+                          validationSchema={signupUserSchema}
+                          onSubmit = {this._handleSubmit}
+                          render={(formikProps) => (
+                            <Form className="form" method action>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">face</i>
+                                  </span>
+                                  <Field
+                                    name="hoTen"
+                                    onChange={formikProps.handleChange}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Họ và Tên"
+                                  />
+                                 <ErrorMessage name="hoTen">
+                                   {
+                                     msg => <div className="alert alert-danger">{msg}</div>
+                                   }
+                                 </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">face</i>
+                                  </span>
+                                  <Field
+                                    name="taiKhoan"
+                                    onChange={formikProps.handleChange}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Tài Khoản"
+                                  />
+                                   <ErrorMessage name="taiKhoan">
+                                   {
+                                     msg => <div className="alert alert-danger">{msg}</div>
+                                   }
+                                 </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">email</i>
+                                  </span>
+                                  <Field
+                                    name="email"
+                                    onChange={formikProps.handleChange}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Email..."
+                                  />
+                                  <ErrorMessage name="email">
+                                   {
+                                     msg => <div className="alert alert-danger">{msg}</div>
+                                   }
+                                 </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">phone</i>
+                                  </span>
+                                  <Field
+                                    name="soDT"
+                                    onChange={formikProps.handleChange}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Số điện thoại..."
+                                  />
+                                  <ErrorMessage name="soDT">
+                                   {
+                                     msg => <div className="alert alert-danger">{msg}</div>
+                                   }
+                                 </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">lock_outline</i>
+                                  </span>
+                                  <Field
+                                    name="matKhau"
+                                    onChange={formikProps.handleChange}
+                                    type="password"
+                                    placeholder="Mật khẩu..."
+                                    className="form-control"
+                                  />
+                                    <ErrorMessage name="matKhau">
+                                   {
+                                     msg => <div className="alert alert-danger">{msg}</div>
+                                   }
+                                 </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-check">
+                                <label className="form-check-label">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    defaultValue
+                                    defaultChecked
+                                  />
+                                  <span className="form-check-sign">
+                                    <span className="check" />
+                                  </span>
+                             I agree to the
+                             <a href="#something">terms and conditions</a>.
+                           </label>
+                              </div>
+                              <div className="text-center">
+                                <button
+                                  href="#pablo"
+                                  className="btn btn-primary btn-round"
+                                >
+                                  Get Started
+                           </button>
+                              </div>
+                            </Form>
+                          )} />
                       </div>
                     </div>
                   </div>
