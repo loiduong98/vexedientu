@@ -4,7 +4,7 @@ import dstuyenReducer from "../reducers/dstuyenReducer";
 import { combineReducers } from "redux";
 
 const allReducer = combineReducers({
-  dsbenReducer: dsbenReducer,
-  dstuyenReducer: dstuyenReducer,
+    dsbenReducer: dsbenReducer,
+    dstuyenReducer: dstuyenReducer,
 });
 export default allReducer;
