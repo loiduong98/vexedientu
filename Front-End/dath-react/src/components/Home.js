@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import Axios from "axios";
+import { Redirect } from "react-router-dom";
 
 class Home extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Home extends Component {
       ngayDi: new Date(),
       idBenDi: 0,
       idBenDen: 0,
+      isRedirect: false,
     };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -63,8 +65,15 @@ class Home extends Component {
 
   // sự kiện nhấn button submit
   handleSubmit(event) {
-    alert("Bạn vừa nhấn nút Submit ");
     event.preventDefault();
+    if (this.state.idBenDi === 0) {
+      alert("Vui lòng chọn bến đi");
+    } else if (this.state.idBenDen === 0) {
+      alert("Vui lòng chọn bến đến");
+    } else {
+      // alert("đủ điều kiện");
+      this.setState({ isRedirect: true });
+    }
   }
 
   // mảng a1 lưu trữ các bến có thể chọn
@@ -81,9 +90,7 @@ class Home extends Component {
       this.a1 = [];
       this.props.dstuyenData.map((item, index) => {
         if (this.state.idBenDi === item.idBenDi) {
-          console.log(item.TenTuyen);
           this.a1.push(item.idBenDen);
-          //= [...this.a1, item.idBenDen];
         }
       });
     }
@@ -91,8 +98,6 @@ class Home extends Component {
     // in ra giao diện các danh sách bến có thể đi
     var dsbenden = this.props.dsbenData.map((item, index) => {
       if (this.a1.indexOf(item.id) !== -1) {
-        console.log(item.TenBen);
-        console.log(document.getElementById("benDen"));
         return (
           <option key={index} value={item.id}>
             {item.TenBen}
@@ -100,6 +105,10 @@ class Home extends Component {
         );
       }
     });
+    //điều kiện chuyển hướng
+    if (this.state.isRedirect === true) {
+      return <Redirect to="/chon-ghe" />;
+    }
 
     return (
       <div>
@@ -108,7 +117,7 @@ class Home extends Component {
             <div className="container">
               <div className="row">
                 <div className="booking-form z-indept-2">
-                  <form method="get">
+                  <form>
                     <div className="row">
                       <div className="col-md-4">
                         <div className="form-group">
