@@ -5,7 +5,7 @@ class Nav extends Component {
   render() {
     return (
       <nav
-        className="navbar navbar-color-on-scroll fixed-top navbar-expand-lg navbar-white"
+        className="navbar fixed-top navbar-expand-lg navbar-white"
         color-on-scroll={100}
         id="sectionsNav"
       >

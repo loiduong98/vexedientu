@@ -12,7 +12,9 @@ class Home extends Component {
       ngayDi: new Date(),
       idBenDi: 0,
       idBenDen: 0,
-      isRedirect: false,
+      idTuyen: 0,
+      inputTuyen: "",
+      isRedirectToChonGhe: false,
     };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,8 +28,8 @@ class Home extends Component {
       Axios.get("http://localhost:8000/api/tuyen"),
     ])
       .then((resArr) => {
-        console.log(resArr[0].data); // in ra danh sách bến để test
-        console.log(resArr[1].data); // in ra danh sách tuyến để test
+        //console.log(resArr[0].data); // in ra danh sách bến để test
+        //console.log(resArr[1].data); // in ra danh sách tuyến để test
         // đẩy danh sách bên lấy từ API vào state trong reducer
         this.props.dispatch({
           type: "FETCH_DSBEN",
@@ -71,8 +73,30 @@ class Home extends Component {
     } else if (this.state.idBenDen === 0) {
       alert("Vui lòng chọn bến đến");
     } else {
-      // alert("đủ điều kiện");
-      this.setState({ isRedirect: true });
+      this.props.dstuyenData.map((tuyen, index) => {
+        if (
+          tuyen.idBenDi === this.state.idBenDi &&
+          tuyen.idBenDen === this.state.idBenDen
+        ) {
+          this.setState(
+            {
+              idTuyen: tuyen.id,
+              inputTuyen: tuyen.TenTuyen,
+            },
+            () => {
+              if (typeof Storage !== "undefined") {
+                // Khởi tạo sesionStorage
+                sessionStorage.setItem("chonTuyen", JSON.stringify(this.state));
+              } else {
+                alert("Trình duyệt của bạn không hỗ trợ!");
+              }
+              return console.log(this.state);
+            }
+          );
+          console.log("Tuyến xe khách chọn là: " + tuyen.TenTuyen);
+        }
+      });
+      this.setState({ isRedirectToChonGhe: true });
     }
   }
 
@@ -106,7 +130,7 @@ class Home extends Component {
       }
     });
     //điều kiện chuyển hướng
-    if (this.state.isRedirect === true) {
+    if (this.state.isRedirectToChonGhe === true) {
       return <Redirect to="/chon-ghe" />;
     }
 

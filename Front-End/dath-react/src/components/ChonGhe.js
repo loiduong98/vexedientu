@@ -1,7 +1,36 @@
 import React, { Component } from "react";
 
 class ChonGhe extends Component {
+  step1;
+  componentWillMount() {
+    if (typeof Storage !== "undefined") {
+      // get sessionStorage
+      this.step1 = JSON.parse(sessionStorage.getItem("chonTuyen"));
+    } else {
+      alert("Vui lòng quay lại trang chủ");
+    }
+  }
+
   render() {
+    function reverseString(str) {
+      // Step 1. Use the split() method to return a new array
+      var splitString = str.split(""); // var splitString = "hello".split("");
+      // ["h", "e", "l", "l", "o"]
+
+      // Step 2. Use the reverse() method to reverse the new created array
+      var reverseArray = splitString.reverse(); // var reverseArray = ["h", "e", "l", "l", "o"].reverse();
+      // ["o", "l", "l", "e", "h"]
+
+      // Step 3. Use the join() method to join all elements of the array into a string
+      var joinArray = reverseArray.join(""); // var joinArray = ["o", "l", "l", "e", "h"].join("");
+      // "olleh"
+
+      //Step 4. Return the reversed string
+      return joinArray; // "olleh"
+    }
+    var ngaydi = this.step1.ngayDi;
+    var res = ngaydi.substr(0, 10);
+
     return (
       <section id="chonghe">
         <div className="container">
@@ -10,8 +39,8 @@ class ChonGhe extends Component {
               <div className="card">
                 <div className="card-header card-header-primary">
                   <h4 className="card-title">
-                    TP.HCM - Cần Thơ <br />
-                    08/05/2020
+                    {this.step1.inputTuyen} <br />
+                    {res}
                   </h4>
                 </div>
                 <div className="card-body">
@@ -40,8 +69,7 @@ class ChonGhe extends Component {
                         Giờ khởi hành
                       </h4>
                       <select
-                        className="form-control selectpicker"
-                        data-style="btn btn-link"
+                        className="form-control"
                         id="exampleFormControlSelect1"
                       >
                         <option>06:00</option>
@@ -58,9 +86,7 @@ class ChonGhe extends Component {
                         Điểm lên xe
                       </h4>
                       <select
-                        multiple
-                        className="form-control selectpicker"
-                        data-style="btn btn-link"
+                        className="form-control"
                         id="exampleFormControlSelect2"
                       >
                         <option>475A Điện Biên Phủ</option>
