@@ -36,6 +36,40 @@
   color: white;
 }
 
+<<<<<<< .merge_file_a03576
 #booking .col-md-4 .form-group.bmd-form-group {
   padding-top: 17px;
+=======
+#booking .col-md-4 .form-group {
+  padding-top: 26px;
+}
+
+#booking .col-md-4 .form-group select {
+  color: white;
+}
+
+section#chonghe {
+  margin-top: 100px;
+}
+
+.seat {
+  transition: 0.4s all;
+}
+
+.booked {
+  color: #968684;
+}
+
+.selecting {
+  color: #ff9e00;
+}
+
+#chonghe i.fa {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.booked i.fa {
+  cursor: none !important;
+>>>>>>> .merge_file_a10776
 }
