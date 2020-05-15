@@ -79,10 +79,8 @@ class DatVeController extends Controller
         $SDT = $request->SDT;
         $Email = $request->Email;
         $DiaChi = $request->DiaChi;
-        $TenHTTT = $request->TenHTTT; 
-        
-        
-
+        $TenHTTT = $request->TenHTTT;       
+dd($TenGhe);
         foreach($tuyen as $keytuyen){
             $tuyen_di = $keytuyen->idBenDi;
             $tuyen_den = $keytuyen->idBenDen;

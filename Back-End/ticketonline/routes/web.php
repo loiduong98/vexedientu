@@ -269,6 +269,4 @@ Route::post('login', [ 'as' => 'login', 'uses' => 'Auth\LoginController@postLogi
 Route::get('logout', [ 'as' => 'logout', 'uses' => 'Auth\LogoutController@getLogout']);
 //Haha
 
-Route::get('api/datve','DatVeController@getTT');
-
 
