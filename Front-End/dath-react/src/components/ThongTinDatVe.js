@@ -40,41 +40,47 @@ class ThongTinDatVe extends Component {
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <label htmlFor="inputAddress">Số điện thoại</label>
+                    <input
+                      type="tel"
+                      className="form-control"
+                      name="inputPhone"
+                      placeholder="Số điện thoại"
+                      pattern="(\+84|0){1}(9|8|7|5|3){1}[0-9]{8}"
+                    />
+                  </div>
+                  <div className="loader" style={{ display: "none" }}>
+                    <div id="ld2">
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                    </div>
+                  </div>
+                  <div className="form-group">
                     <input
                       type="text"
                       className="form-control"
-                      id="inputAddress"
-                      placeholder="1234 Main St"
+                      name="inputHoTen"
+                      placeholder="Họ Tên"
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="inputAddress2">Họ tên</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputAddress2"
-                      placeholder="Apartment, studio, or floor"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleFormControlInput1">
-                      Email address
-                    </label>
                     <input
                       type="email"
                       className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="name@example.com"
+                      name="inputEmail"
+                      placeholder="youremail@example.com"
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="inputAddress2">Địa chỉ</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="inputAddress2"
-                      placeholder="Apartment, studio, or floor"
+                      name="inputAddress"
+                      placeholder="Địa chỉ"
                     />
                   </div>
                   <div className="form-row">
