@@ -26,7 +26,7 @@ class apiBenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return ben::create($request->all());
     }
 
     /**
