@@ -29,6 +29,40 @@ class ThongTinDatVe extends Component {
   render() {
     return (
       <div className="container" style={{ marginTop: "100px" }}>
+        <div className="md-stepper-horizontal">
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">directions_bus</span>
+            </div>
+            <div className="md-step-title">Chọn tuyến</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">event_seat</span>
+            </div>
+            <div className="md-step-title">Chọn ghế</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">edit</span>
+            </div>
+            <div className="md-step-title">Điền thông tin</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step">
+            <div className="md-step-circle">
+              <span className="material-icons">credit_card</span>
+            </div>
+            <div className="md-step-title">Thanh toán</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-6">
             <div className="card">
