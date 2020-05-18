@@ -41,6 +41,12 @@ class ChonGhe extends Component {
       seatReserved: [],
       seatBooked: ["A1", "A3", "E3", "D3", "B4"],
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log("ban dang bam nut tiep tuc");
   }
 
   // xử lý sự kiện onclich chọn ghế
@@ -209,7 +215,18 @@ class ChonGhe extends Component {
                   <h5 id="tongTien" style={{ fontWeight: 300 }}>
                     Tổng số tiền là:
                     <span style={{ color: "red", fontWeight: "bold" }}>
-                      ({this.state.seatReserved.length}00,000)
+                      (
+                      {this.props.dslichchayData.map((item, index) => {
+                        if (item.idTuyen === this.step1.idTuyen) {
+                          return (
+                            parseInt(item.Gia) *
+                            parseInt(this.state.seatReserved.length)
+                          )
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                      })}
+                      )
                     </span>
                     đ
                   </h5>
@@ -247,12 +264,6 @@ class ChonGhe extends Component {
                         Giá vé:{" "}
                         {this.props.dslichchayData.map((item, index) => {
                           if (item.idTuyen === this.step1.idTuyen) {
-                            console.log(
-                              item.Gia.toString().replace(
-                                /\B(?=(\d{3})+(?!\d))/g,
-                                ","
-                              )
-                            );
                             return item.Gia.toString().replace(
                               /\B(?=(\d{3})+(?!\d))/g,
                               ","
@@ -308,6 +319,13 @@ class ChonGhe extends Component {
                         </div>
                       </div>
                     </div>
+                    <button
+                      type="submit"
+                      className="btn btn-block btn-success"
+                      onClick={(e) => this.handleSubmit(e)}
+                    >
+                      Tiếp tục <span class="material-icons">forward</span>
+                    </button>
                   </form>
                 </div>
               </div>
@@ -412,7 +430,7 @@ class DrawGrid extends React.Component {
           </tbody>
         </table>
 
-        <AvailableList available={this.props.available} />
+        {/* <AvailableList available={this.props.available} /> */}
         {/* <ReservedList reserved={this.props.reserved} /> */}
       </div>
     );
@@ -423,23 +441,23 @@ class DrawGrid extends React.Component {
   }
 }
 
-class AvailableList extends React.Component {
-  render() {
-    const seatCount = this.props.available.length;
-    return (
-      <div className="text-center">
-        <h4>
-          Ghế còn trống: ({seatCount === 0 ? "No seats available" : seatCount})
-        </h4>
-        <span>
-          {this.props.available.map((res) => (
-            <p key={res}>{res} - </p>
-          ))}
-        </span>
-      </div>
-    );
-  }
-}
+// class AvailableList extends React.Component {
+//   render() {
+//     const seatCount = this.props.available.length;
+//     return (
+//       <div className="text-center">
+//         <h4>
+//           Ghế còn trống: ({seatCount === 0 ? "No seats available" : seatCount})
+//         </h4>
+//         <span>
+//           {this.props.available.map((res) => (
+//             <p key={res}>{res} - </p>
+//           ))}
+//         </span>
+//       </div>
+//     );
+//   }
+// }
 
 // class ReservedList extends React.Component {
 //   render() {
