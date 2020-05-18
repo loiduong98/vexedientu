@@ -29,6 +29,40 @@ class ThongTinDatVe extends Component {
   render() {
     return (
       <div className="container" style={{ marginTop: "100px" }}>
+        <div className="md-stepper-horizontal">
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">directions_bus</span>
+            </div>
+            <div className="md-step-title">Chọn tuyến</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">event_seat</span>
+            </div>
+            <div className="md-step-title">Chọn ghế</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">edit</span>
+            </div>
+            <div className="md-step-title">Điền thông tin</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step">
+            <div className="md-step-circle">
+              <span className="material-icons">credit_card</span>
+            </div>
+            <div className="md-step-title">Thanh toán</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-6">
             <div className="card">
@@ -40,41 +74,47 @@ class ThongTinDatVe extends Component {
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <label htmlFor="inputAddress">Số điện thoại</label>
+                    <input
+                      type="tel"
+                      className="form-control"
+                      name="inputPhone"
+                      placeholder="Số điện thoại"
+                      pattern="(\+84|0){1}(9|8|7|5|3){1}[0-9]{8}"
+                    />
+                  </div>
+                  <div className="loader" style={{ display: "none" }}>
+                    <div id="ld2">
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                    </div>
+                  </div>
+                  <div className="form-group">
                     <input
                       type="text"
                       className="form-control"
-                      id="inputAddress"
-                      placeholder="1234 Main St"
+                      name="inputHoTen"
+                      placeholder="Họ Tên"
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="inputAddress2">Họ tên</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputAddress2"
-                      placeholder="Apartment, studio, or floor"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleFormControlInput1">
-                      Email address
-                    </label>
                     <input
                       type="email"
                       className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="name@example.com"
+                      name="inputEmail"
+                      placeholder="youremail@example.com"
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="inputAddress2">Địa chỉ</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="inputAddress2"
-                      placeholder="Apartment, studio, or floor"
+                      name="inputAddress"
+                      placeholder="Địa chỉ"
                     />
                   </div>
                   <div className="form-row">
