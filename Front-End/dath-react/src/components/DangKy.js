@@ -14,9 +14,10 @@ const signupUserSchema = yup.object().shape({
 class DangKy extends Component {
 
   _handleSubmit = (values) => {
+    console.log(values)
    Axios ({
      method: "POST",
-     url: "",
+     url: "http://127.0.0.1:8000/api/users/",
      data: values
    }).then(res => {
      console.log(res);
@@ -100,22 +101,22 @@ class DangKy extends Component {
                           validationSchema={signupUserSchema}
                           onSubmit = {this._handleSubmit}
                           render={(formikProps) => (
-                            <Form className="form" method action>
+                            <Form className="form" method="POST" action="">
                               <div className="form-group">
                                 <div className="input-group">
                                   <span className="input-group-addon">
                                     <i className="material-icons">face</i>
                                   </span>
                                   <Field
-                                    name="hoTen"
+                                    name="name"
                                     onChange={formikProps.handleChange}
                                     type="text"
                                     className="form-control"
                                     placeholder="Họ và Tên"
                                   />
-                                 <ErrorMessage name="hoTen">
+                                 <ErrorMessage name="name">
                                    {
-                                     msg => <div className="alert alert-danger">{msg}</div>
+                                     msg => <div className="alert alert-danger alert-msg">{msg}</div>
                                    }
                                  </ErrorMessage>
                                 </div>
@@ -134,7 +135,7 @@ class DangKy extends Component {
                                   />
                                    <ErrorMessage name="taiKhoan">
                                    {
-                                     msg => <div className="alert alert-danger">{msg}</div>
+                                     msg => <div className="alert alert-danger alert-msg">{msg}</div>
                                    }
                                  </ErrorMessage>
                                 </div>
@@ -153,7 +154,8 @@ class DangKy extends Component {
                                   />
                                   <ErrorMessage name="email">
                                    {
-                                     msg => <div className="alert alert-danger">{msg}</div>
+                                     msg => <div className="alert alert-danger alert-msg">{msg}</div>
+                                   
                                    }
                                  </ErrorMessage>
                                 </div>
@@ -172,7 +174,7 @@ class DangKy extends Component {
                                   />
                                   <ErrorMessage name="soDT">
                                    {
-                                     msg => <div className="alert alert-danger">{msg}</div>
+                                     msg => <div className="alert alert-danger alert-msg">{msg}</div>
                                    }
                                  </ErrorMessage>
                                 </div>
@@ -191,7 +193,7 @@ class DangKy extends Component {
                                   />
                                     <ErrorMessage name="matKhau">
                                    {
-                                     msg => <div className="alert alert-danger">{msg}</div>
+                                     msg => <div className="alert alert-danger alert-msg">{msg}</div>
                                    }
                                  </ErrorMessage>
                                 </div>
@@ -216,7 +218,7 @@ class DangKy extends Component {
                                   href="#pablo"
                                   className="btn btn-primary btn-round"
                                 >
-                                  Get Started
+                                  Đăng ký
                            </button>
                               </div>
                             </Form>
@@ -227,11 +229,4 @@ class DangKy extends Component {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-export default DangKy;
+ 

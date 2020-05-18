@@ -36,10 +36,6 @@
   color: white;
 }
 
-<<<<<<< .merge_file_a03576
-#booking .col-md-4 .form-group.bmd-form-group {
-  padding-top: 17px;
-=======
 #booking .col-md-4 .form-group {
   padding-top: 26px;
 }
@@ -71,7 +67,6 @@ section#chonghe {
 
 .booked i.fa {
   cursor: none !important;
->>>>>>> .merge_file_a10776
 }
 /* CSS loading data */
 .loader {
