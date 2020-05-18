@@ -26,7 +26,7 @@ class apiSoDogheController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return sodoghe::create($request->all());
     }
 
     /**
@@ -35,9 +35,9 @@ class apiSoDogheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(sodoghe $sodoghe)
     {
-        //
+        return $sodoghe;
     }
 
     /**
@@ -47,9 +47,10 @@ class apiSoDogheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, sodoghe $sodoghe)
     {
-        //
+        $sodoghe->update($request->all());
+        return $sodoghe;
     }
 
     /**
@@ -58,8 +59,9 @@ class apiSoDogheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(sodoghe $sodoghe)
     {
-        //
+        $sodoghe->delete();
+        return $sodoghe;
     }
 }

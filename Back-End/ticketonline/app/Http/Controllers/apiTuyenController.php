@@ -26,7 +26,7 @@ class apiTuyenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return tuyen::create($request->all());
     }
 
     /**
@@ -35,9 +35,9 @@ class apiTuyenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(tuyen $tuyen)
     {
-        //
+        return $tuyen;
     }
 
     /**
@@ -47,9 +47,10 @@ class apiTuyenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, tuyen $tuyen)
     {
-        //
+        $tuyen->update($request->all());
+        return $tuyen;
     }
 
     /**
@@ -58,8 +59,9 @@ class apiTuyenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(tuyen $tuyen)
     {
-        //
+        $tuyen->delete();
+        return $tuyen;
     }
 }
