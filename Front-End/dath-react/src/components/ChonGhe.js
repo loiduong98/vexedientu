@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { store } from "react-notifications-component";
+import Axios from "axios";
+import { connect } from "react-redux";
+
 class ChonGhe extends Component {
   constructor(props) {
     super(props);
@@ -20,18 +23,15 @@ class ChonGhe extends Component {
         "B1",
         "B2",
         "B3",
-        "B4",
         "C1",
         "C2",
         "C3",
         "C4",
         "D1",
         "D2",
-        "D3",
         "D4",
         "E1",
         "E2",
-        "E3",
         "E4",
         "F1",
         "F2",
@@ -39,7 +39,7 @@ class ChonGhe extends Component {
         "F4",
       ],
       seatReserved: [],
-      seatBooked: ["A1", "A3"],
+      seatBooked: ["A1", "A3", "E3", "D3", "B4"],
     };
   }
 
@@ -104,6 +104,24 @@ class ChonGhe extends Component {
     }
   }
 
+  //get data từ API
+  getDataAPI() {
+    Axios.all([Axios.get("http://localhost:8000/api/lichchay")])
+      .then((resArr) => {
+        this.props.dispatch({
+          type: "FETCH_DSLICHCHAY",
+          payload: resArr[0].data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  componentDidMount() {
+    this.getDataAPI();
+  }
+
   render() {
     // định dạng ngày đi ra màn hình
     var ngaydi = this.step1.ngayDi;
@@ -122,8 +140,9 @@ class ChonGhe extends Component {
 
     return (
       <section id="chonghe">
+        {console.log(this.step1.idTuyen)}
         <ReactNotification />
-
+        {console.log(this.props.dslichchayData)}
         <div className="container">
           <div className="md-stepper-horizontal">
             <div className="md-step active">
@@ -225,7 +244,22 @@ class ChonGhe extends Component {
                           defaultValue="option2"
                           defaultChecked
                         />
-                        Giá vé: 100.000 đ / người
+                        Giá vé:{" "}
+                        {this.props.dslichchayData.map((item, index) => {
+                          if (item.idTuyen === this.step1.idTuyen) {
+                            console.log(
+                              item.Gia.toString().replace(
+                                /\B(?=(\d{3})+(?!\d))/g,
+                                ","
+                              )
+                            );
+                            return item.Gia.toString().replace(
+                              /\B(?=(\d{3})+(?!\d))/g,
+                              ","
+                            );
+                          }
+                        })}{" "}
+                        đ / người
                         <span className="circle">
                           <span className="check" />
                         </span>
@@ -422,4 +456,10 @@ class AvailableList extends React.Component {
 //   }
 // }
 
-export default ChonGhe;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    dslichchayData: state.dslichchayReducer.dslichchayData,
+  };
+};
+
+export default connect(mapStateToProps)(ChonGhe);
