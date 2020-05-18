@@ -69,5 +69,22 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+             Route::apiResource('khachhang', 'apiKhachHangController');
+
+             Route::apiResource('ben', 'apiBenController');
+             
+             Route::apiResource('tuyen', 'apiTuyenController');
+             
+             Route::apiResource('chucvu', 'apiChucVuController');
+             
+             Route::apiResource('sodoghe', 'apiSoDoGheController');
+             
+             Route::apiResource('chitietghe', 'apiChiTietGheController');
+             
+             Route::apiResource('xe', 'apiXeController');
+             
+             Route::apiResource('nhanvien', 'apiNhanVienController');
+             
+             Route::apiResource('users', 'apiUsersController');
     }
 }

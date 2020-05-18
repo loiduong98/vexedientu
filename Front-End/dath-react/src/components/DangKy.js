@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import Axios from "axios";
+import {userService} from "./Services/index"
 
 const signupUserSchema = yup.object().shape({
   taiKhoan: yup.string().required("Field is required!"),
@@ -14,11 +14,8 @@ const signupUserSchema = yup.object().shape({
 class DangKy extends Component {
 
   _handleSubmit = (values) => {
-   Axios ({
-     method: "POST",
-     url: "",
-     data: values
-   }).then(res => {
+    userService.signUp(values)
+   .then(res => {
      console.log(res);
      
    }).catch(err => {
@@ -98,9 +95,11 @@ class DangKy extends Component {
                             soDT:''
                           }}
                           validationSchema={signupUserSchema}
+
                           onSubmit = {this._handleSubmit}
+
                           render={(formikProps) => (
-                            <Form className="form" method action>
+                            <Form className="form">
                               <div className="form-group">
                                 <div className="input-group">
                                   <span className="input-group-addon">
