@@ -77,7 +77,7 @@ class LoginController extends Controller
                 dd('loi lon 2');
                 return redirect('admin/index');
             }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>3])) {
-                dd('loi lon 3');
+                
                 return redirect('admin/index');
             }else {
                 // Kiểm tra không đúng sẽ hiển thị thông báo lỗi

@@ -6,12 +6,40 @@ import { Redirect } from "react-router-dom";
 class ThongTinDatVe extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoaderSpinner: false,
+      inputPhone: "",
+    };
+    this.handleChange = this.handleChange.bind(this);
   }
 
+  loader = {};
+
+  // lấy số điện thoại người dùng nhập vào
+  inputPhone(e) {
+    if (e.target.value.length === 10) {
+      this.setState({ inputPhone: e.target.value, isLoaderSpinner: false });
+    } else {
+      this.setState({
+        isLoaderSpinner: true,
+        inputPhone: e.target.value,
+      });
+    }
+  }
+  // bắt sự kiện khách hàng điền thông tin vào form
+  handleChange(event) {
+    this.setState(
+      {
+        [event.target.name]: event.target.value,
+      },
+      () => {
+        return console.log(this.state);
+      }
+    );
+  }
   getdskhachhang() {
     Axios.get("http://localhost:8000/api/khachhang")
       .then((res) => {
-        console.log(res.data);
         this.props.dispatch({
           type: "FETCH_KHACHHANG",
           payload: res.data,
@@ -27,6 +55,102 @@ class ThongTinDatVe extends Component {
   }
 
   render() {
+    var customerForm = this.props.khachhangData.map((item, index) => {
+      if (this.state.inputPhone === "") {
+        return;
+      } else if (this.state.isLoaderSpinner === true) {
+        return (
+          <div className="loader" style={{ display: "inline-block" }}>
+            <div id="ld2">
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
+          </div>
+        );
+      } else if (item.SDT !== this.state.inputPhone) {
+        return (
+          <div key={index}>
+            <div className="form-group">
+              <input
+                onChange={(event) => this.handleChange(event)}
+                type="text"
+                className="form-control"
+                name="inputHoTen"
+                placeholder="Họ Tên"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                onChange={(event) => this.handleChange(event)}
+                type="email"
+                className="form-control"
+                name="inputEmail"
+                placeholder="youremail@example.com"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                onChange={(event) => this.handleChange(event)}
+                type="text"
+                className="form-control"
+                name="inputAddress"
+                placeholder="Địa chỉ"
+              />
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={index}>
+            <div className="form-group label-floating has-success">
+              <label class="control-label"></label>
+              <input
+                onChange={this.handleChange}
+                type="text"
+                className="form-control"
+                name="inputHoTen"
+                defaultValue={item.HoTen}
+              />
+              <span className="form-control-feedback">
+                <i className="material-icons">done</i>
+              </span>
+            </div>
+            <div className="form-group label-floating has-success">
+              <label class="control-label"></label>
+              <input
+                onChange={this.handleChange}
+                type="email"
+                className="form-control"
+                name="inputEmail"
+                defaultValue={item.Email}
+              />
+              <span className="form-control-feedback">
+                <i className="material-icons">done</i>
+              </span>
+            </div>
+            <div className="form-group label-floating has-success">
+              <label class="control-label"></label>
+              <input
+                onChange={this.handleChange}
+                type="text"
+                className="form-control"
+                name="inputAddress"
+                defaultValue={item.DiaChi}
+              />
+              <span className="form-control-feedback">
+                <i className="material-icons">done</i>
+              </span>
+            </div>
+          </div>
+        );
+      }
+    });
+
     return (
       <div className="container" style={{ marginTop: "100px" }}>
         <div className="md-stepper-horizontal">
@@ -75,6 +199,7 @@ class ThongTinDatVe extends Component {
                 <form>
                   <div className="form-group">
                     <input
+                      onChange={(e) => this.inputPhone(e)}
                       type="tel"
                       className="form-control"
                       name="inputPhone"
@@ -82,55 +207,12 @@ class ThongTinDatVe extends Component {
                       pattern="(\+84|0){1}(9|8|7|5|3){1}[0-9]{8}"
                     />
                   </div>
-                  <div className="loader" style={{ display: "none" }}>
-                    <div id="ld2">
-                      <div />
-                      <div />
-                      <div />
-                      <div />
-                      <div />
-                      <div />
-                      <div />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="inputHoTen"
-                      placeholder="Họ Tên"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="email"
-                      className="form-control"
-                      name="inputEmail"
-                      placeholder="youremail@example.com"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="inputAddress"
-                      placeholder="Địa chỉ"
-                    />
-                  </div>
+                  {customerForm}
+
                   <div className="form-row">
-                    <div className="form-group col-md-6">
-                      <button type="submit" className="btn btn-block btn-rose">
-                        Đi lui
-                      </button>
-                    </div>
-                    <div className="form-group col-md-6">
-                      <button
-                        type="submit"
-                        className="btn btn-block btn-success"
-                      >
-                        Đi tới
-                      </button>
-                    </div>
+                    <button type="submit" className="btn btn-block btn-success">
+                      Tiếp tục <span class="material-icons">forward</span>
+                    </button>
                   </div>
                 </form>
               </div>
