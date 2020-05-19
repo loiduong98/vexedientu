@@ -4,6 +4,7 @@ import "react-notifications-component/dist/theme.css";
 import { store } from "react-notifications-component";
 import Axios from "axios";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class ChonGhe extends Component {
   constructor(props) {
@@ -40,13 +41,46 @@ class ChonGhe extends Component {
       ],
       seatReserved: [],
       seatBooked: ["A1", "A3", "E3", "D3", "B4"],
+      isGoThongTinDatVe: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log("ban dang bam nut tiep tuc");
+    if (this.state.seatReserved.length === 0) {
+      store.addNotification({
+        message: "Vui lòng chọn ghế bạn muốn",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else {
+      this.props.dslichchayData.map((item) => {
+        if (item.idTuyen === this.step1.idTuyen) {
+          return (this.tongtien =
+            parseInt(item.Gia) * parseInt(this.state.seatReserved.length));
+        }
+      });
+      this.setState(
+        { isGoThongTinDatVe: true, tongtien: this.tongtien },
+        () => {
+          if (typeof Storage !== "undefined") {
+            // Khởi tạo sesionStorage
+            sessionStorage.setItem("chonghe", JSON.stringify(this.state));
+          } else {
+            alert("Trình duyệt của bạn không hỗ trợ!");
+          }
+          return console.log(this.state);
+        }
+      );
+    }
   }
 
   // xử lý sự kiện onclich chọn ghế
@@ -101,6 +135,9 @@ class ChonGhe extends Component {
     }
   }
   step1;
+
+  tongtien;
+
   componentWillMount() {
     if (typeof Storage !== "undefined") {
       // get sessionStorage
@@ -144,11 +181,13 @@ class ChonGhe extends Component {
       ngaydi.substr(0, 4)
     );
 
+    //điều kiện chuyển hướng
+    if (this.state.isGoThongTinDatVe === true) {
+      return <Redirect to="/thong-tin-dat-ve" />;
+    }
     return (
       <section id="chonghe">
-        {console.log(this.step1.idTuyen)}
         <ReactNotification />
-        {console.log(this.props.dslichchayData)}
         <div className="container">
           <div className="md-stepper-horizontal">
             <div className="md-step active">

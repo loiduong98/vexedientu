@@ -1,23 +1,35 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Axios from "axios";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import { store } from "react-notifications-component";
 import { Redirect } from "react-router-dom";
 
 class ThongTinDatVe extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isGoPayment: false,
       isLoaderSpinner: false,
       inputPhone: "",
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  loader = {};
 
   // lấy số điện thoại người dùng nhập vào
   inputPhone(e) {
     if (e.target.value.length === 10) {
+      this.props.khachhangData.map((item) => {
+        if (item.SDT === e.target.value) {
+          this.setState({
+            inputHoTen: item.HoTen,
+            inputAddress: item.DiaChi,
+            inputEmail: item.Email,
+          });
+        }
+      });
       this.setState({ inputPhone: e.target.value, isLoaderSpinner: false });
     } else {
       this.setState({
@@ -28,15 +40,82 @@ class ThongTinDatVe extends Component {
   }
   // bắt sự kiện khách hàng điền thông tin vào form
   handleChange(event) {
-    this.setState(
-      {
-        [event.target.name]: event.target.value,
-      },
-      () => {
-        return console.log(this.state);
-      }
-    );
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   }
+
+  // Khi người dùng nhấn nút tiếp tục qua trang khác
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.state.inputPhone === "") {
+      store.addNotification({
+        message: "Vui lòng nhập số điện thoại",
+        type: "warning",
+        insert: "top",
+        container: "top-left",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else if (this.state.inputHoTen === undefined) {
+      store.addNotification({
+        message: "Vui lòng nhập họ tên",
+        type: "warning",
+        insert: "top",
+        container: "top-left",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else if (this.state.inputEmail === undefined) {
+      store.addNotification({
+        message: "Vui lòng nhập địa chỉ Email",
+        type: "warning",
+        insert: "top",
+        container: "top-left",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else if (this.state.inputAddress === undefined) {
+      store.addNotification({
+        message: "Vui lòng nhập địa chỉ của bạn",
+        type: "warning",
+        insert: "top",
+        container: "top-left",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else {
+      this.setState({ isGoPayment: true }, () => {
+        if (typeof Storage !== "undefined") {
+          // Khởi tạo sesionStorage
+          sessionStorage.setItem(
+            "thongtinkhachhang",
+            JSON.stringify(this.state)
+          );
+        } else {
+          alert("Trình duyệt của bạn không hỗ trợ!");
+        }
+        return console.log(this.state);
+      });
+    }
+  }
+  // get danh sach khach hang tu API
   getdskhachhang() {
     Axios.get("http://localhost:8000/api/khachhang")
       .then((res) => {
@@ -108,7 +187,7 @@ class ThongTinDatVe extends Component {
         return (
           <div key={index}>
             <div className="form-group label-floating has-success">
-              <label class="control-label"></label>
+              <label className="control-label"></label>
               <input
                 onChange={this.handleChange}
                 type="text"
@@ -121,7 +200,7 @@ class ThongTinDatVe extends Component {
               </span>
             </div>
             <div className="form-group label-floating has-success">
-              <label class="control-label"></label>
+              <label className="control-label"></label>
               <input
                 onChange={this.handleChange}
                 type="email"
@@ -134,7 +213,7 @@ class ThongTinDatVe extends Component {
               </span>
             </div>
             <div className="form-group label-floating has-success">
-              <label class="control-label"></label>
+              <label className="control-label"></label>
               <input
                 onChange={this.handleChange}
                 type="text"
@@ -151,8 +230,14 @@ class ThongTinDatVe extends Component {
       }
     });
 
+    //điều kiện chuyển hướng
+    if (this.state.isGoPayment === true) {
+      return <Redirect to="/thanh-toan" />;
+    }
+
     return (
       <div className="container" style={{ marginTop: "100px" }}>
+        <ReactNotification />
         <div className="md-stepper-horizontal">
           <div className="md-step active">
             <div className="md-step-circle">
@@ -210,7 +295,11 @@ class ThongTinDatVe extends Component {
                   {customerForm}
 
                   <div className="form-row">
-                    <button type="submit" className="btn btn-block btn-success">
+                    <button
+                      type="submit"
+                      onClick={(event) => this.handleSubmit(event)}
+                      className="btn btn-block btn-success"
+                    >
                       Tiếp tục <span class="material-icons">forward</span>
                     </button>
                   </div>
