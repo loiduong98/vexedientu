@@ -10,37 +10,10 @@ class ChonGhe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seat: [
-        ["A1", "A2", "A3", "A4"],
-        ["B1", "B2", "B3", "B4"],
-        ["C1", "C2", "C3", "C4"],
-        ["D1", "D2", "D3", "D4"],
-        ["E1", "E2", "E3", "E4"],
-        ["F1", "F2", "F3", "F4"],
-      ],
-      seatAvailable: [
-        "A2",
-        "A4",
-        "B1",
-        "B2",
-        "B3",
-        "C1",
-        "C2",
-        "C3",
-        "C4",
-        "D1",
-        "D2",
-        "D4",
-        "E1",
-        "E2",
-        "E4",
-        "F1",
-        "F2",
-        "F3",
-        "F4",
-      ],
+      seat: [],
+      seatAvailable: [],
       seatReserved: [],
-      seatBooked: ["A1", "A3", "E3", "D3", "B4"],
+      seatBooked: [],
       isGoThongTinDatVe: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -134,7 +107,7 @@ class ChonGhe extends Component {
       });
     }
   }
-  step1;
+  step1; // biến chứa dữ liệu từ session storage
 
   tongtien;
 
@@ -149,11 +122,58 @@ class ChonGhe extends Component {
 
   //get data từ API
   getDataAPI() {
-    Axios.all([Axios.get("http://localhost:8000/api/lichchay")])
+    Axios.all([
+      Axios.get("http://localhost:8000/api/lichchay"),
+      Axios.get("http://localhost:8000/api/xe"),
+    ])
       .then((resArr) => {
+        // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
         this.props.dispatch({
           type: "FETCH_DSLICHCHAY",
           payload: resArr[0].data,
+        });
+        // đẩy dữ liệu danh sách xe từ API get được vào reducer
+        this.props.dispatch({
+          type: "FETCH_DSXE",
+          payload: resArr[1].data,
+        });
+
+        // lấy id xe
+        this.props.dslichchayData.map((item) => {
+          if (item.idTuyen === this.step1.idTuyen) {
+            this.setState({ idXe: item.idXe }, () => {
+              console.log(this.state);
+            });
+          }
+        });
+
+        // lấy danh sách ghế từ xe ra
+        this.props.dsxeData.map((item) => {
+          if (item.id === this.state.idXe) {
+            // đẩy tất cả ghế vào dạng chuỗi
+            var tatcaghe = item.TatCaGhe.split(/[\s,]+/);
+            // đẩy các ghế đã đặt vào dạng chuỗi
+            var ghedadat = item.GheDaDat.split(/[\s,]+/);
+            // lọc ra ghế còn trống
+            const ghetrong = tatcaghe.filter((i) => !ghedadat.includes(i));
+
+            // đẩy tất cả ghế vào ma trận sợ đồ để in ra
+            const toMatrix = (arr, width) =>
+              arr.reduce(
+                (rows, key, index) =>
+                  (index % width == 0
+                    ? rows.push([key])
+                    : rows[rows.length - 1].push(key)) && rows,
+                []
+              );
+            var matranghe = toMatrix(tatcaghe, 4);
+
+            this.setState({
+              seatBooked: ghedadat,
+              seatAvailable: ghetrong,
+              seat: matranghe,
+            });
+          }
         });
       })
       .catch((err) => {
@@ -315,6 +335,22 @@ class ChonGhe extends Component {
                         </span>
                       </label>
                     </div>
+                    <div className="form-group">
+                      <h4
+                        className="info-title"
+                        style={{ marginBottom: "0px" }}
+                      >
+                        Biển số xe
+                      </h4>
+                      <p>
+                        {this.props.dsxeData.map((item) => {
+                          if (item.id === this.state.idXe) {
+                            return item.BSXe;
+                          }
+                        })}
+                      </p>
+                    </div>
+
                     <div className="form-group">
                       <h4
                         className="info-title"
@@ -516,6 +552,7 @@ class DrawGrid extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     dslichchayData: state.dslichchayReducer.dslichchayData,
+    dsxeData: state.dsxeReducer.dsxeData,
   };
 };
 
