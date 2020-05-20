@@ -94,6 +94,8 @@ class RouteServiceProvider extends ServiceProvider
                 Route::apiResource('lichchay', 'apiLichChayController');
 
                 Route::apiResource('checkout', 'DatVeController');  
+
+                Route::apiResource('login', 'apiLoginController');
         });
     }
 }
