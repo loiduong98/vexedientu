@@ -4,6 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import { store } from "react-notifications-component";
 
 class Home extends Component {
   constructor(props) {
@@ -24,8 +27,8 @@ class Home extends Component {
   // get danh sách tuyến và danh sách bến từ API
   getAll() {
     Axios.all([
-      Axios.get("http://localhost:8000/api/ben"),
-      Axios.get("http://localhost:8000/api/tuyen"),
+      Axios.get("http://127.0.0.1:8000/api/ben"),
+      Axios.get("http://127.0.0.1:8000/api/tuyen"),
     ])
       .then((resArr) => {
         //console.log(resArr[0].data); // in ra danh sách bến để test
@@ -69,9 +72,31 @@ class Home extends Component {
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.idBenDi === 0) {
-      alert("Vui lòng chọn bến đi");
+      store.addNotification({
+        message: "Vui lòng chọn điểm đi",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
     } else if (this.state.idBenDen === 0) {
-      alert("Vui lòng chọn bến đến");
+      store.addNotification({
+        message: "Vui lòng chọn điểm đến",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
     } else {
       this.props.dstuyenData.map((tuyen, index) => {
         if (
@@ -137,6 +162,8 @@ class Home extends Component {
     return (
       <div>
         <div id="booking" className="section">
+          <ReactNotification />
+          <div className="cloud"></div>
           <div className="section-center">
             <div className="container">
               <div className="row">

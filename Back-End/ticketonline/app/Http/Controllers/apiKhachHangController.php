@@ -35,9 +35,9 @@ class apiKhachHangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(khachhang $khachhang)
     {
-        return khachhang::find($id);
+        return $khachhang;
     }
 
     /**
@@ -47,9 +47,10 @@ class apiKhachHangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, khachhang $khachhang)
     {
-        //
+        $khachhang->update($request->all());
+        return $khachhang;
     }
 
     /**
@@ -58,8 +59,9 @@ class apiKhachHangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(khachhang $khachhang)
     {
-        //
+        $khachhang->delete();
+        return $khachhang;
     }
 }

@@ -26,7 +26,7 @@ class apiNhanVienController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return nhanvien::create($request->all());
     }
 
     /**
@@ -35,9 +35,9 @@ class apiNhanVienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(nhanvien $nhanvien)
     {
-        //
+        return $nhanvien;
     }
 
     /**
@@ -47,9 +47,10 @@ class apiNhanVienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, nhanvien $nhanvien)
     {
-        //
+        $nhanvien->update($request->all());
+        return $nhanvien;
     }
 
     /**
@@ -58,8 +59,9 @@ class apiNhanVienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(nhanvien $nhanvien)
     {
-        //
+        $nhanvien->delete();
+        return $nhanvien;
     }
 }

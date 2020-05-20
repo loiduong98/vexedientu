@@ -7,6 +7,10 @@ use App\chucvu;
 
 class ChucVuController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function getDanhSach()
     {
     	$chucvu = chucvu::orderBy('id','DESC')->get();

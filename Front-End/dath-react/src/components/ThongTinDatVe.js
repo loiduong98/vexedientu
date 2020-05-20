@@ -1,17 +1,124 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Axios from "axios";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import { store } from "react-notifications-component";
 import { Redirect } from "react-router-dom";
 
 class ThongTinDatVe extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isGoPayment: false,
+      isLoaderSpinner: false,
+      inputPhone: "",
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // lấy số điện thoại người dùng nhập vào
+  inputPhone(e) {
+    if (e.target.value.length === 10) {
+      this.props.khachhangData.map((item) => {
+        if (item.SDT === e.target.value) {
+          this.setState({
+            inputHoTen: item.HoTen,
+            inputAddress: item.DiaChi,
+            inputEmail: item.Email,
+          });
+        }
+      });
+      this.setState({ inputPhone: e.target.value, isLoaderSpinner: false });
+    } else {
+      this.setState({
+        isLoaderSpinner: true,
+        inputPhone: e.target.value,
+      });
+    }
+  }
+  // bắt sự kiện khách hàng điền thông tin vào form
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  // Khi người dùng nhấn nút tiếp tục qua trang khác
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.state.inputPhone === "") {
+      store.addNotification({
+        message: "Vui lòng nhập số điện thoại",
+        type: "warning",
+        insert: "top",
+        container: "top-left",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else if (this.state.inputHoTen === undefined) {
+      store.addNotification({
+        message: "Vui lòng nhập họ tên",
+        type: "warning",
+        insert: "top",
+        container: "top-left",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else if (this.state.inputEmail === undefined) {
+      store.addNotification({
+        message: "Vui lòng nhập địa chỉ Email",
+        type: "warning",
+        insert: "top",
+        container: "top-left",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else if (this.state.inputAddress === undefined) {
+      store.addNotification({
+        message: "Vui lòng nhập địa chỉ của bạn",
+        type: "warning",
+        insert: "top",
+        container: "top-left",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else {
+      this.setState({ isGoPayment: true }, () => {
+        if (typeof Storage !== "undefined") {
+          // Khởi tạo sesionStorage
+          sessionStorage.setItem(
+            "thongtinkhachhang",
+            JSON.stringify(this.state)
+          );
+        } else {
+          alert("Trình duyệt của bạn không hỗ trợ!");
+        }
+        return console.log(this.state);
+      });
+    }
+  }
+  // get danh sach khach hang tu API
   getdskhachhang() {
-    Axios.get("http://localhost:8000/api/khachhang")
+    Axios.get("http://127.0.0.1:8000/api/khachhang")
       .then((res) => {
-        console.log(res.data);
         this.props.dispatch({
           type: "FETCH_KHACHHANG",
           payload: res.data,
@@ -27,8 +134,144 @@ class ThongTinDatVe extends Component {
   }
 
   render() {
+    var customerForm = this.props.khachhangData.map((item, index) => {
+      if (this.state.inputPhone === "") {
+        return;
+      } else if (this.state.isLoaderSpinner === true) {
+        return (
+          <div className="loader" style={{ display: "inline-block" }}>
+            <div id="ld2">
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
+          </div>
+        );
+      } else if (item.SDT !== this.state.inputPhone) {
+        return (
+          <div key={index}>
+            <div className="form-group">
+              <input
+                onChange={(event) => this.handleChange(event)}
+                type="text"
+                className="form-control"
+                name="inputHoTen"
+                placeholder="Họ Tên"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                onChange={(event) => this.handleChange(event)}
+                type="email"
+                className="form-control"
+                name="inputEmail"
+                placeholder="youremail@example.com"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                onChange={(event) => this.handleChange(event)}
+                type="text"
+                className="form-control"
+                name="inputAddress"
+                placeholder="Địa chỉ"
+              />
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={index}>
+            <div className="form-group label-floating has-success">
+              <label className="control-label"></label>
+              <input
+                onChange={this.handleChange}
+                type="text"
+                className="form-control"
+                name="inputHoTen"
+                defaultValue={item.HoTen}
+              />
+              <span className="form-control-feedback">
+                <i className="material-icons">done</i>
+              </span>
+            </div>
+            <div className="form-group label-floating has-success">
+              <label className="control-label"></label>
+              <input
+                onChange={this.handleChange}
+                type="email"
+                className="form-control"
+                name="inputEmail"
+                defaultValue={item.Email}
+              />
+              <span className="form-control-feedback">
+                <i className="material-icons">done</i>
+              </span>
+            </div>
+            <div className="form-group label-floating has-success">
+              <label className="control-label"></label>
+              <input
+                onChange={this.handleChange}
+                type="text"
+                className="form-control"
+                name="inputAddress"
+                defaultValue={item.DiaChi}
+              />
+              <span className="form-control-feedback">
+                <i className="material-icons">done</i>
+              </span>
+            </div>
+          </div>
+        );
+      }
+    });
+
+    //điều kiện chuyển hướng
+    if (this.state.isGoPayment === true) {
+      return <Redirect to="/thanh-toan" />;
+    }
+
     return (
       <div className="container" style={{ marginTop: "100px" }}>
+        <ReactNotification />
+        <div className="md-stepper-horizontal">
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">directions_bus</span>
+            </div>
+            <div className="md-step-title">Chọn tuyến</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">event_seat</span>
+            </div>
+            <div className="md-step-title">Chọn ghế</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step active">
+            <div className="md-step-circle">
+              <span className="material-icons">edit</span>
+            </div>
+            <div className="md-step-title">Điền thông tin</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+          <div className="md-step">
+            <div className="md-step-circle">
+              <span className="material-icons">credit_card</span>
+            </div>
+            <div className="md-step-title">Thanh toán</div>
+            <div className="md-step-bar-left" />
+            <div className="md-step-bar-right" />
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-6">
             <div className="card">
@@ -40,57 +283,25 @@ class ThongTinDatVe extends Component {
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <label htmlFor="inputAddress">Số điện thoại</label>
                     <input
-                      type="text"
+                      onChange={(e) => this.inputPhone(e)}
+                      type="tel"
                       className="form-control"
-                      id="inputAddress"
-                      placeholder="1234 Main St"
+                      name="inputPhone"
+                      placeholder="Số điện thoại"
+                      pattern="(\+84|0){1}(9|8|7|5|3){1}[0-9]{8}"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="inputAddress2">Họ tên</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputAddress2"
-                      placeholder="Apartment, studio, or floor"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleFormControlInput1">
-                      Email address
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="name@example.com"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="inputAddress2">Địa chỉ</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputAddress2"
-                      placeholder="Apartment, studio, or floor"
-                    />
-                  </div>
+                  {customerForm}
+
                   <div className="form-row">
-                    <div className="form-group col-md-6">
-                      <button type="submit" className="btn btn-block btn-rose">
-                        Đi lui
-                      </button>
-                    </div>
-                    <div className="form-group col-md-6">
-                      <button
-                        type="submit"
-                        className="btn btn-block btn-success"
-                      >
-                        Đi tới
-                      </button>
-                    </div>
+                    <button
+                      type="submit"
+                      onClick={(event) => this.handleSubmit(event)}
+                      className="btn btn-block btn-success"
+                    >
+                      Tiếp tục <span class="material-icons">forward</span>
+                    </button>
                   </div>
                 </form>
               </div>
@@ -150,4 +361,4 @@ const mapStateToProps = (state) => {
     khachhangData: state.khachhangReducer.khachhangData,
   };
 };
-export default connect(mapStateToProps)(ThongTinDatVe);
+export default connect(mapStateToProps)(ThongTinDatVe)

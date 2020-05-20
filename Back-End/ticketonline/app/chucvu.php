@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class chucvu extends Model
 {
+    protected $fillable = [
+        'id',
+        'TenCV',
+    ];
     protected $table = "chucvu";
     public $timestamps = false;
 
