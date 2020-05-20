@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Darryldecode\Cart\CartServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -229,6 +230,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cart' =>  Darryldecode\Cart\Cart::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'providers' => [
+            Laravel\Passport\PassportServiceProvider::class,
+        ],
 
     ],
 

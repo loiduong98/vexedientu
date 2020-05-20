@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "material-kit",
   "version": "2.0.0",
   "lockfileVersion": 1,
@@ -4686,7 +4685,4 @@
       }
     }
   }
-=======
-  "lockfileVersion": 1
->>>>>>> frontend-Cong
 }

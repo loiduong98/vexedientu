@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class nhanvien extends Model
 {
+    protected $fillable = [
+        'id',
+        'HoTen',
+        'SDT',
+        'Email',
+        'DiaChi',
+        'NgaySinh',
+        'idCV',
+        'idUsers',
+        'GioiTinh',
+        'TrangThai',
+    ];
     protected $table = "nhanvien";
     public $timestamps = false;
 

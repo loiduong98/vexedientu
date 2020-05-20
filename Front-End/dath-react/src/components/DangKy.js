@@ -1,18 +1,33 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import Axios from "axios";
+import * as yup from "yup";
+
+const UserSchema = yup.object().shape({
+  name: yup.string().required('*Bạn chưa nhập họ tên'),
+  email: yup.string().required('*Bạn chưa nhập email').email('Không đúng định dạng email'),
+  password: yup.string().required('*Bạn chưa nhập password'),
+})
 
 class DangKy extends Component {
+
+  _handleSubmit = values => {
+    Axios({
+      method: 'POST',
+      url: 'http://127.0.0.1:8000/api/users',
+      data: values
+    }).then(res => {
+      alert('Chúc mừng bạn đã đăng ký thành công <3')
+
+    }).catch(err => {
+      console.log(err);
+    })
+    console.log(values)
+  }
   render() {
     return (
       <div className="signup-page">
-        <div
-          className="page-header header-filter"
-          filter-color="purple"
-          style={{
-            backgroundImage: "url(./assets/img/bg7.jpg)",
-            backgroundSize: "cover",
-            backgroundPosition: "top center",
-          }}
-        >
+        <div className="page-header header-filter" filter-color="purple" style={{ backgroundImage: 'url(./assets/img/bg7.jpg)', backgroundSize: 'cover', backgroundPosition: 'top center' }}>
           <div className="container">
             <div className="row">
               <div className="col-md-10 ml-auto mr-auto">
@@ -28,9 +43,8 @@ class DangKy extends Component {
                           <div className="description">
                             <h4 className="info-title">Tra cứu lịch sử</h4>
                             <p className="description">
-                              Tra cứu thông tin chi tiết vé xe. Lịch sủ mua vé
-                              xe. Xem lại thông tin chi tiết vé.
-                            </p>
+                              Tra cứu thông tin chi tiết vé xe. Lịch sủ mua vé xe. Xem lại thông tin chi tiết vé.
+                      </p>
                           </div>
                         </div>
                         <div className="info info-horizontal">
@@ -40,111 +54,102 @@ class DangKy extends Component {
                           <div className="description">
                             <h4 className="info-title">Hệ thống trao đổi vé</h4>
                             <p className="description">
-                              Bạn mua vé nhầm ngày? Bạn có công việc đột xuất
-                              nên bị lỡ vé xe đã đặt? Hãy để chúng tôi giúp bạn
-                              bán lại.
-                            </p>
-                          </div>
-                        </div>
-                        <div className="info info-horizontal">
-                          <div className="icon icon-info">
-                            <i className="material-icons">group</i>
-                          </div>
-                          <div className="description">
-                            <h4 className="info-title">Đóng góp ý kiến</h4>
-                            <p className="description">
-                              Chúng tôi luôn lắng nghe ý kiến của khách hàng để
-                              cải thiện chất lượng và dịch vụ tốt hơn.
-                            </p>
+                              Bạn mua vé nhầm ngày? Bạn có công việc đột xuất nên bị lỡ vé xe đã đặt? Hãy để chúng tôi giúp bạn bán lại.
+                      </p>
                           </div>
                         </div>
                       </div>
                       <div className="col-md-5 mr-auto">
-                        <form className="form" method action>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">face</i>
-                              </span>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Họ và tên"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">email</i>
-                              </span>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Email..."
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">phone</i>
-                              </span>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Số điện thoại..."
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">lock_outline</i>
-                              </span>
-                              <input
-                                type="password"
-                                placeholder="Mật khẩu..."
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon">
-                                <i className="material-icons">lock_outline</i>
-                              </span>
-                              <input
-                                type="password"
-                                placeholder="Nhập lại mật khẩu..."
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-check">
-                            <label className="form-check-label">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                defaultValue
-                                defaultChecked
-                              />
-                              <span className="form-check-sign">
-                                <span className="check" />
-                              </span>
-                              I agree to the
-                              <a href="#something">terms and conditions</a>.
-                            </label>
-                          </div>
-                          <div className="text-center">
-                            <a
-                              href="#pablo"
-                              className="btn btn-primary btn-round"
-                            >
-                              Get Started
-                            </a>
-                          </div>
-                        </form>
+                        <Formik
+                          initialValues={
+                            {
+                              name: '',
+                              email: '',
+                              password: '',
+                              level: '3',
+                              urlHinh: '',
+                            }
+                          }
+                          validationSchema={UserSchema}
+                          onSubmit={this._handleSubmit}
+                          render={formikProps => (
+                            <Form className="form">
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">face</i>
+                                  </span>
+                                  <Field
+                                    type="text"
+                                    name="name"
+                                    className="form-control"
+                                    onChange={formikProps.handleChange}
+                                    placeholder="Họ và tên" />
+                                  <ErrorMessage name="name">
+                                    {msg => <div className="alert alert-danger">{msg}</div>}
+                                  </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">email</i>
+                                  </span>
+                                  <Field
+                                    type="text"
+                                    name="email"
+                                    className="form-control"
+                                    onChange={formikProps.handleChange}
+                                    placeholder="Email..." />
+                                  <ErrorMessage name="email">
+                                    {msg => <div className="alert alert-danger">{msg}</div>}
+                                  </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">lock_outline</i>
+                                  </span>
+                                  <Field
+                                    type="password"
+                                    name="password"
+                                    className="form-control"
+                                    onChange={formikProps.handleChange}
+                                    placeholder="Password..." />
+                                  <ErrorMessage name="password">
+                                    {msg => <div className="alert alert-danger">{msg}</div>}
+                                  </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">image</i>
+                                  </span>
+                                  <input
+                                    type="text" //Không set type="file" được
+                                    name="urlHinh"
+                                    className="form-control"
+                                    onChange={formikProps.handleChange}
+                                    placeholder="Url hình..." />
+                                </div>
+                              </div>
+                              <div className="form-check">
+                                <label className="form-check-label">
+                                  <input className="form-check-input" type="checkbox" defaultValue defaultChecked />
+                                  <span className="form-check-sign">
+                                    <span className="check" />
+                                  </span>
+                        I agree to the
+                        <a href="#something">terms and conditions</a>.
+                      </label>
+                              </div>
+                              <div className="text-center">
+                                <button className="btn btn-danger">Đăng ký</button>
+                              </div>
+                            </Form>
+                          )} />
                       </div>
                     </div>
                   </div>
@@ -154,7 +159,7 @@ class DangKy extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 

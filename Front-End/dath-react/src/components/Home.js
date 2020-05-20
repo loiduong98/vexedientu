@@ -1,25 +1,169 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from "react-redux";
+import Axios from "axios";
+import { Redirect } from "react-router-dom";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import { store } from "react-notifications-component";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date(),
+      ngayDi: new Date(),
+      idBenDi: 0,
+      idBenDen: 0,
+      idTuyen: 0,
+      inputTuyen: "",
+      isRedirectToChonGhe: false,
     };
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(date) {
+  // get danh sách tuyến và danh sách bến từ API
+  getAll() {
+    Axios.all([
+      Axios.get("http://localhost:8000/api/ben"),
+      Axios.get("http://localhost:8000/api/tuyen"),
+    ])
+      .then((resArr) => {
+        //console.log(resArr[0].data); // in ra danh sách bến để test
+        //console.log(resArr[1].data); // in ra danh sách tuyến để test
+        // đẩy danh sách bên lấy từ API vào state trong reducer
+        this.props.dispatch({
+          type: "FETCH_DSBEN",
+          payload: resArr[0].data,
+        });
+        // đẩy danh sách tuyến lấy từ API vào state trong reducer
+        this.props.dispatch({
+          type: "FETCH_DSTUYEN",
+          payload: resArr[1].data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // force update HTML
+  componentDidMount() {
+    this.getAll();
+  }
+
+  // bắt sự kiện thay đổi ngày
+  handleDateChange = (date) => {
     this.setState({
-      startDate: date,
+      ngayDi: date,
+    });
+  };
+
+  //bắt sự kiện thay đổi tuyến đi, tuyến đến
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: parseInt(event.target.value),
     });
   }
+
+  // sự kiện nhấn button submit
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.state.idBenDi === 0) {
+      store.addNotification({
+        message: "Vui lòng chọn điểm đi",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else if (this.state.idBenDen === 0) {
+      store.addNotification({
+        message: "Vui lòng chọn điểm đến",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else {
+      this.props.dstuyenData.map((tuyen, index) => {
+        if (
+          tuyen.idBenDi === this.state.idBenDi &&
+          tuyen.idBenDen === this.state.idBenDen
+        ) {
+          this.setState(
+            {
+              idTuyen: tuyen.id,
+              inputTuyen: tuyen.TenTuyen,
+            },
+            () => {
+              if (typeof Storage !== "undefined") {
+                // Khởi tạo sesionStorage
+                sessionStorage.setItem("chonTuyen", JSON.stringify(this.state));
+              } else {
+                alert("Trình duyệt của bạn không hỗ trợ!");
+              }
+              return console.log(this.state);
+            }
+          );
+          console.log("Tuyến xe khách chọn là: " + tuyen.TenTuyen);
+        }
+      });
+      this.setState({ isRedirectToChonGhe: true });
+    }
+  }
+
+  // mảng a1 lưu trữ các bến có thể chọn
+  a1 = [];
+
   render() {
+    // lấy id những bến có thể đến sau khi chọn bến đi
+    if (this.state.idBenDi === 0) {
+      console.log("Chưa chọn bến đi");
+    } else {
+      console.log(
+        "Đã cập nhật bến đi ID ben di khach hang chon:" + this.state.idBenDi
+      );
+      this.a1 = [];
+      this.props.dstuyenData.map((item, index) => {
+        if (this.state.idBenDi === item.idBenDi) {
+          this.a1.push(item.idBenDen);
+        }
+      });
+    }
+
+    // in ra giao diện các danh sách bến có thể đi
+    var dsbenden = this.props.dsbenData.map((item, index) => {
+      if (this.a1.indexOf(item.id) !== -1) {
+        return (
+          <option key={index} value={item.id}>
+            {item.TenBen}
+          </option>
+        );
+      }
+    });
+    //điều kiện chuyển hướng
+    if (this.state.isRedirectToChonGhe === true) {
+      return <Redirect to="/chon-ghe" />;
+    }
+
     return (
       <div>
         <div id="booking" className="section">
+          <ReactNotification />
+          <div className="cloud"></div>
           <div className="section-center">
             <div className="container">
               <div className="row">
@@ -27,42 +171,48 @@ class Home extends Component {
                   <form>
                     <div className="row">
                       <div className="col-md-4">
-                        <div className="form-group bmd-form-group">
+                        <div className="form-group">
                           <select
-                            className="form-control selectpicker"
-                            data-style="btn btn-link"
-                            id="exampleFormControlSelect1"
+                            className="form-control"
+                            onChange={(event) => this.handleChange(event)}
+                            id="benDi"
+                            name="idBenDi"
                           >
-                            <option>Hà Nội</option>
-                            <option>Đà Lạt</option>
-                            <option>TP.HCM</option>
+                            <option value={this.state.idBenDi}>
+                              Chọn điểm đi
+                            </option>
+                            {this.props.dsbenData.map((item, index) => {
+                              return (
+                                <option key={index} value={item.id}>
+                                  {item.TenBen}
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
                       <div className="col-md-4">
-                        <div className="form-group bmd-form-group">
+                        <div className="form-group">
                           <select
-                            className="form-control selectpicker"
-                            data-style="btn btn-link"
-                            id="exampleFormControlSelect1"
+                            className="form-control"
+                            onChange={(event) => this.handleChange(event)}
+                            id="benDen"
+                            name="idBenDen"
                           >
-                            <option>Cần Thơ</option>
-                            <option>Bến Tre</option>
-                            <option>Tiền Giang</option>
+                            <option value={this.state.idBenDen}>
+                              Chọn điểm đến
+                            </option>
+                            {dsbenden}
                           </select>
                         </div>
                       </div>
                       <div className="col-md-2">
                         <div className="form-group bmd-form-group">
-                          {/* <input
-                            className="form-control"
-                            type="date"
-                            required
-                          /> */}
                           <DatePicker
+                            name="date"
                             className="form-control"
-                            selected={new Date()}
-                            onChange={this.handleChange}
+                            selected={this.state.ngayDi}
+                            onChange={this.handleDateChange}
                             minDate={new Date()}
                             name="startDate"
                             dateFormat="MM/dd/yyyy"
@@ -71,7 +221,10 @@ class Home extends Component {
                       </div>
                       <div className="col-md-2">
                         <div className="form-btn">
-                          <button className="btn btn-warning btn-block btn-lg waves-effect waves-light z-indept-1">
+                          <button
+                            onClick={(event) => this.handleSubmit(event)}
+                            className="btn btn-warning btn-block btn-lg waves-effect waves-light z-indept-1"
+                          >
                             Mua vé
                           </button>
                         </div>
@@ -209,10 +362,23 @@ class Home extends Component {
               </div>
             </div>
           </div>
+
+          <div className="row">
+            {this.props.dsbenData.map((item, index) => {
+              return item.TenBen;
+            })}
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default Home;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    dsbenData: state.dsbenReducer.dsbenData,
+    dstuyenData: state.dstuyenReducer.dstuyenData,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

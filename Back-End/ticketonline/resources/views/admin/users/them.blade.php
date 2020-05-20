@@ -33,6 +33,10 @@
                                 <input class="form-control" type="email"  name="email" placeholder="Nhập email" />
                             </div>
                             <div class="form-group">
+                                <label>Password</label>
+                                <input class="form-control" type="password"  name="password" placeholder="Nhập pass" />
+                            </div>
+                            <div class="form-group">
                                 <label>Chức vụ</label>
                                 <select class="form-control" name="level" id="level">                                   
                                     <option value="3">Thành viên</option>

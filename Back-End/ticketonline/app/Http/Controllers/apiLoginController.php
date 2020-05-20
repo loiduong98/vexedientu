@@ -1,54 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use Session;
-use app\User;
 
+use App\User;
 
-class LoginController extends Controller
+class apiLoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
     /**
-     * Where to redirect users after login.
+     * Display a listing of the resource.
      *
-     * @var string
+     * @return \Illuminate\Http\Response
      */
-    protected $redirectTo = 'admin/index';
-    
-    protected function redirectTo($request)
-{
-    return route('login');
-    
-}
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function getLogin() {
-	    return view('auth/login');
+    public function index()
+    {
+        //
     }
-    public function postLogin(Request $request) {
-        // Kiểm tra dữ liệu nhập vào
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         $rules = [
             'email' =>'required|email',
             'password' => 'required|min:6'
@@ -87,8 +64,38 @@ class LoginController extends Controller
             }
         }
     }
-    public function __construct()
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        $this->middleware('guest')->except('logout');
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

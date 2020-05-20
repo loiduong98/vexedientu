@@ -43,6 +43,7 @@ class UsersController extends Controller
                 'password.max'=>'password quá dài'
             ]);
         $users = new User;
+        $users->name = $request->name;
         $users->email = $request->email;
         $users->password = bcrypt($request->password);
         $users->level = $request->level;

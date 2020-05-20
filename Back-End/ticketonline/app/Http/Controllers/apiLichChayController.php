@@ -16,26 +16,14 @@ class apiLichChayController extends Controller
     {
         return lichchay::all();
     }
-
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        return lichchay::create($request->all());
     }
 
     /**
@@ -44,20 +32,9 @@ class apiLichChayController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(lichchay $lichchay)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $lichchay;
     }
 
     /**
@@ -67,9 +44,10 @@ class apiLichChayController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, lichchay $lichchay)
     {
-        //
+        $lichchay->update($request->all());
+        return $lichchay;
     }
 
     /**
@@ -78,8 +56,9 @@ class apiLichChayController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(lichchay $lichchay)
     {
-        //
+        $lichchay->delete();
+        return $lichchay;
     }
 }

@@ -92,7 +92,10 @@ class RouteServiceProvider extends ServiceProvider
                 Route::apiResource('ve', 'apiVeController');      
 
                 Route::apiResource('lichchay', 'apiLichChayController');
-                //thang cho lan map      
+
+                Route::apiResource('checkout', 'DatVeController');  
+
+                Route::apiResource('login', 'apiLoginController');
         });
     }
 }
