@@ -12,6 +12,15 @@ class apiLichChayController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        return lichchay::all();
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         return lichchay::create($request->all());
