@@ -14,16 +14,27 @@ export default class ThanhToan extends Component {
       this.step1 = JSON.parse(sessionStorage.getItem("chonTuyen"));
       this.step2 = JSON.parse(sessionStorage.getItem("chonghe"));
       this.step3 = JSON.parse(sessionStorage.getItem("thongtinkhachhang"));
-      this.setState({
-        tuyen: this.step1.inputTuyen,
-        ngaydi: this.step1.ngayDi,
-        ghe: this.step2.seatReserved,
-        tongtien: this.step2.tongtien,
-        hoten: this.step3.inputHoTen,
-        sdt: this.step3.inputPhone,
-        email: this.step3.inputEmail,
-        diachi: this.step3.inputAddress,
-      });
+      this.setState(
+        {
+          tuyen: this.step1.inputTuyen,
+          ngaydi: this.step1.ngayDi,
+          // ép mảng ghế về chuỗi cho phù hợp với cơ sở dữ liệu
+          ghedat: this.step2.seatReserved.toString(),
+          // các ghế đã đặt ở dạng mảng để có thể in ra giao diện
+          ghe: this.step2.seatReserved,
+          tongtien: this.step2.tongtien,
+          hoten: this.step3.inputHoTen,
+          sdt: this.step3.inputPhone,
+          email: this.step3.inputEmail,
+          diachi: this.step3.inputAddress,
+          idxe: this.step2.idXe,
+          idlichchay: this.step2.idLichChay,
+          idtuyen: this.step1.idTuyen,
+        },
+        () => {
+          return console.log(this.state);
+        }
+      );
     } else {
       alert("Vui lòng quay lại trang chủ");
     }
