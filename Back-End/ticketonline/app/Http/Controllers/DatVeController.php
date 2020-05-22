@@ -64,6 +64,8 @@ class DatVeController extends Controller
                 
                 'HoTen.required'=>'Bạn chưa nhập tên nhân viên',
             ]);
+
+        // dd($request->all());
         $lichchay = lichchay::all();
         $khachhang = khachhang::all();
         $tuyen     = tuyen::all();
@@ -79,8 +81,10 @@ class DatVeController extends Controller
         $SDT = $request->SDT;
         $Email = $request->Email;
         $DiaChi = $request->DiaChi;
-        $TenHTTT = $request->TenHTTT;       
-dd($TenGhe);
+        $TenHTTT = $request->TenHTTT;  
+        $test_ghe = $request->test_ghe;
+        // echo "<pre>",print_r($test_ghe,1),"</pre>";     
+        // dd($TenGhe);
         foreach($tuyen as $keytuyen){
             $tuyen_di = $keytuyen->idBenDi;
             $tuyen_den = $keytuyen->idBenDen;
