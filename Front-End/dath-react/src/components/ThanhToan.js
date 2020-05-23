@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
+import Axios from "axios";
+import retesData from "../data/ratesData.json";
 
 export default class ThanhToan extends Component {
   constructor(props) {
@@ -7,26 +9,24 @@ export default class ThanhToan extends Component {
     this.state = {};
   }
 
-  // // axios post example
-  // var postData = {
-  //   email: "test@test.com",
-  //   password: "password"
-  // };
+  postDatVe() {
+    // dữ liệu đẩy xuống backend xử lý
+    var postData = this.state;
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
 
-  // let axiosConfig = {
-  //   headers: {
-  //       'Content-Type': 'application/json;charset=UTF-8',
-  //       "Access-Control-Allow-Origin": "*",
-  //   }
-  // };
-
-  // axios.post('http://<host>:<port>/<path>', postData, axiosConfig)
-  // .then((res) => {
-  //   console.log("RESPONSE RECEIVED: ", res);
-  // })
-  // .catch((err) => {
-  //   console.log("AXIOS ERROR: ", err);
-  // })
+    Axios.post("/api/dangky", postData, axiosConfig)
+      .then((res) => {
+        console.log("RESPONSE RECEIVED: ", res);
+      })
+      .catch((err) => {
+        console.log("AXIOS ERROR: ", err);
+      });
+  }
 
   step1; // dữ liệu bước chọn tuyến
   step2; // dữ liệu bước chọn ghế
@@ -37,6 +37,9 @@ export default class ThanhToan extends Component {
       this.step1 = JSON.parse(sessionStorage.getItem("chonTuyen"));
       this.step2 = JSON.parse(sessionStorage.getItem("chonghe"));
       this.step3 = JSON.parse(sessionStorage.getItem("thongtinkhachhang"));
+      // chuyển tiền Việt nam qua tiền đô la để thanh toán paypal
+      //console.log(this.doiTien(this.step2.tongtien, "USD", false));
+      //console.log(typeof this.doiTien(this.step2.tongtien, "USD", false));
       this.setState(
         {
           tuyen: this.step1.inputTuyen,
@@ -53,6 +56,7 @@ export default class ThanhToan extends Component {
           idxe: this.step2.idXe,
           idlichchay: this.step2.idLichChay,
           idtuyen: this.step1.idTuyen,
+          tongtienUSD: this.doiTien(this.step2.tongtien, "USD", false),
         },
         () => {
           return console.log(this.state);
@@ -61,6 +65,24 @@ export default class ThanhToan extends Component {
     } else {
       alert("Vui lòng quay lại trang chủ");
     }
+  }
+
+  // ham chuyen đổi tỷ giá ngoại tệ
+  doiTien(money, code, encode = true) {
+    const input = parseFloat(money);
+    if (Number.isNaN(input)) {
+      return "";
+    }
+    const currency = retesData.rates[0].value.find(
+      (item) => item.code === code
+    );
+    if (!currency) {
+      return "";
+    }
+    const sell = parseFloat(currency.sell.replace(",", ""));
+    const output = encode ? input * sell : input / sell;
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString();
   }
 
   render() {
@@ -77,6 +99,8 @@ export default class ThanhToan extends Component {
       " ",
       ngaydi.substr(0, 4)
     );
+    var pay = this.state.tongtienUSD.substr(0, 5);
+
     return (
       <section className="payment" style={{ marginTop: "100px" }}>
         <div className="md-stepper-horizontal">
@@ -126,12 +150,8 @@ export default class ThanhToan extends Component {
                   <h4 className="card-title">Chọn phương thức thanh toán</h4>
                 </div>
                 <div className="card-body">
-                  Đang phát triển phương thức thanh toán Đang phát triển phương
-                  thức thanh toán Đang phát triển phương thức thanh toán Đang
-                  phát triển phương thức thanh toán Đang phát triển phương thức
-                  thanh toán Đang phát triển phương thức thanh toán
                   <PayPalButton
-                    amount="0.01"
+                    amount={pay}
                     onSuccess={(details, data) => {
                       alert(
                         "Transaction completed by " +
@@ -216,13 +236,13 @@ export default class ThanhToan extends Component {
                           </table>
                         </div>
                       </div>
-                      <div className="form-group">
+                      {/* <div className="form-group">
                         <div className="col-lg-12 col-md-12 col-sm-2 col-xs-12 col-ms-12">
                           <button className="btn btn-primary btn-block">
                             Thanh Toán
                           </button>
                         </div>
-                      </div>
+                      </div> */}
                     </form>
                   </div>
                 </div>
@@ -230,6 +250,8 @@ export default class ThanhToan extends Component {
             </div>
           </div>
         </div>
+        <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+        <script>paypal.Buttons().render("body");</script>
       </section>
     );
   }
