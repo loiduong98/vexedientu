@@ -1,10 +1,33 @@
 import React, { Component } from "react";
+import { PayPalButton } from "react-paypal-button-v2";
 
 export default class ThanhToan extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+  // // axios post example
+  // var postData = {
+  //   email: "test@test.com",
+  //   password: "password"
+  // };
+
+  // let axiosConfig = {
+  //   headers: {
+  //       'Content-Type': 'application/json;charset=UTF-8',
+  //       "Access-Control-Allow-Origin": "*",
+  //   }
+  // };
+
+  // axios.post('http://<host>:<port>/<path>', postData, axiosConfig)
+  // .then((res) => {
+  //   console.log("RESPONSE RECEIVED: ", res);
+  // })
+  // .catch((err) => {
+  //   console.log("AXIOS ERROR: ", err);
+  // })
+
   step1; // dữ liệu bước chọn tuyến
   step2; // dữ liệu bước chọn ghế
   step3; // dữ liệu bước điền thông tin khách hàng
@@ -14,16 +37,27 @@ export default class ThanhToan extends Component {
       this.step1 = JSON.parse(sessionStorage.getItem("chonTuyen"));
       this.step2 = JSON.parse(sessionStorage.getItem("chonghe"));
       this.step3 = JSON.parse(sessionStorage.getItem("thongtinkhachhang"));
-      this.setState({
-        tuyen: this.step1.inputTuyen,
-        ngaydi: this.step1.ngayDi,
-        ghe: this.step2.seatReserved,
-        tongtien: this.step2.tongtien,
-        hoten: this.step3.inputHoTen,
-        sdt: this.step3.inputPhone,
-        email: this.step3.inputEmail,
-        diachi: this.step3.inputAddress,
-      });
+      this.setState(
+        {
+          tuyen: this.step1.inputTuyen,
+          ngaydi: this.step1.ngayDi,
+          // ép mảng ghế về chuỗi cho phù hợp với cơ sở dữ liệu
+          ghedat: this.step2.seatReserved.toString(),
+          // các ghế đã đặt ở dạng mảng để có thể in ra giao diện
+          ghe: this.step2.seatReserved,
+          tongtien: this.step2.tongtien,
+          hoten: this.step3.inputHoTen,
+          sdt: this.step3.inputPhone,
+          email: this.step3.inputEmail,
+          diachi: this.step3.inputAddress,
+          idxe: this.step2.idXe,
+          idlichchay: this.step2.idLichChay,
+          idtuyen: this.step1.idTuyen,
+        },
+        () => {
+          return console.log(this.state);
+        }
+      );
     } else {
       alert("Vui lòng quay lại trang chủ");
     }
@@ -92,7 +126,25 @@ export default class ThanhToan extends Component {
                   <h4 className="card-title">Chọn phương thức thanh toán</h4>
                 </div>
                 <div className="card-body">
-                  Đang phát triển phương thức thanh toán
+                  Đang phát triển phương thức thanh toán Đang phát triển phương
+                  thức thanh toán Đang phát triển phương thức thanh toán Đang
+                  phát triển phương thức thanh toán Đang phát triển phương thức
+                  thanh toán Đang phát triển phương thức thanh toán
+                  <PayPalButton
+                    amount="0.01"
+                    onSuccess={(details, data) => {
+                      alert(
+                        "Transaction completed by " +
+                          details.payer.name.given_name
+                      );
+                    }}
+                    shippingPreference="NO_SHIPPING"
+                    options={{
+                      clientId:
+                        "AWy4VjiZvKYejBmofoCTe_u7GKfgD5h8QJfyXCUVb-EnTogDnLBb-pPLEV8wH-LLGHoWaDyTIYqHB0WS",
+                      currency: "USD",
+                    }}
+                  />
                 </div>
               </div>
             </div>
