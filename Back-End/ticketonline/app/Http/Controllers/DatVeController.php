@@ -20,7 +20,6 @@ use QrCode;
 
 class DatVeController extends Controller
 {
-    
     public function getTT()
     {
         $tuyen = tuyen::all();
@@ -45,7 +44,6 @@ class DatVeController extends Controller
         
     }
 
-   
     public function postTT(Request $request)
     {     
         $this->validate($request,
@@ -66,6 +64,8 @@ class DatVeController extends Controller
                 
                 'HoTen.required'=>'Bạn chưa nhập tên nhân viên',
             ]);
+
+        // dd($request->all());
         $lichchay = lichchay::all();
         $khachhang = khachhang::all();
         $tuyen     = tuyen::all();
@@ -81,10 +81,10 @@ class DatVeController extends Controller
         $SDT = $request->SDT;
         $Email = $request->Email;
         $DiaChi = $request->DiaChi;
-        $TenHTTT = $request->TenHTTT; 
-        
-        
-
+        $TenHTTT = $request->TenHTTT;  
+        $test_ghe = $request->test_ghe;
+        // echo "<pre>",print_r($test_ghe,1),"</pre>";     
+        // dd($TenGhe);
         foreach($tuyen as $keytuyen){
             $tuyen_di = $keytuyen->idBenDi;
             $tuyen_den = $keytuyen->idBenDen;
@@ -130,7 +130,6 @@ class DatVeController extends Controller
             }
         }
 
-        
         $khachhang->save();
         $id_KH = $khachhang->id;
         $TongTien = $giaLC * $Soluong;
@@ -154,15 +153,6 @@ class DatVeController extends Controller
         $ve->idXe = $id_Xe;
         $ve->save();
         $id_ve = $ve->id;
-        
-        // foreach($chitietve as $keyCTV){
-        //     $CTV_id = $keyCTV->id;
-        //     $CTV_ve = $keyCTV->idVe;
-        //     $CTV_mbm = $keyCTV->MaBiMat;
-        //     if($CTV_id = $id_ve){
-        //         $CTV_mbm == $CTV_qrcode;
-                
-        // }
 
         $ct_hoadon = new ct_hoadon;
         $ct_hoadon->id_hoadon = $id_HD;      
@@ -170,7 +160,6 @@ class DatVeController extends Controller
         $ct_hoadon->SoLuong = $Soluong;
         $ct_hoadon->save();
       
-
         for ($i=0; $i < $Soluong; $i++) { 
             $chitietve = new chitietve;
             $chitietve->idVe = $id_ve;
@@ -183,7 +172,7 @@ class DatVeController extends Controller
         
         Mail::send(['html'=>'page.layout.mailfb'],['name','Lợi Dương'],function($message){
             $message->to('loiduong0511@yahoo.com')->subject("Chúc mừng bạn đã đặt vé thành công");
-            $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD');
+            $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD.');
         });
             // $HoTen = $request->all();
             // $Email = $request->all();
@@ -193,7 +182,8 @@ class DatVeController extends Controller
             // Session::flash('flash_message', 'Send message successfully!');
 
         // QrCode::generate($CTV_mbm);
-        return Redirect('page/checkout')->with('thongbao','Đặt vé thành công');
+        //check ok
+        return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
         
         
     }

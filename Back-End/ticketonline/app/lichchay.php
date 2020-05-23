@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class lichchay extends Model
 {
+    protected $fillable = [
+        'id',
+        'Gia',
+        'idTuyen',
+        'idXe',
+        'TenLC',
+    ];
     protected $table = "lichchay";
     public $timestamps = false;
 

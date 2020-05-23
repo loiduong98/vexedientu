@@ -8,6 +8,10 @@ use App\ben;
 
 class TuyenController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function getDanhSach()
     {
     	$tuyen = tuyen::orderBy('id','DESC')->get();

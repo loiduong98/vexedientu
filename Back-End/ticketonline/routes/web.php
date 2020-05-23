@@ -19,9 +19,6 @@ Route::get('admin/index','AdminController@getLayout');
 Route::get('page/mail','PageController@getMail');
 Route::post('page/mail','PageController@postMail');
 
-Route::get('admin/login','UsersController@getLogin');
-Route::post('admin/login','UsersController@postLogin');
-Route::get('admin/logout','UsersController@getLogout');
 
 Route::group(['prefix'=>'admin'], function(){
 	Route::group(['prefix'=>'tuyen'], function(){
@@ -247,20 +244,29 @@ Route::group(['prefix'=>'page'], function(){
 
 Auth::routes();
 
-Route::group(['prefix'=>'admin'], function(){
-	Route::group(['prefix'=>'login'], function(){
-		Route::get('/home', 'HomeController@index')->name('home');
-		Route::post('/home', 'HomeController@index')->name('home');
-	});	
+// Route::group(['prefix'=>'admin'], function(){
+// 	Route::group(['prefix'=>'login'], function(){
+// 		Route::get('/home', 'HomeController@index')->name('home');
+// 		Route::post('/home', 'HomeController@index')->name('home');
+// 	});	
+// });
+
+
+Route::group(['prefix'=>'trade'], function(){
+		Route::get('index','TradeTicketController@getLayout');
+		Route::get('index','TradeTicketController@getDanhSachTuyen');
 });
 
-Route::get('qr-code', function () {
-	
-    return QrCode::size(500)->generate("16546848645313486");
-});
-// Route::get('update', function () {
-// 	//DB::table('hoadon')->increment('id',176);
-// 	//DB::table('ve')->increment('id',179);
-// 	DB::table('ct_hoadon')->decrement('id_hoadon',1);
-// 	echo "Đã update";
-// });
+// Đăng ký thành viên
+Route::get('dangky', 'Auth\RegisterController@getRegister');
+Route::post('dangky', 'Auth\RegisterController@postRegister');
+ 
+// Đăng nhập và xử lý đăng nhập
+Route::get('login', [ 'as' => 'login', 'uses' => 'Auth\LoginController@getLogin']);
+Route::post('login', [ 'as' => 'login', 'uses' => 'Auth\LoginController@postLogin']);
+ 
+// Đăng xuất
+Route::get('logout', [ 'as' => 'logout', 'uses' => 'Auth\LogoutController@getLogout']);
+//Haha
+
+

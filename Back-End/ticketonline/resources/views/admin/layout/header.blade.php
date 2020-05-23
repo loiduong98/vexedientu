@@ -17,15 +17,19 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        @if(Auth::check())
-                        <li><i class="fa fa-user fa-fw"></i>{{Auth::users()->username}}</a>
-                        </li>
-                        <li><a href="admin/users/sua/{{Auth::users()->id}}"><i class="fa fa-gear fa-fw"></i> Cài đặt</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="admin/logout"><i class="fa fa-sign-out fa-fw"></i> Thoát</a>
-                        </li>
-                        @endif
+                    @if (Auth::check())
+                    <li>
+                    Bạn đang đăng nhập với quyền 
+                    @if( Auth::User()->level == 1)
+                        {{ "SuperAdmin" }}
+                    @elseif( Auth::User()->level == 2)
+                        {{ "Admin" }}
+                    @elseif( Auth::User()->level == 3)
+                        {{ "Thành viên" }}
+                    @endif
+                    </li>
+                    <div class="pull-right" style="margin-top: 3px;"><a class="btn btn-primary" href="{{ url('/logout') }}">Đăng xuất</a></div>
+                    @endif
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
