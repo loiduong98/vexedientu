@@ -2,21 +2,11 @@ import React, { Component } from "react";
 import { Formik, Form, Field } from 'formik'
 import Axios from "axios";
 import * as yup from "yup";
+import {connect} from 'react-redux'
+import { login } from "../redux/action/user";
+import {FETCH_CREDENTIALS} from './type'
 
 class DangNhap extends Component {
-  _handleSubmit = values => {
-    Axios({
-      method: 'POST',
-      url: 'http://127.0.0.1:8000/api/login',
-      data: values
-    }).then(res => {
-      alert('Chúc mừng bạn đã đăng ký thành công <3')
-
-    }).catch(err => {
-      console.log(err);
-    })
-    console.log(values)
-  }
   render() {
     return (
       <div className="login-page">
@@ -39,6 +29,8 @@ class DangNhap extends Component {
                     }}
                     onSubmit={(values) => {
                       console.log(values);
+        
+                      this.props.dispatch(login(values))
                       
                     }}
                     render={({ handleChange }) => (<Form className="form">
@@ -95,4 +87,4 @@ class DangNhap extends Component {
   }
 }
 
-export default DangNhap;
+export default connect()(DangNhap);
