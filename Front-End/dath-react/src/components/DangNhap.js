@@ -4,7 +4,7 @@ import Axios from "axios";
 import * as yup from "yup";
 import {connect} from 'react-redux'
 import { login } from "../redux/action/user";
-import {FETCH_CREDENTIALS} from './type'
+import {FETCH_CREDENTIALS} from '../redux/action/type.js'
 
 class DangNhap extends Component {
   render() {
