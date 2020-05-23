@@ -6,6 +6,7 @@ import DangNhap from "../components/DangNhap";
 import LienHe from "../components/LienHe";
 import ChonGhe from "../components/ChonGhe";
 import ThongTinDatVe from "../components/ThongTinDatVe";
+import ThanhToan from "../components/ThanhToan";
 
 class DieuHuongURL extends Component {
   render() {
@@ -17,6 +18,7 @@ class DieuHuongURL extends Component {
         <Route path="/lien-he" component={LienHe} />
         <Route path="/chon-ghe" component={ChonGhe} />
         <Route path="/thong-tin-dat-ve" component={ThongTinDatVe} />
+        <Route path="/thanh-toan" component={ThanhToan} />
       </Switch>
     );
   }
