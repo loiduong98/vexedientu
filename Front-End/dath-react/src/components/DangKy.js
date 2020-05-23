@@ -1,33 +1,50 @@
 import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as yup from "yup";
 import Axios from "axios";
+import * as yup from "yup";
 
-const signupUserSchema = yup.object().shape({
-  taiKhoan: yup.string().required("Field is required!"),
-  matKhau: yup.string().required("Field is required!"),
-  hoTen: yup.string().required("Field is required!"),
-  email: yup.string().required("Field is required!").email("Email is invalid!"),
-  soDT: yup.string().required("Field is required!").matches(/^[0-9]+$/)
-})
+const UserSchema = yup.object().shape({
+  name: yup.string().required("*Bạn chưa nhập họ tên"),
+  email: yup
+    .string()
+    .required("*Bạn chưa nhập email")
+    .email("Không đúng định dạng email"),
+  password: yup.string().required("*Bạn chưa nhập password"),
+});
 
 class DangKy extends Component {
-
   _handleSubmit = (values) => {
-   Axios ({
-     method: "POST",
-     url: "",
-     data: values
-   }).then(res => {
-     console.log(res);
-     
-   }).catch(err => {
-     console.log(err);
-     
-   })
-    
-  }
+    // Axios({
+    //   method: "POST",
+    //   url: "http://localhost:8000/api/users",
+    //   data: values,
+    // })
+    //   .then((res) => {
+    //     alert("Chúc mừng bạn đã đăng ký thành công <3");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // console.log(values);
 
+    var postData = values;
+
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    Axios.post("/api/users", postData, axiosConfig)
+      .then((res) => {
+        alert("Chúc mừng bạn đã đăng ký thành công <3");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(values);
+  };
   render() {
     return (
       <div className="signup-page">
@@ -73,70 +90,39 @@ class DangKy extends Component {
                             </p>
                           </div>
                         </div>
-                        <div className="info info-horizontal">
-                          <div className="icon icon-info">
-                            <i className="material-icons">group</i>
-                          </div>
-                          <div className="description">
-                            <h4 className="info-title">Đóng góp ý kiến</h4>
-                            <p className="description">
-                              Chúng tôi luôn lắng nghe ý kiến của khách hàng để
-                              cải thiện chất lượng và dịch vụ tốt hơn.
-                            </p>
-                          </div>
-                        </div>
                       </div>
-
                       <div className="col-md-5 mr-auto">
-
                         <Formik
-                          initialValues = {{
-                            taiKhoan:'',
-                            matKhau:'',
-                            hoTen:'',
-                            email:'',
-                            soDT:''
+                          initialValues={{
+                            name: "",
+                            email: "",
+                            password: "",
+                            level: "3",
+                            urlHinh: "",
                           }}
-                          validationSchema={signupUserSchema}
-                          onSubmit = {this._handleSubmit}
+                          validationSchema={UserSchema}
+                          onSubmit={this._handleSubmit}
                           render={(formikProps) => (
-                            <Form className="form" method action>
+                            <Form className="form">
                               <div className="form-group">
                                 <div className="input-group">
                                   <span className="input-group-addon">
                                     <i className="material-icons">face</i>
                                   </span>
                                   <Field
-                                    name="hoTen"
-                                    onChange={formikProps.handleChange}
                                     type="text"
+                                    name="name"
                                     className="form-control"
-                                    placeholder="Họ và Tên"
-                                  />
-                                 <ErrorMessage name="hoTen">
-                                   {
-                                     msg => <div className="alert alert-danger">{msg}</div>
-                                   }
-                                 </ErrorMessage>
-                                </div>
-                              </div>
-                              <div className="form-group">
-                                <div className="input-group">
-                                  <span className="input-group-addon">
-                                    <i className="material-icons">face</i>
-                                  </span>
-                                  <Field
-                                    name="taiKhoan"
                                     onChange={formikProps.handleChange}
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Tài Khoản"
+                                    placeholder="Họ và tên"
                                   />
-                                   <ErrorMessage name="taiKhoan">
-                                   {
-                                     msg => <div className="alert alert-danger">{msg}</div>
-                                   }
-                                 </ErrorMessage>
+                                  <ErrorMessage name="name">
+                                    {(msg) => (
+                                      <div className="alert alert-danger">
+                                        {msg}
+                                      </div>
+                                    )}
+                                  </ErrorMessage>
                                 </div>
                               </div>
                               <div className="form-group">
@@ -145,55 +131,56 @@ class DangKy extends Component {
                                     <i className="material-icons">email</i>
                                   </span>
                                   <Field
-                                    name="email"
-                                    onChange={formikProps.handleChange}
                                     type="text"
+                                    name="email"
                                     className="form-control"
+                                    onChange={formikProps.handleChange}
                                     placeholder="Email..."
                                   />
                                   <ErrorMessage name="email">
-                                   {
-                                     msg => <div className="alert alert-danger">{msg}</div>
-                                   }
-                                 </ErrorMessage>
+                                    {(msg) => (
+                                      <div className="alert alert-danger">
+                                        {msg}
+                                      </div>
+                                    )}
+                                  </ErrorMessage>
                                 </div>
                               </div>
                               <div className="form-group">
                                 <div className="input-group">
                                   <span className="input-group-addon">
-                                    <i className="material-icons">phone</i>
+                                    <i className="material-icons">
+                                      lock_outline
+                                    </i>
                                   </span>
                                   <Field
-                                    name="soDT"
-                                    onChange={formikProps.handleChange}
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Số điện thoại..."
-                                  />
-                                  <ErrorMessage name="soDT">
-                                   {
-                                     msg => <div className="alert alert-danger">{msg}</div>
-                                   }
-                                 </ErrorMessage>
-                                </div>
-                              </div>
-                              <div className="form-group">
-                                <div className="input-group">
-                                  <span className="input-group-addon">
-                                    <i className="material-icons">lock_outline</i>
-                                  </span>
-                                  <Field
-                                    name="matKhau"
-                                    onChange={formikProps.handleChange}
                                     type="password"
-                                    placeholder="Mật khẩu..."
+                                    name="password"
                                     className="form-control"
+                                    onChange={formikProps.handleChange}
+                                    placeholder="Password..."
                                   />
-                                    <ErrorMessage name="matKhau">
-                                   {
-                                     msg => <div className="alert alert-danger">{msg}</div>
-                                   }
-                                 </ErrorMessage>
+                                  <ErrorMessage name="password">
+                                    {(msg) => (
+                                      <div className="alert alert-danger">
+                                        {msg}
+                                      </div>
+                                    )}
+                                  </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">image</i>
+                                  </span>
+                                  <input
+                                    type="text" //Không set type="file" được
+                                    name="urlHinh"
+                                    className="form-control"
+                                    onChange={formikProps.handleChange}
+                                    placeholder="Url hình..."
+                                  />
                                 </div>
                               </div>
                               <div className="form-check">
@@ -207,20 +194,18 @@ class DangKy extends Component {
                                   <span className="form-check-sign">
                                     <span className="check" />
                                   </span>
-                             I agree to the
-                             <a href="#something">terms and conditions</a>.
-                           </label>
+                                  I agree to the
+                                  <a href="#something">terms and conditions</a>.
+                                </label>
                               </div>
                               <div className="text-center">
-                                <button
-                                  href="#pablo"
-                                  className="btn btn-primary btn-round"
-                                >
-                                  Get Started
-                           </button>
+                                <button className="btn btn-danger">
+                                  Đăng ký
+                                </button>
                               </div>
                             </Form>
-                          )} />
+                          )}
+                        />
                       </div>
                     </div>
                   </div>
