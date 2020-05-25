@@ -1,36 +1,9 @@
-<<<<<<< HEAD
-import React, { Component } from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-=======
 import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
 import Axios from "axios";
 import * as yup from "yup";
 
 const UserSchema = yup.object().shape({
-<<<<<<< HEAD
-  name: yup.string().required('*Bạn chưa nhập họ tên'),
-  email: yup.string().required('*Bạn chưa nhập email').email('Không đúng định dạng email'),
-  password: yup.string().required('*Bạn chưa nhập password'),
-})
-
-class DangKy extends Component {
-
-  _handleSubmit = values => {
-    Axios({
-      method: 'POST',
-      url: 'http://127.0.0.1:8000/api/users',
-      data: values
-    }).then(res => {
-      alert('Chúc mừng bạn đã đăng ký thành công <3')
-
-    }).catch(err => {
-      console.log(err);
-    })
-    console.log(values)
-  }
-=======
   name: yup.string().required("*Bạn chưa nhập họ tên"),
   email: yup
     .string()
@@ -72,7 +45,6 @@ class DangKy extends Component {
       });
     console.log(values);
   };
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
   render() {
     return (
       <div className="signup-page">
@@ -103,34 +75,15 @@ class DangKy extends Component {
                           <div className="description">
                             <h4 className="info-title">Hệ thống trao đổi vé</h4>
                             <p className="description">
-<<<<<<< HEAD
-                              Bạn mua vé nhầm ngày? Bạn có công việc đột xuất nên bị lỡ vé xe đã đặt? Hãy để chúng tôi giúp bạn bán lại.
-                      </p>
-=======
                               Bạn mua vé nhầm ngày? Bạn có công việc đột xuất
                               nên bị lỡ vé xe đã đặt? Hãy để chúng tôi giúp bạn
                               bán lại.
                             </p>
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
                           </div>
                         </div>
                       </div>
                       <div className="col-md-5 mr-auto">
                         <Formik
-<<<<<<< HEAD
-                          initialValues={
-                            {
-                              name: '',
-                              email: '',
-                              password: '',
-                              level: '3',
-                              urlHinh: '',
-                            }
-                          }
-                          validationSchema={UserSchema}
-                          onSubmit={this._handleSubmit}
-                          render={formikProps => (
-=======
                           initialValues={{
                             name: "",
                             email: "",
@@ -141,7 +94,6 @@ class DangKy extends Component {
                           validationSchema={UserSchema}
                           onSubmit={this._handleSubmit}
                           render={(formikProps) => (
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
                             <Form className="form">
                               <div className="form-group">
                                 <div className="input-group">
@@ -153,11 +105,6 @@ class DangKy extends Component {
                                     name="name"
                                     className="form-control"
                                     onChange={formikProps.handleChange}
-<<<<<<< HEAD
-                                    placeholder="Họ và tên" />
-                                  <ErrorMessage name="name">
-                                    {msg => <div className="alert alert-danger">{msg}</div>}
-=======
                                     placeholder="Họ và tên"
                                   />
                                   <ErrorMessage name="name">
@@ -166,7 +113,6 @@ class DangKy extends Component {
                                         {msg}
                                       </div>
                                     )}
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
                                   </ErrorMessage>
                                 </div>
                               </div>
@@ -180,11 +126,6 @@ class DangKy extends Component {
                                     name="email"
                                     className="form-control"
                                     onChange={formikProps.handleChange}
-<<<<<<< HEAD
-                                    placeholder="Email..." />
-                                  <ErrorMessage name="email">
-                                    {msg => <div className="alert alert-danger">{msg}</div>}
-=======
                                     placeholder="Email..."
                                   />
                                   <ErrorMessage name="email">
@@ -193,31 +134,21 @@ class DangKy extends Component {
                                         {msg}
                                       </div>
                                     )}
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
                                   </ErrorMessage>
                                 </div>
                               </div>
                               <div className="form-group">
                                 <div className="input-group">
                                   <span className="input-group-addon">
-<<<<<<< HEAD
-                                    <i className="material-icons">lock_outline</i>
-=======
                                     <i className="material-icons">
                                       lock_outline
                                     </i>
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
                                   </span>
                                   <Field
                                     type="password"
                                     name="password"
                                     className="form-control"
                                     onChange={formikProps.handleChange}
-<<<<<<< HEAD
-                                    placeholder="Password..." />
-                                  <ErrorMessage name="password">
-                                    {msg => <div className="alert alert-danger">{msg}</div>}
-=======
                                     placeholder="Password..."
                                   />
                                   <ErrorMessage name="password">
@@ -226,7 +157,6 @@ class DangKy extends Component {
                                         {msg}
                                       </div>
                                     )}
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
                                   </ErrorMessage>
                                 </div>
                               </div>
@@ -240,12 +170,8 @@ class DangKy extends Component {
                                     name="urlHinh"
                                     className="form-control"
                                     onChange={formikProps.handleChange}
-<<<<<<< HEAD
-                                    placeholder="Url hình..." />
-=======
                                     placeholder="Url hình..."
                                   />
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
                                 </div>
                               </div>
                               <div className="form-check">
@@ -254,14 +180,6 @@ class DangKy extends Component {
                                   <span className="form-check-sign">
                                     <span className="check" />
                                   </span>
-<<<<<<< HEAD
-                        I agree to the
-                        <a href="#something">terms and conditions</a>.
-                      </label>
-                              </div>
-                              <div className="text-center">
-                                <button className="btn btn-danger">Đăng ký</button>
-=======
                                   I agree to the
                                   <a href="#something">terms and conditions</a>.
                                 </label>
@@ -270,7 +188,6 @@ class DangKy extends Component {
                                 <button className="btn btn-danger">
                                   Đăng ký
                                 </button>
->>>>>>> 21be2ece3c8b88433452ec9188376747d5f1bbb2
                               </div>
                             </Form>
                           )}
