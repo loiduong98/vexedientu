@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use App\tuyen;
 use App\lichchay;
@@ -15,6 +17,7 @@ use App\sodoghe;
 use App\ve;
 use App\hoadon;
 use App\ct_hoadon;
+use App\xe;
 use Mail;
 use QrCode;
 
@@ -45,7 +48,7 @@ class DatVeController extends Controller
     }
 
     public function postTT(Request $request)
-    {     
+    {   
         $this->validate($request,
             [
                 'NgayKhoiHanh'=>'required',
@@ -133,6 +136,7 @@ class DatVeController extends Controller
         $khachhang->save();
         $id_KH = $khachhang->id;
         $TongTien = $giaLC * $Soluong;
+
         $hoadon = new hoadon;
         $hoadon->NgayDatVe = $NgayDatVe;
         $hoadon->TongTien = $TongTien;
@@ -186,6 +190,132 @@ class DatVeController extends Controller
         return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
         
         
+    }
+
+    public function bookticket(Request $request)
+    {
+        echo "Post TT <pre>",print_r($request->all(),1),"</pre>";
+
+        $lichchay       = lichchay::all();
+        $khachhang      = khachhang::all();
+        $tuyen          = tuyen::all();
+        $xe             = xe::all();
+        $NgayDatVe      = now();
+
+        $DiaChi         = $request->diachi;       
+        $Email          = $request->email;
+        $TenGhe         = $request->ghedat;
+        $HoTen          = $request->hoten;
+        $idLC           = $request->idlichchay;
+        $id_tuyen       = $request->idtuyen;
+        $id_xe          = $request->idxe;
+        $ngaydatve      = $request->ngaydi;
+        $SDT_kh         = $request->sdt;
+        $tongtien       = $request->tongtien;
+        $tongtienUSD    = $request->tongtienUSD;
+        $tuyen_xe       = $request->tuyen;
+
+        foreach($lichchay as $keyLC){
+            $LC_id = $keyLC->id;
+            $LC_tuyen = $keyLC->idTuyen;
+            $LC_gia = $keyLC->Gia;
+            $LC_xe = $keyLC->idXe;
+            
+            if($id_tuyen == $LC_tuyen){
+                $id_lc      = $LC_id;
+                $gia_lc     = $LC_gia;
+                $id_xelc    = $LC_xe;
+                $id_tuyenlc = $LC_tuyen; 
+            }
+        }
+
+        // check khach hang
+        foreach($khachhang as $keyKH){
+            $SDT_KH = $keyKH->SDT;
+            $id_KH  = $keyKH->id;
+
+            if($SDT_kh !== $SDT_KH)
+            {
+                $khachhang = new khachhang;
+                $khachhang->HoTen = $HoTen;
+                $khachhang->SDT = $SDT_kh;
+                $khachhang->Email = $Email;
+                $khachhang->DiaChi = $DiaChi;
+                $khachhang->save();
+            }else{
+                $id_KH = $id_KH;
+            }
+        }
+
+        // Check & Update Ghe
+        foreach ($xe as $vl_xe) {
+            $id_vl_xe       = $vl_xe->id;
+            $xe_ghe         = explode(',', $vl_xe->GheDaDat);
+            $TenGhe_array   = explode(',',$TenGhe);
+            
+            if($id_xelc == $id_vl_xe){
+                foreach ($TenGhe_array as $vl_ghe) {
+                    if(in_array($vl_ghe, $xe_ghe)){
+                        echo json_encode(['status'=>'fasle','message'=>'Chố đã được đặt']);die();
+                    }else{
+                        $xe_ghe         = array_merge(array($vl_ghe),$xe_ghe);
+                        $update_ghe     = implode(',', $xe_ghe);
+                        Xe::where('id', $id_xelc)->update(array('GheDaDat' => $update_ghe));
+                    }
+                }
+            }
+        }
+        
+        $soluong = count($TenGhe_array);
+
+        $hoadon = new hoadon;
+        $hoadon->NgayDatVe = $NgayDatVe;    
+        $hoadon->TongTien = $tongtien;
+        $hoadon->GhiChu = 'test';
+        $hoadon->idKH = $id_KH;
+        $hoadon->idHTTT = 1;
+        $hoadon->save();
+
+        if(($hoadon->save()) !== true){
+          echo json_encode(['status'=>'fasle','message'=>'Khong the tao hoa don']);die();  
+        } else{
+            echo json_encode(['status'=>'true','message'=>'Tao. HD okayyy']);
+        }
+        
+        $id_HD = $hoadon->id;
+
+        $ve = new ve;
+        $ve->NgayDatVe = $NgayDatVe;
+        $ve->idKH = $id_KH;
+        $ve->idLC = $idLC;
+        $ve->idHD = $id_HD;
+        $ve->NgayKhoiHanh = $ngaydatve;
+        $ve->GioKhoiHanh = $NgayDatVe;
+        $ve->TrangThai = '0';
+        $ve->idXe = $id_xe;
+        $ve->save();
+
+        if(($ve->save()) !== true){
+          echo json_encode(['status'=>'fasle','message'=>'Khong the tao hoa don']);die();  
+        } else{
+            echo json_encode(['status'=>'true','message'=>'Tao. Ve okayyy']);
+        }
+        
+        $id_ve = $ve->id;
+// die();
+        $ct_hoadon = new ct_hoadon;
+        $ct_hoadon->id_hoadon = $id_HD;      
+        $ct_hoadon->idVe = $id_ve;
+        $ct_hoadon->SoLuong = $soluong;
+        $ct_hoadon->GheDaDat = $TenGhe;
+        $ct_hoadon->save();
+
+        if(($ct_hoadon->save()) !== true){
+          echo json_encode(['status'=>'fasle','message'=>'Khong the tao hoa don']);die();  
+        }else{
+            echo json_encode(['status'=>'true','message'=>'Tao. chi tiet HD okayyy']);
+        }
+
     }
    
 }
