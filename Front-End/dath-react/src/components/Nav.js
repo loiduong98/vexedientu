@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class Nav extends Component {
   render() {
@@ -38,19 +39,28 @@ class Nav extends Component {
                   <i className="material-icons">view_day</i> Liên hệ
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/dang-nhap" className="nav-link">
-                  <i className="material-icons">view_carousel</i> Đăng nhập
+
+              {
+                this.props.credentials ? <li className="nav-item">
+                  <span className="nav-link">Hi, {this.props.credentials.name} </span>
+                </li> :
+                  (<>
+                    <li className="nav-item">
+                      <Link to="/dang-nhap" className="nav-link">
+                        <i className="material-icons">view_carousel</i> Đăng nhập
                 </Link>
-              </li>
-              <li className="button-container nav-item">
-                <Link
-                  to="/dang-ky"
-                  className="btn btn-rose btn-round btn-block"
-                >
-                  <i className="material-icons">how_to_reg</i> Đăng ký
+                    </li>
+                    <li className="button-container nav-item">
+                      <Link
+                        to="/dang-ky"
+                        className="btn btn-rose btn-round btn-block"
+                      >
+                        <i className="material-icons">how_to_reg</i> Đăng ký
                 </Link>
-              </li>
+                    </li>
+                  </>)
+              }
+
             </ul>
           </div>
         </div>
@@ -59,4 +69,10 @@ class Nav extends Component {
   }
 }
 
-export default Nav;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    credentials: state.user.credentials
+  }
+}
+
+export default connect(mapStateToProps)(Nav);
