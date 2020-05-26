@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Formik, Form, Field } from 'formik'
 import Axios from "axios";
-import * as yup from "yup";
 import {connect} from 'react-redux'
 import { login } from "../redux/action/user";
 import {FETCH_CREDENTIALS} from '../redux/action/type.js'
@@ -29,9 +28,7 @@ class DangNhap extends Component {
                     }}
                     onSubmit={(values) => {
                       console.log(values);
-        
                       this.props.dispatch(login(values))
-                      
                     }}
                     render={({ handleChange }) => (<Form className="form">
                       <div className="card-header card-header-primary text-center">
