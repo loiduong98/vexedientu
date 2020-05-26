@@ -154,8 +154,8 @@ export default class ThanhToan extends Component {
                     amount={pay}
                     onSuccess={(details, data) => {
                       alert(
-                        "Chúc mừng bạn " +
-                          details.payer.name.given_name+" đã thanh toán thành công"
+                        "Transaction completed by " +
+                          details.payer.name.given_name
                       );
                     }}
                     shippingPreference="NO_SHIPPING"
