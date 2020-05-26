@@ -1,47 +1,82 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    background-color: #f5f5f5;
-}
 
-.ticket h1 {
-    text-align: center;
-    font-size: 50px;
-    padding-top: 30px;
-}
+/* Menu Search */
 
-.ticket__content {
+.menu-search .row {
     display: flex;
-    width: 80%;
-    margin: 0 auto;
-    justify-content: space-around;
-    padding-top: 30px;
-    margin-left: 200px;
-    border-top: 3px aqua;
+    justify-content: space-between;
+    padding: 20px 0px;
+    background-color: #03A9F4;
+    width: 100%;
 }
 
-.ticket__items img {
-    width: 350px;
-    border-top: 5px solid aqua;
+.col-md-9.pull-left.search form {
+    display: flex;
+    justify-content: center;
 }
 
-.ticket__items h2 {
+.post-item a {
+    text-decoration: none;
     color: black;
-    font-size: 25px;
 }
 
-.ticket__items button {
-    color: aqua;
-    border: none;
-    background-color: black;
-    font-size: 14px;
-    padding: 10px 15px;
+.search-location {
+    margin: 0 20px;
 }
 
-.ticket__items button:hover {
-    color: white;
+.btn-search {
+    margin-left: 20px;
 }
+
+
+/* End Menu Search */
+
+
+/* Content */
+
+.row.news {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.content__left {
+    background-color: #fff;
+    padding-top: 20px;
+}
+
+
+/* End Content */
+
+
+/* Panigation */
+
+ul.list__panigation {
+    display: flex;
+}
+
+.page {
+    height: 50px;
+}
+
+ul.list__panigation li {
+    list-style: none;
+    padding-left: 20px;
+}
+
+ul.list__panigation li a {
+    text-decoration: none;
+    color: black;
+}
+
+li.page.selected {
+    width: 30px;
+    height: 30px;
+    background-color: gray;
+}
+
+
+/* End Panigation */

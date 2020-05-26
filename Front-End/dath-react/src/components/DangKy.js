@@ -48,7 +48,15 @@ class DangKy extends Component {
   render() {
     return (
       <div className="signup-page">
-        <div className="page-header header-filter" filter-color="purple" style={{ backgroundImage: 'url(./assets/img/bg7.jpg)', backgroundSize: 'cover', backgroundPosition: 'top center' }}>
+        <div
+          className="page-header header-filter"
+          filter-color="purple"
+          style={{
+            backgroundImage: "url(./assets/img/bg7.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "top center",
+          }}
+        >
           <div className="container">
             <div className="row">
               <div className="col-md-10 ml-auto mr-auto">
@@ -64,8 +72,9 @@ class DangKy extends Component {
                           <div className="description">
                             <h4 className="info-title">Tra cứu lịch sử</h4>
                             <p className="description">
-                              Tra cứu thông tin chi tiết vé xe. Lịch sủ mua vé xe. Xem lại thông tin chi tiết vé.
-                      </p>
+                              Tra cứu thông tin chi tiết vé xe. Lịch sủ mua vé
+                              xe. Xem lại thông tin chi tiết vé.
+                            </p>
                           </div>
                         </div>
                         <div className="info info-horizontal">
@@ -176,7 +185,12 @@ class DangKy extends Component {
                               </div>
                               <div className="form-check">
                                 <label className="form-check-label">
-                                  <input className="form-check-input" type="checkbox" defaultValue defaultChecked />
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    defaultValue
+                                    defaultChecked
+                                  />
                                   <span className="form-check-sign">
                                     <span className="check" />
                                   </span>
@@ -190,7 +204,8 @@ class DangKy extends Component {
                                 </button>
                               </div>
                             </Form>
-                          )} />
+                          )}
+                        />
                       </div>
                     </div>
                   </div>
@@ -200,7 +215,7 @@ class DangKy extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

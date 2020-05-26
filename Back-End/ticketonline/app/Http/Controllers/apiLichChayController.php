@@ -7,6 +7,9 @@ use App\lichchay;
 
 class apiLichChayController extends Controller
 {
+    public function index() {
+        return lichchay::all();
+    }
     /**
      * Display a listing of the resource.
      *
