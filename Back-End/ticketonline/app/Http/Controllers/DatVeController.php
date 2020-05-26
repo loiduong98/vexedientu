@@ -188,8 +188,6 @@ class DatVeController extends Controller
         // QrCode::generate($CTV_mbm);
         //check ok
         return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
-        
-        
     }
 
     public function bookticket(Request $request)
@@ -229,24 +227,28 @@ class DatVeController extends Controller
             }
         }
 
+        $sdt_array = array();
+        
         // check khach hang
         foreach($khachhang as $keyKH){
-            $SDT_KH = $keyKH->SDT;
+            $SDT_KH = explode(',',$keyKH->SDT);
             $id_KH  = $keyKH->id;
-
-            if($SDT_kh !== $SDT_KH)
-            {
-                $khachhang = new khachhang;
-                $khachhang->HoTen = $HoTen;
-                $khachhang->SDT = $SDT_kh;
-                $khachhang->Email = $Email;
-                $khachhang->DiaChi = $DiaChi;
-                $khachhang->save();
-            }else{
-                $id_KH = $id_KH;
-            }
+            $sdt_array = array_merge($sdt_array,$SDT_KH);
         }
 
+        if(in_array($SDT_kh, $sdt_array)){
+            khachhang::where('SDT', $SDT_kh)->update(array('HoTen' => $HoTen, 'Email' => $Email, 'DiaChi' => $DiaChi));
+            $id_KH = (khachhang::where('SDT', $SDT_kh)->first())->id;
+        }else{
+            $khachhang = new khachhang;
+            $khachhang->HoTen = $HoTen;
+            $khachhang->SDT = $SDT_kh;
+            $khachhang->Email = $Email;
+            $khachhang->DiaChi = $DiaChi;
+            $khachhang->save();
+            $id_KH = $khachhang->id;
+        }
+        
         // Check & Update Ghe
         foreach ($xe as $vl_xe) {
             $id_vl_xe       = $vl_xe->id;
@@ -268,10 +270,11 @@ class DatVeController extends Controller
         
         $soluong = count($TenGhe_array);
 
+        // Tao hoa don
         $hoadon = new hoadon;
         $hoadon->NgayDatVe = $NgayDatVe;    
         $hoadon->TongTien = $tongtien;
-        $hoadon->GhiChu = 'test';
+        $hoadon->GhiChu = 'Dat ve cho vui';
         $hoadon->idKH = $id_KH;
         $hoadon->idHTTT = 1;
         $hoadon->save();
@@ -284,6 +287,7 @@ class DatVeController extends Controller
         
         $id_HD = $hoadon->id;
 
+        // Tao ve
         $ve = new ve;
         $ve->NgayDatVe = $NgayDatVe;
         $ve->idKH = $id_KH;
@@ -296,7 +300,7 @@ class DatVeController extends Controller
         $ve->save();
 
         if(($ve->save()) !== true){
-          echo json_encode(['status'=>'fasle','message'=>'Khong the tao hoa don']);die();  
+          echo json_encode(['status'=>'fasle','message'=>'Khong the tao ve']);die();  
         } else{
             echo json_encode(['status'=>'true','message'=>'Tao. Ve okayyy']);
         }
@@ -311,7 +315,7 @@ class DatVeController extends Controller
         $ct_hoadon->save();
 
         if(($ct_hoadon->save()) !== true){
-          echo json_encode(['status'=>'fasle','message'=>'Khong the tao hoa don']);die();  
+          echo json_encode(['status'=>'fasle','message'=>'Khong the tao chi tiet hoa don']);die();  
         }else{
             echo json_encode(['status'=>'true','message'=>'Tao. chi tiet HD okayyy']);
         }
