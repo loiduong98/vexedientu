@@ -38,7 +38,8 @@ class DangNhap extends Component {
                       password: ''
                     }}
                     onSubmit={(values) => {
-                      {handleSubmit}
+                      console.log(values);
+                      
                     }}
                     render={({ handleChange }) => (<Form className="form">
                       <div className="card-header card-header-primary text-center">

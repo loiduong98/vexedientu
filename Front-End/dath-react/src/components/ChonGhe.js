@@ -4,43 +4,56 @@ import "react-notifications-component/dist/theme.css";
 import { store } from "react-notifications-component";
 import Axios from "axios";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class ChonGhe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seat: [
-        ["A1", "A2", "A3", "A4"],
-        ["B1", "B2", "B3", "B4"],
-        ["C1", "C2", "C3", "C4"],
-        ["D1", "D2", "D3", "D4"],
-        ["E1", "E2", "E3", "E4"],
-        ["F1", "F2", "F3", "F4"],
-      ],
-      seatAvailable: [
-        "A2",
-        "A4",
-        "B1",
-        "B2",
-        "B3",
-        "C1",
-        "C2",
-        "C3",
-        "C4",
-        "D1",
-        "D2",
-        "D4",
-        "E1",
-        "E2",
-        "E4",
-        "F1",
-        "F2",
-        "F3",
-        "F4",
-      ],
+      seat: [],
+      seatAvailable: [],
       seatReserved: [],
-      seatBooked: ["A1", "A3", "E3", "D3", "B4"],
+      seatBooked: [],
+      isGoThongTinDatVe: false,
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if (this.state.seatReserved.length === 0) {
+      store.addNotification({
+        message: "Vui lòng chọn ghế bạn muốn",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "animate__flipInX"],
+        animationOut: ["animated", "animate__fadeOutDown"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+    } else {
+      this.props.dslichchayData.map((item) => {
+        if (item.idTuyen === this.step1.idTuyen) {
+          return (this.tongtien =
+            parseInt(item.Gia) * parseInt(this.state.seatReserved.length));
+        }
+      });
+      this.setState(
+        { isGoThongTinDatVe: true, tongtien: this.tongtien },
+        () => {
+          if (typeof Storage !== "undefined") {
+            // Khởi tạo sesionStorage
+            sessionStorage.setItem("chonghe", JSON.stringify(this.state));
+          } else {
+            alert("Trình duyệt của bạn không hỗ trợ!");
+          }
+          return console.log(this.state);
+        }
+      );
+    }
   }
 
   // xử lý sự kiện onclich chọn ghế
@@ -94,7 +107,10 @@ class ChonGhe extends Component {
       });
     }
   }
-  step1;
+  step1; // biến chứa dữ liệu từ session storage
+
+  tongtien;
+
   componentWillMount() {
     if (typeof Storage !== "undefined") {
       // get sessionStorage
@@ -106,11 +122,58 @@ class ChonGhe extends Component {
 
   //get data từ API
   getDataAPI() {
-    Axios.all([Axios.get("http://localhost:8000/api/lichchay")])
+    Axios.all([
+      Axios.get("http://localhost:8000/api/lichchay"),
+      Axios.get("http://localhost:8000/api/xe"),
+    ])
       .then((resArr) => {
+        // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
         this.props.dispatch({
           type: "FETCH_DSLICHCHAY",
           payload: resArr[0].data,
+        });
+        // đẩy dữ liệu danh sách xe từ API get được vào reducer
+        this.props.dispatch({
+          type: "FETCH_DSXE",
+          payload: resArr[1].data,
+        });
+
+        // lấy id xe
+        this.props.dslichchayData.map((item) => {
+          if (item.idTuyen === this.step1.idTuyen) {
+            this.setState({ idXe: item.idXe }, () => {
+              console.log(this.state);
+            });
+          }
+        });
+
+        // lấy danh sách ghế từ xe ra
+        this.props.dsxeData.map((item) => {
+          if (item.id === this.state.idXe) {
+            // đẩy tất cả ghế vào dạng chuỗi
+            var tatcaghe = item.TatCaGhe.split(/[\s,]+/);
+            // đẩy các ghế đã đặt vào dạng chuỗi
+            var ghedadat = item.GheDaDat.split(/[\s,]+/);
+            // lọc ra ghế còn trống
+            const ghetrong = tatcaghe.filter((i) => !ghedadat.includes(i));
+
+            // đẩy tất cả ghế vào ma trận sợ đồ để in ra
+            const toMatrix = (arr, width) =>
+              arr.reduce(
+                (rows, key, index) =>
+                  (index % width == 0
+                    ? rows.push([key])
+                    : rows[rows.length - 1].push(key)) && rows,
+                []
+              );
+            var matranghe = toMatrix(tatcaghe, 4);
+
+            this.setState({
+              seatBooked: ghedadat,
+              seatAvailable: ghetrong,
+              seat: matranghe,
+            });
+          }
         });
       })
       .catch((err) => {
@@ -138,11 +201,13 @@ class ChonGhe extends Component {
       ngaydi.substr(0, 4)
     );
 
+    //điều kiện chuyển hướng
+    if (this.state.isGoThongTinDatVe === true) {
+      return <Redirect to="/thong-tin-dat-ve" />;
+    }
     return (
       <section id="chonghe">
-        {console.log(this.step1.idTuyen)}
         <ReactNotification />
-        {console.log(this.props.dslichchayData)}
         <div className="container">
           <div className="md-stepper-horizontal">
             <div className="md-step active">
@@ -209,7 +274,18 @@ class ChonGhe extends Component {
                   <h5 id="tongTien" style={{ fontWeight: 300 }}>
                     Tổng số tiền là:
                     <span style={{ color: "red", fontWeight: "bold" }}>
-                      ({this.state.seatReserved.length}00,000)
+                      (
+                      {this.props.dslichchayData.map((item, index) => {
+                        if (item.idTuyen === this.step1.idTuyen) {
+                          return (
+                            parseInt(item.Gia) *
+                            parseInt(this.state.seatReserved.length)
+                          )
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                      })}
+                      )
                     </span>
                     đ
                   </h5>
@@ -247,12 +323,6 @@ class ChonGhe extends Component {
                         Giá vé:{" "}
                         {this.props.dslichchayData.map((item, index) => {
                           if (item.idTuyen === this.step1.idTuyen) {
-                            console.log(
-                              item.Gia.toString().replace(
-                                /\B(?=(\d{3})+(?!\d))/g,
-                                ","
-                              )
-                            );
                             return item.Gia.toString().replace(
                               /\B(?=(\d{3})+(?!\d))/g,
                               ","
@@ -265,6 +335,22 @@ class ChonGhe extends Component {
                         </span>
                       </label>
                     </div>
+                    <div className="form-group">
+                      <h4
+                        className="info-title"
+                        style={{ marginBottom: "0px" }}
+                      >
+                        Biển số xe
+                      </h4>
+                      <p>
+                        {this.props.dsxeData.map((item) => {
+                          if (item.id === this.state.idXe) {
+                            return item.BSXe;
+                          }
+                        })}
+                      </p>
+                    </div>
+
                     <div className="form-group">
                       <h4
                         className="info-title"
@@ -308,6 +394,13 @@ class ChonGhe extends Component {
                         </div>
                       </div>
                     </div>
+                    <button
+                      type="submit"
+                      className="btn btn-block btn-success"
+                      onClick={(e) => this.handleSubmit(e)}
+                    >
+                      Tiếp tục <span class="material-icons">forward</span>
+                    </button>
                   </form>
                 </div>
               </div>
@@ -412,7 +505,7 @@ class DrawGrid extends React.Component {
           </tbody>
         </table>
 
-        <AvailableList available={this.props.available} />
+        {/* <AvailableList available={this.props.available} /> */}
         {/* <ReservedList reserved={this.props.reserved} /> */}
       </div>
     );
@@ -423,23 +516,23 @@ class DrawGrid extends React.Component {
   }
 }
 
-class AvailableList extends React.Component {
-  render() {
-    const seatCount = this.props.available.length;
-    return (
-      <div className="text-center">
-        <h4>
-          Ghế còn trống: ({seatCount === 0 ? "No seats available" : seatCount})
-        </h4>
-        <span>
-          {this.props.available.map((res) => (
-            <p key={res}>{res} - </p>
-          ))}
-        </span>
-      </div>
-    );
-  }
-}
+// class AvailableList extends React.Component {
+//   render() {
+//     const seatCount = this.props.available.length;
+//     return (
+//       <div className="text-center">
+//         <h4>
+//           Ghế còn trống: ({seatCount === 0 ? "No seats available" : seatCount})
+//         </h4>
+//         <span>
+//           {this.props.available.map((res) => (
+//             <p key={res}>{res} - </p>
+//           ))}
+//         </span>
+//       </div>
+//     );
+//   }
+// }
 
 // class ReservedList extends React.Component {
 //   render() {
@@ -459,6 +552,7 @@ class AvailableList extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     dslichchayData: state.dslichchayReducer.dslichchayData,
+    dsxeData: state.dsxeReducer.dsxeData,
   };
 };
 
