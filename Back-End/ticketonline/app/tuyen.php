@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class tuyen extends Model
 {
+    protected $fillable = [
+        'id',
+        'TenTuyen',
+        'idBenDi',
+        'idBenDen',
+    ];
     protected $table = "tuyen";
     public $timestamps = false;
 
@@ -19,4 +25,3 @@ class tuyen extends Model
             return $this->belongsTo('App\ben','idBenDen','id');
         }
 }
-

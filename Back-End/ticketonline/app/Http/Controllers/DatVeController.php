@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use App\tuyen;
 use App\lichchay;
@@ -15,12 +17,12 @@ use App\sodoghe;
 use App\ve;
 use App\hoadon;
 use App\ct_hoadon;
+use App\xe;
 use Mail;
 use QrCode;
 
 class DatVeController extends Controller
 {
-    
     public function getTT()
     {
         $tuyen = tuyen::all();
@@ -45,9 +47,8 @@ class DatVeController extends Controller
         
     }
 
-   
     public function postTT(Request $request)
-    {     
+    {   
         $this->validate($request,
             [
                 'NgayKhoiHanh'=>'required',
@@ -66,6 +67,8 @@ class DatVeController extends Controller
                 
                 'HoTen.required'=>'Bạn chưa nhập tên nhân viên',
             ]);
+
+        // dd($request->all());
         $lichchay = lichchay::all();
         $khachhang = khachhang::all();
         $tuyen     = tuyen::all();
@@ -81,10 +84,10 @@ class DatVeController extends Controller
         $SDT = $request->SDT;
         $Email = $request->Email;
         $DiaChi = $request->DiaChi;
-        $TenHTTT = $request->TenHTTT; 
-        
-        
-
+        $TenHTTT = $request->TenHTTT;  
+        $test_ghe = $request->test_ghe;
+        // echo "<pre>",print_r($test_ghe,1),"</pre>";     
+        // dd($TenGhe);
         foreach($tuyen as $keytuyen){
             $tuyen_di = $keytuyen->idBenDi;
             $tuyen_den = $keytuyen->idBenDen;
@@ -130,10 +133,10 @@ class DatVeController extends Controller
             }
         }
 
-        
         $khachhang->save();
         $id_KH = $khachhang->id;
         $TongTien = $giaLC * $Soluong;
+
         $hoadon = new hoadon;
         $hoadon->NgayDatVe = $NgayDatVe;
         $hoadon->TongTien = $TongTien;
@@ -154,15 +157,6 @@ class DatVeController extends Controller
         $ve->idXe = $id_Xe;
         $ve->save();
         $id_ve = $ve->id;
-        
-        // foreach($chitietve as $keyCTV){
-        //     $CTV_id = $keyCTV->id;
-        //     $CTV_ve = $keyCTV->idVe;
-        //     $CTV_mbm = $keyCTV->MaBiMat;
-        //     if($CTV_id = $id_ve){
-        //         $CTV_mbm == $CTV_qrcode;
-                
-        // }
 
         $ct_hoadon = new ct_hoadon;
         $ct_hoadon->id_hoadon = $id_HD;      
@@ -170,7 +164,6 @@ class DatVeController extends Controller
         $ct_hoadon->SoLuong = $Soluong;
         $ct_hoadon->save();
       
-
         for ($i=0; $i < $Soluong; $i++) { 
             $chitietve = new chitietve;
             $chitietve->idVe = $id_ve;
@@ -183,7 +176,7 @@ class DatVeController extends Controller
         
         Mail::send(['html'=>'page.layout.mailfb'],['name','Lợi Dương'],function($message){
             $message->to('loiduong0511@yahoo.com')->subject("Chúc mừng bạn đã đặt vé thành công");
-            $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD');
+            $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD.');
         });
             // $HoTen = $request->all();
             // $Email = $request->all();
@@ -193,9 +186,140 @@ class DatVeController extends Controller
             // Session::flash('flash_message', 'Send message successfully!');
 
         // QrCode::generate($CTV_mbm);
-        return Redirect('page/checkout')->with('thongbao','Đặt vé thành công');
+        //check ok
+        return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
+    }
+
+    public function bookticket(Request $request)
+    {
+        echo "Post TT <pre>",print_r($request->all(),1),"</pre>";
+
+        $lichchay       = lichchay::all();
+        $khachhang      = khachhang::all();
+        $tuyen          = tuyen::all();
+        $xe             = xe::all();
+        $NgayDatVe      = now();
+
+        $DiaChi         = $request->diachi;       
+        $Email          = $request->email;
+        $TenGhe         = $request->ghedat;
+        $HoTen          = $request->hoten;
+        $idLC           = $request->idlichchay;
+        $id_tuyen       = $request->idtuyen;
+        $id_xe          = $request->idxe;
+        $ngaydatve      = $request->ngaydi;
+        $SDT_kh         = $request->sdt;
+        $tongtien       = $request->tongtien;
+        $tongtienUSD    = $request->tongtienUSD;
+        $tuyen_xe       = $request->tuyen;
+
+        foreach($lichchay as $keyLC){
+            $LC_id = $keyLC->id;
+            $LC_tuyen = $keyLC->idTuyen;
+            $LC_gia = $keyLC->Gia;
+            $LC_xe = $keyLC->idXe;
+            
+            if($id_tuyen == $LC_tuyen){
+                $id_lc      = $LC_id;
+                $gia_lc     = $LC_gia;
+                $id_xelc    = $LC_xe;
+                $id_tuyenlc = $LC_tuyen; 
+            }
+        }
+
+        $sdt_array = array();
         
+        // check khach hang
+        foreach($khachhang as $keyKH){
+            $SDT_KH = explode(',',$keyKH->SDT);
+            $id_KH  = $keyKH->id;
+            $sdt_array = array_merge($sdt_array,$SDT_KH);
+        }
+
+        if(in_array($SDT_kh, $sdt_array)){
+            khachhang::where('SDT', $SDT_kh)->update(array('HoTen' => $HoTen, 'Email' => $Email, 'DiaChi' => $DiaChi));
+            $id_KH = (khachhang::where('SDT', $SDT_kh)->first())->id;
+        }else{
+            $khachhang = new khachhang;
+            $khachhang->HoTen = $HoTen;
+            $khachhang->SDT = $SDT_kh;
+            $khachhang->Email = $Email;
+            $khachhang->DiaChi = $DiaChi;
+            $khachhang->save();
+            $id_KH = $khachhang->id;
+        }
         
+        // Check & Update Ghe
+        foreach ($xe as $vl_xe) {
+            $id_vl_xe       = $vl_xe->id;
+            $xe_ghe         = explode(',', $vl_xe->GheDaDat);
+            $TenGhe_array   = explode(',',$TenGhe);
+            
+            if($id_xelc == $id_vl_xe){
+                foreach ($TenGhe_array as $vl_ghe) {
+                    if(in_array($vl_ghe, $xe_ghe)){
+                        echo json_encode(['status'=>'fasle','message'=>'Chố đã được đặt']);die();
+                    }else{
+                        $xe_ghe         = array_merge(array($vl_ghe),$xe_ghe);
+                        $update_ghe     = implode(',', $xe_ghe);
+                        Xe::where('id', $id_xelc)->update(array('GheDaDat' => $update_ghe));
+                    }
+                }
+            }
+        }
+        
+        $soluong = count($TenGhe_array);
+
+        // Tao hoa don
+        $hoadon = new hoadon;
+        $hoadon->NgayDatVe = $NgayDatVe;    
+        $hoadon->TongTien = $tongtien;
+        $hoadon->GhiChu = 'Dat ve cho vui';
+        $hoadon->idKH = $id_KH;
+        $hoadon->idHTTT = 1;
+        $hoadon->save();
+
+        if(($hoadon->save()) !== true){
+          echo json_encode(['status'=>'fasle','message'=>'Khong the tao hoa don']);die();  
+        } else{
+            echo json_encode(['status'=>'true','message'=>'Tao. HD okayyy']);
+        }
+        
+        $id_HD = $hoadon->id;
+
+        // Tao ve
+        $ve = new ve;
+        $ve->NgayDatVe = $NgayDatVe;
+        $ve->idKH = $id_KH;
+        $ve->idLC = $idLC;
+        $ve->idHD = $id_HD;
+        $ve->NgayKhoiHanh = $ngaydatve;
+        $ve->GioKhoiHanh = $NgayDatVe;
+        $ve->TrangThai = '0';
+        $ve->idXe = $id_xe;
+        $ve->save();
+
+        if(($ve->save()) !== true){
+          echo json_encode(['status'=>'fasle','message'=>'Khong the tao ve']);die();  
+        } else{
+            echo json_encode(['status'=>'true','message'=>'Tao. Ve okayyy']);
+        }
+        
+        $id_ve = $ve->id;
+// die();
+        $ct_hoadon = new ct_hoadon;
+        $ct_hoadon->id_hoadon = $id_HD;      
+        $ct_hoadon->idVe = $id_ve;
+        $ct_hoadon->SoLuong = $soluong;
+        $ct_hoadon->GheDaDat = $TenGhe;
+        $ct_hoadon->save();
+
+        if(($ct_hoadon->save()) !== true){
+          echo json_encode(['status'=>'fasle','message'=>'Khong the tao chi tiet hoa don']);die();  
+        }else{
+            echo json_encode(['status'=>'true','message'=>'Tao. chi tiet HD okayyy']);
+        }
+
     }
    
 }

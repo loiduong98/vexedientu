@@ -12,6 +12,10 @@ use App\chitietve;
 
 class VeController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function getDanhSach()
     {
         chitietve::all();
