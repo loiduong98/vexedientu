@@ -27,9 +27,16 @@ export default class ThanhToan extends Component {
       },
     };
 
-    Axios.post("/api/dangky", postData, axiosConfig)
+    Axios.post("/api/bookticket", postData, axiosConfig)
       .then((res) => {
         console.log("RESPONSE RECEIVED: ", res);
+        swal({
+          title: "Tuyệt vời!",
+          text: "Vé của bạn đã được đặt thành công!",
+          icon: "success",
+        }).then(() => {
+          this.setState({ isGoNext: true });
+        });
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
@@ -165,13 +172,7 @@ export default class ThanhToan extends Component {
                   <PayPalButton
                     amount={pay}
                     onSuccess={(details, data) => {
-                      swal({
-                        title: "Tuyệt vời!",
-                        text: "Vé của bạn đã được đặt thành công!",
-                        icon: "success",
-                      }).then(() => {
-                        this.setState({ isGoNext: true });
-                      });
+                      this.postDatVe();
                     }}
                     shippingPreference="NO_SHIPPING"
                     options={{
