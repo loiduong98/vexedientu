@@ -18,10 +18,8 @@ class Hoadon extends Migration
             $table->string('NgayDatVe');
             $table->string('TongTien');
             $table->string('GhiChu');
-            $table->integer('idKH')->unsigned();
-            $table->foreign('idKH')->references('id')->on('khachhang');
-            $table->integer('idHTTT')->unsigned();
-            $table->foreign('idHTTT')->references('id')->on('hinhthucthanhtoan');
+            $table->integer('idKH');
+            $table->integer('idHTTT');
         });
     }
 
