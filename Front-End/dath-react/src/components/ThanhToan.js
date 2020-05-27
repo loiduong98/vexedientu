@@ -2,11 +2,19 @@ import React, { Component } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import Axios from "axios";
 import retesData from "../data/ratesData.json";
+import swal from "sweetalert";
+import { Redirect } from "react-router-dom";
 
 export default class ThanhToan extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isGoNext: false,
+    };
+  }
+
+  testPost() {
+    console.log("Okay roi ban oi");
   }
 
   postDatVe() {
@@ -101,6 +109,10 @@ export default class ThanhToan extends Component {
     );
     var pay = this.state.tongtienUSD.substr(0, 5);
 
+    if (this.state.isGoNext === true) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <section className="payment" style={{ marginTop: "100px" }}>
         <div className="md-stepper-horizontal">
@@ -153,10 +165,13 @@ export default class ThanhToan extends Component {
                   <PayPalButton
                     amount={pay}
                     onSuccess={(details, data) => {
-                      alert(
-                        "Transaction completed by " +
-                          details.payer.name.given_name
-                      );
+                      swal({
+                        title: "Tuyệt vời!",
+                        text: "Vé của bạn đã được đặt thành công!",
+                        icon: "success",
+                      }).then(() => {
+                        this.setState({ isGoNext: true });
+                      });
                     }}
                     shippingPreference="NO_SHIPPING"
                     options={{
@@ -228,7 +243,19 @@ export default class ThanhToan extends Component {
                                   <span style={{ fontWeight: "bold" }}>
                                     {this.state.tongtien
                                       .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                      .replace(
+                                        /\B(?=(\d{3})+(?!\d))/g,
+                                        ","
+                                      )}{" "}
+                                    VNĐ
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Thanh toán Paypal</td>
+                                <td>
+                                  <span style={{ fontWeight: "bold" }}>
+                                    {pay} USD
                                   </span>
                                 </td>
                               </tr>
