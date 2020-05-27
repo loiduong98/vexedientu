@@ -68,7 +68,6 @@ class DatVeController extends Controller
                 'HoTen.required'=>'Bạn chưa nhập tên nhân viên',
             ]);
 
-        // dd($request->all());
         $lichchay = lichchay::all();
         $khachhang = khachhang::all();
         $tuyen     = tuyen::all();

@@ -138,10 +138,10 @@ class ChonGhe extends Component {
           payload: resArr[1].data,
         });
 
-        // lấy id xe
+        // lấy id xe, lấy id lịch chạy
         this.props.dslichchayData.map((item) => {
           if (item.idTuyen === this.step1.idTuyen) {
-            this.setState({ idXe: item.idXe }, () => {
+            this.setState({ idXe: item.idXe, idLichChay: item.id }, () => {
               console.log(this.state);
             });
           }
@@ -161,7 +161,7 @@ class ChonGhe extends Component {
             const toMatrix = (arr, width) =>
               arr.reduce(
                 (rows, key, index) =>
-                  (index % width == 0
+                  (index % width === 0
                     ? rows.push([key])
                     : rows[rows.length - 1].push(key)) && rows,
                 []

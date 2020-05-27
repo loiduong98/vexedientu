@@ -27,8 +27,8 @@ class Home extends Component {
   // get danh sách tuyến và danh sách bến từ API
   getAll() {
     Axios.all([
-      Axios.get("http://localhost:8000/api/ben"),
-      Axios.get("http://localhost:8000/api/tuyen"),
+      Axios.get("http://127.0.0.1:8000/api/ben"),
+      Axios.get("http://127.0.0.1:8000/api/tuyen"),
     ])
       .then((resArr) => {
         //console.log(resArr[0].data); // in ra danh sách bến để test

@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "TenTuyen": "Tp.Hồ Chí Minh - Đà Lạt",
+    "idBenDi": 1,
+    "idBenDen": 2
+  },
+  {
+    "id": 3,
+    "TenTuyen": "Tp.Hồ Chí Minh - Phan Thiết",
+    "idBenDi": 1,
+    "idBenDen": 3
+  },
+  {
+    "id": 4,
+    "TenTuyen": "Tp.Hồ Chí Minh - Cần Thơ",
+    "idBenDi": 1,
+    "idBenDen": 4
+  },
+  {
+    "id": 5,
+    "TenTuyen": "Đà Lạt - Tp.Hồ Chí Minh",
+    "idBenDi": 2,
+    "idBenDen": 1
+  },
+  {
+    "id": 6,
+    "TenTuyen": "Đà Lạt - Cần Thơ",
+    "idBenDi": 2,
+    "idBenDen": 4
+  },
+  {
+    "id": 7,
+    "TenTuyen": "Phan Thiết - Đà Lạt",
+    "idBenDi": 3,
+    "idBenDen": 2
+  },
+  {
+    "id": 8,
+    "TenTuyen": "Phan Thiết - Tp.Hồ Chí Minh",
+    "idBenDi": 3,
+    "idBenDen": 3
+  },
+  {
+    "id": 10,
+    "TenTuyen": "Tp.Hồ Chí Minh - Đà Nẵng",
+    "idBenDi": 1,
+    "idBenDen": 5
+  },
+  {
+    "id": 14,
+    "TenTuyen": "Thành Phố Hồ chí Minh - Nha Trang",
+    "idBenDi": 1,
+    "idBenDen": 11
+  },
+  {
+    "id": 17,
+    "TenTuyen": "Thành Phố Hồ chí Minh - Bạc Liêu",
+    "idBenDi": 1,
+    "idBenDen": 14
+  }
+]
