@@ -86,8 +86,7 @@ class DatVeController extends Controller
         $DiaChi = $request->DiaChi;
         $TenHTTT = $request->TenHTTT;  
         $test_ghe = $request->test_ghe;
-        // echo "<pre>",print_r($test_ghe,1),"</pre>";     
-        // dd($TenGhe);
+        
         foreach($tuyen as $keytuyen){
             $tuyen_di = $keytuyen->idBenDi;
             $tuyen_den = $keytuyen->idBenDen;
@@ -192,8 +191,6 @@ class DatVeController extends Controller
 
     public function bookticket(Request $request)
     {
-        echo "Post TT <pre>",print_r($request->all(),1),"</pre>";
-
         $lichchay       = lichchay::all();
         $khachhang      = khachhang::all();
         $tuyen          = tuyen::all();
@@ -207,11 +204,12 @@ class DatVeController extends Controller
         $idLC           = $request->idlichchay;
         $id_tuyen       = $request->idtuyen;
         $id_xe          = $request->idxe;
-        $ngaydatve      = $request->ngaydi;
         $SDT_kh         = $request->sdt;
         $tongtien       = $request->tongtien;
         $tongtienUSD    = $request->tongtienUSD;
         $tuyen_xe       = $request->tuyen;
+        $ngaydatve      = $request->ngaydi;
+        $ngaydatve      = date("d-m-Y H:i:s", strtotime($ngaydatve));    
 
         foreach($lichchay as $keyLC){
             $LC_id = $keyLC->id;
@@ -258,7 +256,7 @@ class DatVeController extends Controller
             if($id_xelc == $id_vl_xe){
                 foreach ($TenGhe_array as $vl_ghe) {
                     if(in_array($vl_ghe, $xe_ghe)){
-                        echo json_encode(['status'=>'fasle','message'=>'Chố đã được đặt']);die();
+                        echo json_encode(['status'=>'fasle','message'=>'Chố '.$vl_ghe.' đã được đặt']);die();
                     }else{
                         $xe_ghe         = array_merge(array($vl_ghe),$xe_ghe);
                         $update_ghe     = implode(',', $xe_ghe);
@@ -281,8 +279,6 @@ class DatVeController extends Controller
 
         if(($hoadon->save()) !== true){
           echo json_encode(['status'=>'fasle','message'=>'Khong the tao hoa don']);die();  
-        } else{
-            echo json_encode(['status'=>'true','message'=>'Tao. HD okayyy']);
         }
         
         $id_HD = $hoadon->id;
@@ -301,12 +297,11 @@ class DatVeController extends Controller
 
         if(($ve->save()) !== true){
           echo json_encode(['status'=>'fasle','message'=>'Khong the tao ve']);die();  
-        } else{
-            echo json_encode(['status'=>'true','message'=>'Tao. Ve okayyy']);
-        }
+        } 
         
         $id_ve = $ve->id;
-// die();
+
+        // Tao chi tiet hoa don
         $ct_hoadon = new ct_hoadon;
         $ct_hoadon->id_hoadon = $id_HD;      
         $ct_hoadon->idVe = $id_ve;
@@ -316,8 +311,6 @@ class DatVeController extends Controller
 
         if(($ct_hoadon->save()) !== true){
           echo json_encode(['status'=>'fasle','message'=>'Khong the tao chi tiet hoa don']);die();  
-        }else{
-            echo json_encode(['status'=>'true','message'=>'Tao. chi tiet HD okayyy']);
         }
 
     }

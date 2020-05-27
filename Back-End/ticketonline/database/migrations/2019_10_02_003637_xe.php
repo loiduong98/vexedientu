@@ -15,9 +15,10 @@ class Xe extends Migration
     {
         Schema::create('xe',function($table){
             $table->increments('id');
-            $table->string('BSXe');
-            $table->integer('idSoDoGhe')->unsigned();
-            $table->foreign('idSoDoGhe')->references('id')->on('sodoghe');
+            $table->string('BSXe',50);
+            $table->string('TatCaGhe');
+            $table->string('GheDaDat');
+            $table->string('SoDoGhe');
         });
     }
 

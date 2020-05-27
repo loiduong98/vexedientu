@@ -15,12 +15,10 @@ class CtHoadon extends Migration
     {
         Schema::create('ct_hoadon',function($table){
             $table->increments('id');
-            $table->integer('id_hoadon')->unsigned();
-            $table->foreign('id_hoadon')->references('id')->on('hoadon');
-            $table->integer('idVe')->unsigned();
-            $table->foreign('idVe')->references('id')->on('ve');
+            $table->integer('id_hoadon');
+            $table->integer('idVe');
             $table->string('SoLuong');
-            $table->string('TongTien');
+            $table->string('GheDaDat');
         });
     }
 
