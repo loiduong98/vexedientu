@@ -136,7 +136,7 @@ class ThongTinDatVe extends Component {
   render() {
     var customerForm = this.props.khachhangData.map((item, index) => {
       if (this.state.inputPhone === "") {
-        return;
+        return
       } else if (this.state.isLoaderSpinner === true) {
         return (
           <div className="loader" style={{ display: "inline-block" }}>
