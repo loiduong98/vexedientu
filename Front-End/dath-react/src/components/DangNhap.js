@@ -27,6 +27,7 @@ class DangNhap extends Component {
 
                     onSubmit={values => {
                       this.props.dispatch(login(values))
+                      
                     }}
 
                     render={({ handleChange }) => (

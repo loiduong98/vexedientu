@@ -68,7 +68,6 @@ class DatVeController extends Controller
                 'HoTen.required'=>'Bạn chưa nhập tên nhân viên',
             ]);
 
-        // dd($request->all());
         $lichchay = lichchay::all();
         $khachhang = khachhang::all();
         $tuyen     = tuyen::all();
@@ -306,7 +305,7 @@ class DatVeController extends Controller
         }
         
         $id_ve = $ve->id;
-// die();
+
         $ct_hoadon = new ct_hoadon;
         $ct_hoadon->id_hoadon = $id_HD;      
         $ct_hoadon->idVe = $id_ve;
