@@ -300,12 +300,9 @@ class DatVeController extends Controller
         } 
         
         $id_ve = $ve->id;
-<<<<<<< HEAD
 
         // Tao chi tiet hoa don
-=======
-// die();
->>>>>>> parent of 1100c02ef... update trao doi ve
+
         $ct_hoadon = new ct_hoadon;
         $ct_hoadon->id_hoadon = $id_HD;      
         $ct_hoadon->idVe = $id_ve;

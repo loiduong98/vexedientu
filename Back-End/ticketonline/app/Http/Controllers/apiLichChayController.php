@@ -7,7 +7,6 @@ use App\lichchay;
 
 class apiLichChayController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
