@@ -2,19 +2,11 @@ import React, { Component } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import Axios from "axios";
 import retesData from "../data/ratesData.json";
-import swal from "sweetalert";
-import { Redirect } from "react-router-dom";
 
 export default class ThanhToan extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isGoNext: false,
-    };
-  }
-
-  testPost() {
-    console.log("Okay roi ban oi");
+    this.state = {};
   }
 
   postDatVe() {
@@ -27,16 +19,9 @@ export default class ThanhToan extends Component {
       },
     };
 
-    Axios.post("/api/bookticket", postData, axiosConfig)
+    Axios.post("/api/dangky", postData, axiosConfig)
       .then((res) => {
         console.log("RESPONSE RECEIVED: ", res);
-        swal({
-          title: "Tuyệt vời!",
-          text: "Vé của bạn đã được đặt thành công!",
-          icon: "success",
-        }).then(() => {
-          this.setState({ isGoNext: true });
-        });
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
@@ -96,7 +81,7 @@ export default class ThanhToan extends Component {
     }
     const sell = parseFloat(currency.sell.replace(",", ""));
     const output = encode ? input * sell : input / sell;
-    const rounded = (Math.round(output * 1000) / 1000).toFixed(2);
+    const rounded = Math.round(output * 1000) / 1000;
     return rounded.toString();
   }
 
@@ -114,11 +99,7 @@ export default class ThanhToan extends Component {
       " ",
       ngaydi.substr(0, 4)
     );
-    var pay = this.state.tongtienUSD;
-
-    if (this.state.isGoNext === true) {
-      return <Redirect to="/" />;
-    }
+    var pay = this.state.tongtienUSD.substr(0, 5);
 
     return (
       <section className="payment" style={{ marginTop: "100px" }}>
@@ -172,7 +153,10 @@ export default class ThanhToan extends Component {
                   <PayPalButton
                     amount={pay}
                     onSuccess={(details, data) => {
-                      this.postDatVe();
+                      alert(
+                        "Chúc mừng bạn " +
+                          details.payer.name.given_name+" đã thanh toán thành công"
+                      );
                     }}
                     shippingPreference="NO_SHIPPING"
                     options={{
@@ -244,19 +228,7 @@ export default class ThanhToan extends Component {
                                   <span style={{ fontWeight: "bold" }}>
                                     {this.state.tongtien
                                       .toString()
-                                      .replace(
-                                        /\B(?=(\d{3})+(?!\d))/g,
-                                        ","
-                                      )}{" "}
-                                    VNĐ
-                                  </span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Thanh toán Paypal</td>
-                                <td>
-                                  <span style={{ fontWeight: "bold" }}>
-                                    {pay} USD
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                   </span>
                                 </td>
                               </tr>
