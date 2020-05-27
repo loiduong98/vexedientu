@@ -27,7 +27,7 @@ class apiBookticketController extends Controller
         //
         
         $test = app('App\Http\Controllers\DatVeController')->bookticket($request);
-        return response()->json(['status'=>'true', 'message'=>'Okaylaaaa']);
+        return response()->json(['status'=>'true', 'message'=>'Okay']);
     }
 
     /**
