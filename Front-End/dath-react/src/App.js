@@ -4,9 +4,6 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import DieuHuongURL from "./router/DieuHuongURL";
 import { BrowserRouter as Router } from "react-router-dom";
-import {connect} from "react-redux";
-import createAction from "./redux/Actions";
-import { FETCH_CREDENTIALS } from "./redux/Actions/type";
 
 class App extends Component {
   state = {
@@ -16,7 +13,6 @@ class App extends Component {
   componentDidMount() {
     // this simulates an async action, after which the component will render the content
     demoAsyncCall().then(() => this.setState({ loading: false }));
-    this._getCredentialFromLocal();
   }
   render() {
     const { loading } = this.state;
@@ -35,16 +31,9 @@ class App extends Component {
       </Router>
     );
   }
-
-  _getCredentialFromLocal = () => {
-    const credentialsStr = localStorage.getItem('credentials');
-    if (credentialsStr){
-      this.props.dispatch(createAction(FETCH_CREDENTIALS, JSON.parse(credentialsStr)))
-    }
-  }
 }
 
 function demoAsyncCall() {
   return new Promise((resolve) => setTimeout(() => resolve(), 2500));
 }
-export default connect() (App);
+export default App;

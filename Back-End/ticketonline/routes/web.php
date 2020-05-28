@@ -244,17 +244,10 @@ Route::group(['prefix'=>'page'], function(){
 
 Auth::routes();
 
-// Route::group(['prefix'=>'admin'], function(){
-// 	Route::group(['prefix'=>'login'], function(){
-// 		Route::get('/home', 'HomeController@index')->name('home');
-// 		Route::post('/home', 'HomeController@index')->name('home');
-// 	});	
-// });
-
-
 Route::group(['prefix'=>'trade'], function(){
 		Route::get('index','TradeTicketController@getLayout');
 		Route::get('index','TradeTicketController@getDanhSachTuyen');
+		Route::get('news','TradeTicketController@getNews');
 });
 
 // Đăng ký thành viên

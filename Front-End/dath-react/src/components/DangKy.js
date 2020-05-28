@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Axios from "axios";
 import * as yup from "yup";
+import swal from "sweetalert";
 
 const UserSchema = yup.object().shape({
   name: yup.string().required("*Bạn chưa nhập họ tên"),
@@ -14,18 +15,6 @@ const UserSchema = yup.object().shape({
 
 class DangKy extends Component {
   _handleSubmit = (values) => {
-    // Axios({
-    //   method: "POST",
-    //   url: "http://localhost:8000/api/users",
-    //   data: values,
-    // })
-    //   .then((res) => {
-    //     alert("Chúc mừng bạn đã đăng ký thành công <3");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // console.log(values);
 
     var postData = values;
 
@@ -38,7 +27,11 @@ class DangKy extends Component {
 
     Axios.post("/api/users", postData, axiosConfig)
       .then((res) => {
-        alert("Chúc mừng bạn đã đăng ký thành công <3");
+        swal({
+          title: "Tuyệt vời!",
+          text: "Đăng ký tài khoản thành công!",
+          icon: "success",
+        });
       })
       .catch((err) => {
         console.log(err);

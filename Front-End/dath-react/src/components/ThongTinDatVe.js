@@ -117,7 +117,7 @@ class ThongTinDatVe extends Component {
   }
   // get danh sach khach hang tu API
   getdskhachhang() {
-    Axios.get("http://127.0.0.1:8000/api/khachhang")
+    Axios.get("http://localhost:8000/api/khachhang")
       .then((res) => {
         this.props.dispatch({
           type: "FETCH_KHACHHANG",
@@ -361,4 +361,4 @@ const mapStateToProps = (state) => {
     khachhangData: state.khachhangReducer.khachhangData,
   };
 };
-export default connect(mapStateToProps)(ThongTinDatVe)
+export default connect(mapStateToProps)(ThongTinDatVe);

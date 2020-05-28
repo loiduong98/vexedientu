@@ -13,6 +13,16 @@ class TradeTicketController extends Controller
     	return view('page.tradeticket.index');
     }
 
+    public function getNews()
+    {
+    	return view('page.tradeticket.news');
+    }
+
+    public function postNews()
+    {
+    	return view('admin.tradeticket.them');
+    }
+
     public function getDanhSachTuyen()
     {
     	$tuyen = tuyen::orderBy('id','DESC')->get();
