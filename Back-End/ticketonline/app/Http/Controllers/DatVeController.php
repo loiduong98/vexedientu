@@ -68,7 +68,6 @@ class DatVeController extends Controller
                 'HoTen.required'=>'Bạn chưa nhập tên nhân viên',
             ]);
 
-        // dd($request->all());
         $lichchay = lichchay::all();
         $khachhang = khachhang::all();
         $tuyen     = tuyen::all();
@@ -266,7 +265,8 @@ class DatVeController extends Controller
         $hoadon->TongTien = $tongtien;
         $hoadon->GhiChu = 'Dat ve cho vui';
         $hoadon->idKH = $id_KH;
-        $hoadon->idHTTT = 1;
+        $hoadon->SoLuong = $soluong;
+        $hoadon->GheDaDat = $TenGhe;
         $hoadon->save();
 
         if(($hoadon->save()) !== true){
@@ -290,19 +290,5 @@ class DatVeController extends Controller
         if(($ve->save()) !== true){
           echo json_encode(['status'=>'fasle','message'=>'Khong the tao ve']);die();  
         } 
-        
-        $id_ve = $ve->id;
-
-        // Tao chi tiet hoa don
-        $ct_hoadon = new ct_hoadon;
-        $ct_hoadon->id_hoadon = $id_HD;      
-        $ct_hoadon->idVe = $id_ve;
-        $ct_hoadon->SoLuong = $soluong;
-        $ct_hoadon->GheDaDat = $TenGhe;
-        $ct_hoadon->save();
-
-        if(($ct_hoadon->save()) !== true){
-          echo json_encode(['status'=>'fasle','message'=>'Khong the tao chi tiet hoa don']);die();  
-        }
     }
 }

@@ -15,7 +15,8 @@ class LichChayController extends Controller
     
     public function getDanhSach()
     {
-
+        $tuyen = tuyen::all();
+        $xe = xe::all();
     	$lichchay = lichchay::orderBy('id','DESC')->get();
     	return view('admin.lichchay.danhsach', ['lichchay'=>$lichchay]);
     }

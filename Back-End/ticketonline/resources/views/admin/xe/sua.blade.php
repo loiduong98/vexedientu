@@ -29,8 +29,12 @@
                                 <input class="form-control" name="BSXe" placeholder="Nhập biển số xe" value="{{$xe->BSXe}}" />
                             </div>
                             <div class="form-group">
+                                <label>Ghế đã đặt</label>
+                                <input class="form-control" name="GheDaDat" placeholder="Nhập ghế đã đặt" value="{{$xe->GheDaDat}}"/>
+                            </div>
+                            <div class="form-group">
                                 <label>Sơ đồ ghế</label>
-                                <input class="form-control" name="SoDoghe" placeholder="Nhập Sơ đồ ghế" value="{{$xe->idSoDoGhe}}"/>
+                                <input class="form-control" name="SoDoghe" placeholder="Nhập Sơ đồ ghế" value="{{$xe->SoDoGhe}}"/>
                             </div>
                             
                             

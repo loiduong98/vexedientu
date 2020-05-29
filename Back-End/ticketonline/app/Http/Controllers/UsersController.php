@@ -27,19 +27,19 @@ class UsersController extends Controller
 
     public function postThem(Request $request)
     {
-        // $this->validate($request,
-        //     [
-        //         'email'=>'required|min:3|max:100|unique:users',
-        //         'password'=>'required',
-        //         'level'=>'required',
-        //     ],
-        //     [
-        //         'level.required'=>'Bạn chưa chọn level',
-        //         'username.required'=>'Bạn chưa nhập username',
-        //         'username.min'=>'Username quá ngắn',
-        //         'username.max'=>'Username quá dài',
-        //         'password.required'=>'Bạn chưa nhập password',
-        //     ]);
+        $this->validate($request,
+            [
+                'email'=>'required|min:3|max:100|unique:users',
+                'password'=>'required',
+                'level'=>'required',
+            ],
+            [
+                'level.required'=>'Bạn chưa chọn level',
+                'username.required'=>'Bạn chưa nhập username',
+                'username.min'=>'Username quá ngắn',
+                'username.max'=>'Username quá dài',
+                'password.required'=>'Bạn chưa nhập password',
+            ]);
         
         $users = new User;
         $users->name = $request->name;
