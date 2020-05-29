@@ -133,13 +133,13 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-file-alt"></i> Tin tức<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fas fa-file-alt"></i>Bảng tin<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="admin/tintuc/danhsach">Danh sách Tin tức</a>
+                                    <a href="admin/bangtin/danhsach">Danh sách bảng tin</a>
                                 </li>
                                 <li>
-                                    <a href="admin/tintuc/them">Thêm Tin tức</a>
+                                    <a href="admin/bangtin/them">Thêm bảng tin</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

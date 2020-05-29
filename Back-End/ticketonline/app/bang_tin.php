@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class tintuc extends Model
+class bang_tin extends Model
 {
-    protected $table = "tintuc";
+    protected $table = "bang_tin";
     public $timestamps = false;
 }

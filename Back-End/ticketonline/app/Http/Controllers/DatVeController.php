@@ -177,14 +177,6 @@ class DatVeController extends Controller
             $message->to('loiduong0511@yahoo.com')->subject("Chúc mừng bạn đã đặt vé thành công");
             $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD.');
         });
-            // $HoTen = $request->all();
-            // $Email = $request->all();
-            // Mail::send(['html'=>'page.layout.mailfb'], array('HoTen'=>$HoTen,'Email'=>$Email), function($message){
-            //     $message->to('loiduong0511@yahoo.com')->subject('Visitor Feedback!');
-            // });
-            // Session::flash('flash_message', 'Send message successfully!');
-
-        // QrCode::generate($CTV_mbm);
         //check ok
         return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
     }
@@ -302,7 +294,6 @@ class DatVeController extends Controller
         $id_ve = $ve->id;
 
         // Tao chi tiet hoa don
-
         $ct_hoadon = new ct_hoadon;
         $ct_hoadon->id_hoadon = $id_HD;      
         $ct_hoadon->idVe = $id_ve;
@@ -313,7 +304,5 @@ class DatVeController extends Controller
         if(($ct_hoadon->save()) !== true){
           echo json_encode(['status'=>'fasle','message'=>'Khong the tao chi tiet hoa don']);die();  
         }
-
     }
-   
 }
