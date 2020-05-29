@@ -229,7 +229,7 @@ li.page.selected {
                         </div>
                         <div class="col-md-8">
                             <div class="title">
-                                <a href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
+                                <a data-toggle="modal" data-target="#modelId" href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
                             </div>
                             <div class="price">
                                 <p>Giá thỏa thuận</p>
@@ -256,7 +256,7 @@ li.page.selected {
                         </div>
                         <div class="col-md-8">
                             <div class="title">
-                                <a href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
+                                <a data-toggle="modal" data-target="#modelId" href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
                             </div>
                             <div class="price">
                                 <p>Giá thỏa thuận</p>
@@ -283,7 +283,7 @@ li.page.selected {
                         </div>
                         <div class="col-md-8">
                             <div class="title">
-                                <a href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
+                                <a data-toggle="modal" data-target="#modelId" href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
                             </div>
                             <div class="price">
                                 <p>Giá thỏa thuận</p>
@@ -310,7 +310,7 @@ li.page.selected {
                         </div>
                         <div class="col-md-8">
                             <div class="title">
-                                <a href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
+                                <a data-toggle="modal" data-target="#modelId" href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
                             </div>
                             <div class="price">
                                 <p>Giá thỏa thuận</p>
@@ -337,7 +337,7 @@ li.page.selected {
                         </div>
                         <div class="col-md-8">
                             <div class="title">
-                                <a href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
+                                <a data-toggle="modal" data-target="#modelId" href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
                             </div>
                             <div class="price">
                                 <p>Giá thỏa thuận</p>
@@ -467,4 +467,33 @@ li.page.selected {
         </div>
     </div>
     </div>
+    <!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Trao đổi vé</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <section class="ticket">
+                    <div class="ticket__content">
+                        <div class="ticket__items">
+                            <img src="./img/bx-my-dinh.jpg" alt="" style="width: 480px; height: 250px;">
+                            <h2>Thông tin vé </h2>
+                            <p> <i class="fa fa-bus"></i> Tuyến đi:</p>
+                            <p> <i class="fa fa-clock"></i> Giờ đi: </p>
+                            <p> <i class="fa fa-money-bill"></i> Giá vé:</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Liên hệ</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
