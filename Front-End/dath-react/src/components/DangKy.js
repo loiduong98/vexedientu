@@ -41,7 +41,7 @@ class DangKy extends Component {
       .then((res) => {
         swal({
           title: "Tuyệt vời!",
-          text: "Vé của bạn đã được đặt thành công!",
+          text: "Đăng ký tài khoản thành công!",
           icon: "success",
         });
       })

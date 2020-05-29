@@ -13,10 +13,6 @@ export default class ThanhToan extends Component {
     };
   }
 
-  testPost() {
-    console.log("Okay roi ban oi");
-  }
-
   postDatVe() {
     // dữ liệu đẩy xuống backend xử lý
     var postData = this.state;
@@ -46,7 +42,7 @@ export default class ThanhToan extends Component {
   step1; // dữ liệu bước chọn tuyến
   step2; // dữ liệu bước chọn ghế
   step3; // dữ liệu bước điền thông tin khách hàng
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (typeof Storage !== "undefined") {
       // get sessionStorage
       this.step1 = JSON.parse(sessionStorage.getItem("chonTuyen"));
@@ -96,7 +92,7 @@ export default class ThanhToan extends Component {
     }
     const sell = parseFloat(currency.sell.replace(",", ""));
     const output = encode ? input * sell : input / sell;
-    const rounded = Math.round(output * 1000) / 1000;
+    const rounded = (Math.round(output * 1000) / 1000).toFixed(2);
     return rounded.toString();
   }
 
@@ -114,8 +110,7 @@ export default class ThanhToan extends Component {
       " ",
       ngaydi.substr(0, 4)
     );
-    var pay = this.state.tongtienUSD.substr(0, 5);
-
+    var pay = this.state.tongtienUSD;
     if (this.state.isGoNext === true) {
       return <Redirect to="/" />;
     }
@@ -191,7 +186,7 @@ export default class ThanhToan extends Component {
                 </div>
                 <div className="card-body">
                   <div className="panel">
-                    <form action className="form-horizontal">
+                    <form className="form-horizontal">
                       <div className="form-group">
                         <div className="col-md-12">
                           <table className="table">

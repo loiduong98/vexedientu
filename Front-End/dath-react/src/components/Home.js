@@ -118,7 +118,6 @@ class Home extends Component {
               return console.log(this.state);
             }
           );
-          console.log("Tuyến xe khách chọn là: " + tuyen.TenTuyen);
         }
       });
       this.setState({ isRedirectToChonGhe: true });
@@ -133,9 +132,6 @@ class Home extends Component {
     if (this.state.idBenDi === 0) {
       console.log("Chưa chọn bến đi");
     } else {
-      console.log(
-        "Đã cập nhật bến đi ID ben di khach hang chon:" + this.state.idBenDi
-      );
       this.a1 = [];
       this.props.dstuyenData.map((item, index) => {
         if (this.state.idBenDi === item.idBenDi) {
@@ -361,12 +357,6 @@ class Home extends Component {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="row">
-            {this.props.dsbenData.map((item, index) => {
-              return item.TenBen;
-            })}
           </div>
         </div>
       </div>
