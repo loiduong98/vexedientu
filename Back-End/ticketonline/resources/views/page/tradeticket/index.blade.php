@@ -206,7 +206,7 @@ li.page.selected {
                         <input class="form-control" type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm">
                     </div>
                     <div class="btn-search font-bold text-center form-group pull-right">
-                        <button class="btn btn-light">Tìm</button>
+                        <button class="">Tìm</button>
                     </div>
                 </form>
             </div>
@@ -229,7 +229,7 @@ li.page.selected {
                         </div>
                         <div class="col-md-8">
                             <div class="title">
-                                <a data-toggle="modal" data-target="#modelId" href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
+                                
                             </div>
                             <div class="price">
                                 <p>Giá thỏa thuận</p>
@@ -466,8 +466,8 @@ li.page.selected {
             </ul>
         </div>
     </div>
-</div>
-<!-- Modal -->
+    </div>
+    <!-- Modal -->
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

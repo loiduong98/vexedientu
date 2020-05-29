@@ -27,6 +27,7 @@ class ThongTinDatVe extends Component {
             inputHoTen: item.HoTen,
             inputAddress: item.DiaChi,
             inputEmail: item.Email,
+            isOldCustomer: true,
           });
         }
       });
@@ -35,6 +36,7 @@ class ThongTinDatVe extends Component {
       this.setState({
         isLoaderSpinner: true,
         inputPhone: e.target.value,
+        isOldCustomer: false,
       });
     }
   }
@@ -117,7 +119,7 @@ class ThongTinDatVe extends Component {
   }
   // get danh sach khach hang tu API
   getdskhachhang() {
-    Axios.get("http://127.0.0.1:8000/api/khachhang")
+    Axios.get("http://localhost:8000/api/khachhang")
       .then((res) => {
         this.props.dispatch({
           type: "FETCH_KHACHHANG",
@@ -133,103 +135,106 @@ class ThongTinDatVe extends Component {
     this.getdskhachhang();
   }
 
-  render() {
-    var customerForm = this.props.khachhangData.map((item, index) => {
-      if (this.state.inputPhone === "") {
-        return;
-      } else if (this.state.isLoaderSpinner === true) {
-        return (
-          <div className="loader" style={{ display: "inline-block" }}>
-            <div id="ld2">
-              <div />
-              <div />
-              <div />
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
+  customerForm(check) {
+    if (this.state.inputPhone === "") {
+      return;
+    }
+    if (this.state.isLoaderSpinner === true) {
+      return (
+        <div className="loader" style={{ display: "inline-block" }}>
+          <div id="ld2">
+            <div />
+            <div />
+            <div />
+            <div />
+            <div />
+            <div />
+            <div />
           </div>
-        );
-      } else if (item.SDT !== this.state.inputPhone) {
-        return (
-          <div key={index}>
-            <div className="form-group">
-              <input
-                onChange={(event) => this.handleChange(event)}
-                type="text"
-                className="form-control"
-                name="inputHoTen"
-                placeholder="Họ Tên"
-              />
-            </div>
-            <div className="form-group">
-              <input
-                onChange={(event) => this.handleChange(event)}
-                type="email"
-                className="form-control"
-                name="inputEmail"
-                placeholder="youremail@example.com"
-              />
-            </div>
-            <div className="form-group">
-              <input
-                onChange={(event) => this.handleChange(event)}
-                type="text"
-                className="form-control"
-                name="inputAddress"
-                placeholder="Địa chỉ"
-              />
-            </div>
+        </div>
+      );
+    }
+    if (this.state.isOldCustomer !== true) {
+      return (
+        <div>
+          <div className="form-group">
+            <input
+              onChange={(event) => this.handleChange(event)}
+              type="text"
+              className="form-control"
+              name="inputHoTen"
+              placeholder="Họ Tên"
+            />
           </div>
-        );
-      } else {
-        return (
-          <div key={index}>
-            <div className="form-group label-floating has-success">
-              <label className="control-label"></label>
-              <input
-                onChange={this.handleChange}
-                type="text"
-                className="form-control"
-                name="inputHoTen"
-                defaultValue={item.HoTen}
-              />
-              <span className="form-control-feedback">
-                <i className="material-icons">done</i>
-              </span>
-            </div>
-            <div className="form-group label-floating has-success">
-              <label className="control-label"></label>
-              <input
-                onChange={this.handleChange}
-                type="email"
-                className="form-control"
-                name="inputEmail"
-                defaultValue={item.Email}
-              />
-              <span className="form-control-feedback">
-                <i className="material-icons">done</i>
-              </span>
-            </div>
-            <div className="form-group label-floating has-success">
-              <label className="control-label"></label>
-              <input
-                onChange={this.handleChange}
-                type="text"
-                className="form-control"
-                name="inputAddress"
-                defaultValue={item.DiaChi}
-              />
-              <span className="form-control-feedback">
-                <i className="material-icons">done</i>
-              </span>
-            </div>
+          <div className="form-group">
+            <input
+              onChange={(event) => this.handleChange(event)}
+              type="email"
+              className="form-control"
+              name="inputEmail"
+              placeholder="youremail@example.com"
+            />
           </div>
-        );
-      }
-    });
+          <div className="form-group">
+            <input
+              onChange={(event) => this.handleChange(event)}
+              type="text"
+              className="form-control"
+              name="inputAddress"
+              placeholder="Địa chỉ"
+            />
+          </div>
+        </div>
+      );
+    }
+    if (this.state.isOldCustomer === true) {
+      return (
+        <div>
+          <div className="form-group label-floating has-success">
+            <label className="control-label"></label>
+            <input
+              onChange={this.handleChange}
+              type="text"
+              className="form-control"
+              name="inputHoTen"
+              defaultValue={this.state.inputHoTen}
+            />
+            <span className="form-control-feedback">
+              <i className="material-icons">done</i>
+            </span>
+          </div>
+          <div className="form-group label-floating has-success">
+            <label className="control-label"></label>
+            <input
+              onChange={this.handleChange}
+              type="email"
+              className="form-control"
+              name="inputEmail"
+              defaultValue={this.state.inputEmail}
+            />
+            <span className="form-control-feedback">
+              <i className="material-icons">done</i>
+            </span>
+          </div>
+          <div className="form-group label-floating has-success">
+            <label className="control-label"></label>
+            <input
+              onChange={this.handleChange}
+              type="text"
+              className="form-control"
+              name="inputAddress"
+              defaultValue={this.state.inputAddress}
+            />
+            <span className="form-control-feedback">
+              <i className="material-icons">done</i>
+            </span>
+          </div>
+        </div>
+      );
+    }
+  }
 
+  render() {
     //điều kiện chuyển hướng
     if (this.state.isGoPayment === true) {
       return <Redirect to="/thanh-toan" />;
@@ -292,7 +297,7 @@ class ThongTinDatVe extends Component {
                       pattern="(\+84|0){1}(9|8|7|5|3){1}[0-9]{8}"
                     />
                   </div>
-                  {customerForm}
+                  {this.customerForm(this.state.isOldCustomer)}
 
                   <div className="form-row">
                     <button
@@ -300,7 +305,7 @@ class ThongTinDatVe extends Component {
                       onClick={(event) => this.handleSubmit(event)}
                       className="btn btn-block btn-success"
                     >
-                      Tiếp tục <span class="material-icons">forward</span>
+                      Tiếp tục <span className="material-icons">forward</span>
                     </button>
                   </div>
                 </form>
@@ -361,4 +366,4 @@ const mapStateToProps = (state) => {
     khachhangData: state.khachhangReducer.khachhangData,
   };
 };
-export default connect(mapStateToProps)(ThongTinDatVe)
+export default connect(mapStateToProps)(ThongTinDatVe);

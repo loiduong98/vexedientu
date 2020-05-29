@@ -1,7 +1,7 @@
 @extends('page.layout.index')
 @section('content')
 <style>
-    * {
+* {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -55,7 +55,7 @@ ul.list__qc li {
     display: flex;
     justify-content: space-between;
     padding: 20px 0px;
-    background-color: #03A9F4;
+    background-color: #50a3b8;
 }
 
 .col-md-7.pull-left.search form {
@@ -70,6 +70,59 @@ ul.list__qc li {
 
 
 /* End Menu Search */
+
+
+/* Content */
+
+.row.news {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.content__left {
+    background-color: #fff;
+    padding-top: 20px;
+}
+
+.main-category {
+    background-color: #fff;
+    margin-left: 20px;
+    width: 100%;
+}
+
+li.iem__category {
+    list-style: none;
+    margin: 20px;
+}
+
+.main-category h3 {
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+    background-color: #50a3b8;
+}
+
+.new__top {
+    margin-left: 5px;
+    margin-top: 50px;
+    background-color: #fff;
+    width: 100%;
+}
+
+.new__top h3 {
+    text-align: center;
+    padding: 10px;
+    background-color: #50a3b8;
+    font-weight: 600;
+}
+
+.new__top .news {
+    width: 100%;
+    margin: 20px;
+}
+
+
+/* End Content */
 
 
 /* Type */
@@ -101,16 +154,69 @@ li.item__type {
 
 /* End Type */
 
-.insert-content {
-    display: inline-block;
-    height: 28px;
-    margin-top: 5px;
-    font-size: 18px;
-    color: #183048;
-    font-weight: 600;
+
+/* Panigation */
+
+ul.list__panigation {
+    display: flex;
 }
+
+.page {
+    height: 50px;
+}
+
+ul.list__panigation li {
+    list-style: none;
+    padding-left: 20px;
+}
+
+ul.list__panigation li a {
+    text-decoration: none;
+    color: black;
+}
+
+li.page.selected {
+    width: 30px;
+    height: 30px;
+    background-color: gray;
+}
+
+
+/* End Panigation */
 </style>
-<!-- header -->
+
+<div class="menu-search">
+        <div class="row">
+            <div class="col-md-7 pull-left search">
+                <form class="form-inline search-form" action="#">
+                    <div class="form-group search-category">
+                        <select class="form-control" name="DanhMuc" id="DanhMuc">
+                                    <option value="">Danh mục</option>
+                                    <option value="1">Vé xe khách</option>
+                                </select>
+                    </div>
+                    <div class="form-group search-location">
+                        <select class="form-control" name="Tuyen" id="Tuyen">
+                                    <option value="">Danh sách tuyến</option>
+                                    <option value="1">Đà Lạt</option>
+                                    <option value="1">Cần Thơ</option>
+                                </select>
+                    </div>
+                    <div class="form-group search-text">
+                        <input class="form-control" type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm">
+                    </div>
+                    <div class="btn-search font-bold text-center form-group pull-right">
+                        <button class="">Tìm</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3 pull-right post-item">
+                <a href="#">
+                    <div class="btn-post-item font-bold text-center">Đăng tin miễn phí</div>
+                </a>
+            </div>
+        </div>
+    </div>
     <div class="new-post">
         <div class="container">
             <div class="row">
@@ -195,9 +301,29 @@ li.item__type {
                             <input id="" class="form-control" type="text" name="phonenumber" placeholder="Mời bạn nhập số điện thoại" maxlength="10" autocomplete="off" data-error="Vui lòng điền đúng số điện thoại">
                         </div>
                     </div>
-                    <input class="btn btn-success mb-3" type="submit" value="Hoàn tất">
+                    <input type="submit" value="Hoàn tất">
                 </form>
             </div>
         </div>
     </div>
+
+    <div class="type-ticket">
+        <div class="container-fluid">
+            <ul class="list__type">
+                <li class="item__type">
+                    <a href="">Vé xe đi Thành Phố Hồ Chí Minh</a>
+                </li>
+                <li class="item__type">
+                    <a href="">Vé xe đi Đà Lạt</a>
+                </li>
+                <li class="item__type">
+                    <a href="">Vé xe đi Phan Thiết</a>
+                </li>
+                <li class="item__type">
+                    <a href="">Vé xe đi Cần Thơ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 @endsection

@@ -13,7 +13,7 @@ class TradeTicketController extends Controller
     	return view('page.tradeticket.index');
     }
 
-    public function getLayoutNews()
+    public function getNews()
     {
     	return view('page.tradeticket.news');
     }

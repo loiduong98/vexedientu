@@ -8,10 +8,10 @@
                 <div class="collapse navbar-collapse" id="menuNav">
                     <ul class="navbar-nav m-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Trang Chủ</a>
+                            <a class="nav-link" href="http://localhost:3000/">Trang Chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="master-asset/login.html">Đăng Nhập</a>
+                            <a class="nav-link" href="http://localhost:3000/dang-nhap">Đăng Nhập</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="master-asset/contact.html">Liên Hệ</a>
