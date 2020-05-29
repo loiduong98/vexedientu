@@ -24,9 +24,11 @@ class DangNhap extends Component {
                       email: "",
                       password: ""
                     }}
-
-                    onSubmit={values => {
+                    onSubmit={(values) => {
+                      console.log(values);
+        
                       this.props.dispatch(login(values))
+                      
                     }}
 
                     render={({ handleChange }) => (
