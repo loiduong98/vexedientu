@@ -27,10 +27,7 @@ class ThongTinDatVe extends Component {
             inputHoTen: item.HoTen,
             inputAddress: item.DiaChi,
             inputEmail: item.Email,
-<<<<<<< HEAD
-=======
             isOldCustomer: true,
->>>>>>> frontend-cong
           });
         }
       });
@@ -138,24 +135,6 @@ class ThongTinDatVe extends Component {
     this.getdskhachhang();
   }
 
-<<<<<<< HEAD
-  render() {
-    var customerForm = this.props.khachhangData.map((item, index) => {
-      if (this.state.inputPhone === "") {
-        return
-      } else if (this.state.isLoaderSpinner === true) {
-        return (
-          <div className="loader" style={{ display: "inline-block" }}>
-            <div id="ld2">
-              <div />
-              <div />
-              <div />
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-=======
   customerForm(check) {
     if (this.state.inputPhone === "") {
       return;
@@ -171,7 +150,6 @@ class ThongTinDatVe extends Component {
             <div />
             <div />
             <div />
->>>>>>> frontend-cong
           </div>
         </div>
       );
@@ -188,51 +166,6 @@ class ThongTinDatVe extends Component {
               placeholder="Họ Tên"
             />
           </div>
-<<<<<<< HEAD
-        );
-      } else {
-        return (
-          <div key={index}>
-            <div className="form-group label-floating has-success">
-              <label className="control-label"></label>
-              <input
-                onChange={this.handleChange}
-                type="text"
-                className="form-control"
-                name="inputHoTen"
-                defaultValue={item.HoTen}
-              />
-              <span className="form-control-feedback">
-                <i className="material-icons">done</i>
-              </span>
-            </div>
-            <div className="form-group label-floating has-success">
-              <label className="control-label"></label>
-              <input
-                onChange={this.handleChange}
-                type="email"
-                className="form-control"
-                name="inputEmail"
-                defaultValue={item.Email}
-              />
-              <span className="form-control-feedback">
-                <i className="material-icons">done</i>
-              </span>
-            </div>
-            <div className="form-group label-floating has-success">
-              <label className="control-label"></label>
-              <input
-                onChange={this.handleChange}
-                type="text"
-                className="form-control"
-                name="inputAddress"
-                defaultValue={item.DiaChi}
-              />
-              <span className="form-control-feedback">
-                <i className="material-icons">done</i>
-              </span>
-            </div>
-=======
           <div className="form-group">
             <input
               onChange={(event) => this.handleChange(event)}
@@ -241,7 +174,6 @@ class ThongTinDatVe extends Component {
               name="inputEmail"
               placeholder="youremail@example.com"
             />
->>>>>>> frontend-cong
           </div>
           <div className="form-group">
             <input
@@ -378,11 +310,7 @@ class ThongTinDatVe extends Component {
                       onClick={(event) => this.handleSubmit(event)}
                       className="btn btn-block btn-success"
                     >
-<<<<<<< HEAD
-                      Tiếp tục <span class="material-icons">forward</span>
-=======
                       Tiếp tục <span className="material-icons">forward</span>
->>>>>>> frontend-cong
                     </button>
                   </div>
                 </form>
@@ -443,8 +371,4 @@ const mapStateToProps = (state) => {
     khachhangData: state.khachhangReducer.khachhangData,
   };
 };
-<<<<<<< HEAD
-export default connect(mapStateToProps)(ThongTinDatVe)
-=======
 export default connect(mapStateToProps)(ThongTinDatVe);
->>>>>>> frontend-cong

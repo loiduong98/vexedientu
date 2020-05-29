@@ -2,22 +2,15 @@ import React, { Component } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import Axios from "axios";
 import retesData from "../data/ratesData.json";
-<<<<<<< HEAD
-=======
 import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
->>>>>>> frontend-cong
 
 export default class ThanhToan extends Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
-    this.state = {};
-=======
     this.state = {
       isGoNext: false,
     };
->>>>>>> frontend-cong
   }
 
   postDatVe() {
@@ -30,11 +23,6 @@ export default class ThanhToan extends Component {
       },
     };
 
-<<<<<<< HEAD
-    Axios.post("/api/dangky", postData, axiosConfig)
-      .then((res) => {
-        console.log("RESPONSE RECEIVED: ", res);
-=======
     Axios.post("/api/bookticket", postData, axiosConfig)
       .then((res) => {
         console.log("RESPONSE RECEIVED: ", res);
@@ -45,7 +33,6 @@ export default class ThanhToan extends Component {
         }).then(() => {
           this.setState({ isGoNext: true });
         });
->>>>>>> frontend-cong
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
@@ -55,11 +42,7 @@ export default class ThanhToan extends Component {
   step1; // dữ liệu bước chọn tuyến
   step2; // dữ liệu bước chọn ghế
   step3; // dữ liệu bước điền thông tin khách hàng
-<<<<<<< HEAD
-  componentWillMount() {
-=======
   UNSAFE_componentWillMount() {
->>>>>>> frontend-cong
     if (typeof Storage !== "undefined") {
       // get sessionStorage
       this.step1 = JSON.parse(sessionStorage.getItem("chonTuyen"));
@@ -109,11 +92,7 @@ export default class ThanhToan extends Component {
     }
     const sell = parseFloat(currency.sell.replace(",", ""));
     const output = encode ? input * sell : input / sell;
-<<<<<<< HEAD
-    const rounded = Math.round(output * 1000) / 1000;
-=======
     const rounded = (Math.round(output * 1000) / 1000).toFixed(2);
->>>>>>> frontend-cong
     return rounded.toString();
   }
 
@@ -131,14 +110,10 @@ export default class ThanhToan extends Component {
       " ",
       ngaydi.substr(0, 4)
     );
-<<<<<<< HEAD
-    var pay = this.state.tongtienUSD.substr(0, 5);
-=======
     var pay = this.state.tongtienUSD;
     if (this.state.isGoNext === true) {
       return <Redirect to="/" />;
     }
->>>>>>> frontend-cong
 
     return (
       <section className="payment" style={{ marginTop: "100px" }}>
@@ -192,14 +167,7 @@ export default class ThanhToan extends Component {
                   <PayPalButton
                     amount={pay}
                     onSuccess={(details, data) => {
-<<<<<<< HEAD
-                      alert(
-                        "Chúc mừng bạn " +
-                          details.payer.name.given_name+" đã thanh toán thành công"
-                      );
-=======
                       this.postDatVe();
->>>>>>> frontend-cong
                     }}
                     shippingPreference="NO_SHIPPING"
                     options={{
@@ -218,11 +186,7 @@ export default class ThanhToan extends Component {
                 </div>
                 <div className="card-body">
                   <div className="panel">
-<<<<<<< HEAD
-                    <form action className="form-horizontal">
-=======
                     <form className="form-horizontal">
->>>>>>> frontend-cong
                       <div className="form-group">
                         <div className="col-md-12">
                           <table className="table">
@@ -275,9 +239,6 @@ export default class ThanhToan extends Component {
                                   <span style={{ fontWeight: "bold" }}>
                                     {this.state.tongtien
                                       .toString()
-<<<<<<< HEAD
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-=======
                                       .replace(
                                         /\B(?=(\d{3})+(?!\d))/g,
                                         ","
@@ -291,7 +252,6 @@ export default class ThanhToan extends Component {
                                 <td>
                                   <span style={{ fontWeight: "bold" }}>
                                     {pay} USD
->>>>>>> frontend-cong
                                   </span>
                                 </td>
                               </tr>

@@ -1,17 +1,14 @@
 const stateUser = {
-    credentials:null
+    credentials: null
 }
 
 const userReducer = (state = stateUser, action) => {
     switch (action.type) {
-<<<<<<< HEAD
-=======
         case "FETCH_LOGIN":
-        {
-            state.userReducer = action.payload;   
-            return { ...state };
-        }
->>>>>>> frontend-cong
+            {
+                state.userReducer = action.payload;
+                return {...state };
+            }
         default:
             return state;
     }

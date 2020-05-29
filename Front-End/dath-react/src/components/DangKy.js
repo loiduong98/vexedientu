@@ -39,15 +39,11 @@ class DangKy extends Component {
 
     Axios.post("/api/users", postData, axiosConfig)
       .then((res) => {
-<<<<<<< HEAD
-        alert("Chúc mừng bạn đã đăng ký thành công <3");
-=======
         swal({
           title: "Tuyệt vời!",
           text: "Đăng ký tài khoản thành công!",
           icon: "success",
         });
->>>>>>> frontend-cong
       })
       .catch((err) => {
         console.log(err);
