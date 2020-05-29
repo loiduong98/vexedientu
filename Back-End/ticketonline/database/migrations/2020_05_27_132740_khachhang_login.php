@@ -17,7 +17,8 @@ class KhachhangLogin extends Migration
             $table->Increments('id');
             $table->string('name');
             $table->string('email');
-            $table->number('phone');
+            $table->Integer('phone');
+            $table->string('diachi');
             $table->string('password');
             $table->rememberToken();
             $table->string('urlHinh');
