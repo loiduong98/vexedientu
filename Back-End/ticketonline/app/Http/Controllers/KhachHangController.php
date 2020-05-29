@@ -131,7 +131,6 @@ class KhachHangController extends Controller
         $all_kh = khachhang_login::all();
         
         if(($all_kh->first()) == null){
-            dd('Hellooo');
             $kh = new khachhang_login;
 
             $kh->name       = $rq_name;
