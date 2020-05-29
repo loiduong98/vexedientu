@@ -165,44 +165,45 @@ class KhachHangController extends Controller
         }
         
         foreach ($all_kh as $vl_kh) {
-            $phone_kh = $vl_kh->phone;
-            $email_kh = $vl_kh->email;
-        
-            if(($phone_kh == $rq_phone) || ($email_kh == $rq_email)){
-                echo json_encode(['status'=>'false','message'=>'Số điện thoại hoặc email đã tồn tại.']);die();
-            }else{
-                $kh = new khachhang_login;
-
-                $kh->name       = $rq_name;
-                $kh->email      = $rq_email;
-                $kh->phone      = $rq_phone;
-                $kh->diachi     = $rq_diachi;
-                $kh->password   = $rq_pass;
-
-                if($request->hasFile('urlHinh'))
-                {       
-                    $file = $request->file('urlHinh');
-
-                    $name = $file->getClientOriginalName();
-                    $urlHinh = str_random(4)."_".$name;
-                    while(file_exists("upload/kh/".$urlHinh))
-                    {
-                        $urlHinh = str_random(4)."_".$name;
-                    }
-                    $file->move("upload/kh",$urlHinh);
-                    $kh->urlHinh = $urlHinh;
-                }
-                else
-                {
-                    $kh->urlHinh = "default.png";
-                }
-                $kh->save();
-                if(($kh->save()) !== true){
-                    echo json_encode(['status'=>'false','message'=>'Có lỗi !']);die();    
-                }
-                echo json_encode(['status'=>'true']);die();
-            }
+            $phone_kh[] = $vl_kh->phone;
+            $email_kh[] = $vl_kh->email;
         }
+
+        if(in_array($rq_phone,$phone_kh) || in_array($rq_email,$email_kh)){
+            echo json_encode(['status'=>'false','message'=>'Số điện thoại hoặc email đã tồn tại.']);die();
+        }else{
+            $kh = new khachhang_login;
+
+            $kh->name       = $rq_name;
+            $kh->email      = $rq_email;
+            $kh->phone      = $rq_phone;
+            $kh->diachi     = $rq_diachi;
+            $kh->password   = $rq_pass;
+
+            if($request->hasFile('urlHinh'))
+            {       
+                $file = $request->file('urlHinh');
+
+                $name = $file->getClientOriginalName();
+                $urlHinh = str_random(4)."_".$name;
+                while(file_exists("upload/kh/".$urlHinh))
+                {
+                    $urlHinh = str_random(4)."_".$name;
+                }
+                $file->move("upload/kh",$urlHinh);
+                $kh->urlHinh = $urlHinh;
+            }
+            else
+            {
+                $kh->urlHinh = "default.png";
+            }
+            $kh->save();
+            if(($kh->save()) !== true){
+                echo json_encode(['status'=>'false','message'=>'Có lỗi !']);die();    
+            }
+            echo json_encode(['status'=>'true']);die();
+        }
+
     }
     
     // Đăng nhập khách hàng
