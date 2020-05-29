@@ -229,7 +229,7 @@ li.page.selected {
                         </div>
                         <div class="col-md-8">
                             <div class="title">
-                                <a data-toggle="modal" data-target="#modelId" href="#">Cần bán 2 vé tàu từ Sài Gòn về Bảo Lộc</a>
+                                
                             </div>
                             <div class="price">
                                 <p>Giá thỏa thuận</p>
