@@ -40,9 +40,7 @@
   padding-top: 26px;
 }
 #booking .col-md-4 .form-group select {
-  color: black;
-  background-color: rgba(251, 243, 243, 0.3);
-  font-weight: 600;
+  color: white;
   padding-left: 5px;
 }
 /* CSS phần chọn ghế */

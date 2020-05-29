@@ -111,7 +111,7 @@ class ChonGhe extends Component {
 
   tongtien;
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (typeof Storage !== "undefined") {
       // get sessionStorage
       this.step1 = JSON.parse(sessionStorage.getItem("chonTuyen"));
@@ -399,7 +399,7 @@ class ChonGhe extends Component {
                       className="btn btn-block btn-success"
                       onClick={(e) => this.handleSubmit(e)}
                     >
-                      Tiếp tục <span class="material-icons">forward</span>
+                      Tiếp tục <span className="material-icons">forward</span>
                     </button>
                   </form>
                 </div>

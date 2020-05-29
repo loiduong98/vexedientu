@@ -27,6 +27,10 @@ class ThongTinDatVe extends Component {
             inputHoTen: item.HoTen,
             inputAddress: item.DiaChi,
             inputEmail: item.Email,
+<<<<<<< HEAD
+=======
+            isOldCustomer: true,
+>>>>>>> frontend-cong
           });
         }
       });
@@ -35,6 +39,7 @@ class ThongTinDatVe extends Component {
       this.setState({
         isLoaderSpinner: true,
         inputPhone: e.target.value,
+        isOldCustomer: false,
       });
     }
   }
@@ -133,6 +138,7 @@ class ThongTinDatVe extends Component {
     this.getdskhachhang();
   }
 
+<<<<<<< HEAD
   render() {
     var customerForm = this.props.khachhangData.map((item, index) => {
       if (this.state.inputPhone === "") {
@@ -149,39 +155,40 @@ class ThongTinDatVe extends Component {
               <div />
               <div />
             </div>
+=======
+  customerForm(check) {
+    if (this.state.inputPhone === "") {
+      return;
+    }
+    if (this.state.isLoaderSpinner === true) {
+      return (
+        <div className="loader" style={{ display: "inline-block" }}>
+          <div id="ld2">
+            <div />
+            <div />
+            <div />
+            <div />
+            <div />
+            <div />
+            <div />
+>>>>>>> frontend-cong
           </div>
-        );
-      } else if (item.SDT !== this.state.inputPhone) {
-        return (
-          <div key={index}>
-            <div className="form-group">
-              <input
-                onChange={(event) => this.handleChange(event)}
-                type="text"
-                className="form-control"
-                name="inputHoTen"
-                placeholder="Họ Tên"
-              />
-            </div>
-            <div className="form-group">
-              <input
-                onChange={(event) => this.handleChange(event)}
-                type="email"
-                className="form-control"
-                name="inputEmail"
-                placeholder="youremail@example.com"
-              />
-            </div>
-            <div className="form-group">
-              <input
-                onChange={(event) => this.handleChange(event)}
-                type="text"
-                className="form-control"
-                name="inputAddress"
-                placeholder="Địa chỉ"
-              />
-            </div>
+        </div>
+      );
+    }
+    if (this.state.isOldCustomer !== true) {
+      return (
+        <div>
+          <div className="form-group">
+            <input
+              onChange={(event) => this.handleChange(event)}
+              type="text"
+              className="form-control"
+              name="inputHoTen"
+              placeholder="Họ Tên"
+            />
           </div>
+<<<<<<< HEAD
         );
       } else {
         return (
@@ -225,10 +232,81 @@ class ThongTinDatVe extends Component {
                 <i className="material-icons">done</i>
               </span>
             </div>
+=======
+          <div className="form-group">
+            <input
+              onChange={(event) => this.handleChange(event)}
+              type="email"
+              className="form-control"
+              name="inputEmail"
+              placeholder="youremail@example.com"
+            />
+>>>>>>> frontend-cong
           </div>
-        );
-      }
-    });
+          <div className="form-group">
+            <input
+              onChange={(event) => this.handleChange(event)}
+              type="text"
+              className="form-control"
+              name="inputAddress"
+              placeholder="Địa chỉ"
+            />
+          </div>
+        </div>
+      );
+    }
+    if (this.state.isOldCustomer === true) {
+      return (
+        <div>
+          <div className="form-group label-floating has-success">
+            <label className="control-label"></label>
+            <input
+              onChange={this.handleChange}
+              type="text"
+              className="form-control"
+              name="inputHoTen"
+              defaultValue={this.state.inputHoTen}
+            />
+            <span className="form-control-feedback">
+              <i className="material-icons">done</i>
+            </span>
+          </div>
+          <div className="form-group label-floating has-success">
+            <label className="control-label"></label>
+            <input
+              onChange={this.handleChange}
+              type="email"
+              className="form-control"
+              name="inputEmail"
+              defaultValue={this.state.inputEmail}
+            />
+            <span className="form-control-feedback">
+              <i className="material-icons">done</i>
+            </span>
+          </div>
+          <div className="form-group label-floating has-success">
+            <label className="control-label"></label>
+            <input
+              onChange={this.handleChange}
+              type="text"
+              className="form-control"
+              name="inputAddress"
+              defaultValue={this.state.inputAddress}
+            />
+            <span className="form-control-feedback">
+              <i className="material-icons">done</i>
+            </span>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  render() {
+    //điều kiện chuyển hướng
+    if (this.state.isGoPayment === true) {
+      return <Redirect to="/thanh-toan" />;
+    }
 
     //điều kiện chuyển hướng
     if (this.state.isGoPayment === true) {
@@ -292,7 +370,7 @@ class ThongTinDatVe extends Component {
                       pattern="(\+84|0){1}(9|8|7|5|3){1}[0-9]{8}"
                     />
                   </div>
-                  {customerForm}
+                  {this.customerForm(this.state.isOldCustomer)}
 
                   <div className="form-row">
                     <button
@@ -300,7 +378,11 @@ class ThongTinDatVe extends Component {
                       onClick={(event) => this.handleSubmit(event)}
                       className="btn btn-block btn-success"
                     >
+<<<<<<< HEAD
                       Tiếp tục <span class="material-icons">forward</span>
+=======
+                      Tiếp tục <span className="material-icons">forward</span>
+>>>>>>> frontend-cong
                     </button>
                   </div>
                 </form>
@@ -361,4 +443,8 @@ const mapStateToProps = (state) => {
     khachhangData: state.khachhangReducer.khachhangData,
   };
 };
+<<<<<<< HEAD
 export default connect(mapStateToProps)(ThongTinDatVe)
+=======
+export default connect(mapStateToProps)(ThongTinDatVe);
+>>>>>>> frontend-cong
