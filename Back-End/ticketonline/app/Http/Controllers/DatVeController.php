@@ -242,12 +242,15 @@ class DatVeController extends Controller
         foreach ($xe as $vl_xe) {
             $id_vl_xe       = $vl_xe->id;
             $xe_ghe         = explode(',', $vl_xe->GheDaDat);
-            $TenGhe_array   = explode(',',$TenGhe);
-            
+            $TenGhe_array   = explode(',', $TenGhe);
+            $xe_all         = explode(',', $vl_xe->TatCaGhe);
+
             if($id_xelc == $id_vl_xe){
                 foreach ($TenGhe_array as $vl_ghe) {
                     if(in_array($vl_ghe, $xe_ghe)){
                         echo json_encode(['status'=>'fasle','message'=>'Chố '.$vl_ghe.' đã được đặt']);die();
+                    }elseif(!in_array($vl_ghe, $xe_all)){
+                        echo json_encode(['status'=>'fasle','message'=>'Chố '.$vl_ghe.' không tồn tại']);die();
                     }else{
                         $xe_ghe         = array_merge(array($vl_ghe),$xe_ghe);
                         $update_ghe     = implode(',', $xe_ghe);
