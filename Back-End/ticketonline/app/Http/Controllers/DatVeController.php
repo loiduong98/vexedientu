@@ -68,7 +68,6 @@ class DatVeController extends Controller
                 'HoTen.required'=>'Bạn chưa nhập tên nhân viên',
             ]);
 
-        // dd($request->all());
         $lichchay = lichchay::all();
         $khachhang = khachhang::all();
         $tuyen     = tuyen::all();
@@ -86,8 +85,7 @@ class DatVeController extends Controller
         $DiaChi = $request->DiaChi;
         $TenHTTT = $request->TenHTTT;  
         $test_ghe = $request->test_ghe;
-        // echo "<pre>",print_r($test_ghe,1),"</pre>";     
-        // dd($TenGhe);
+        
         foreach($tuyen as $keytuyen){
             $tuyen_di = $keytuyen->idBenDi;
             $tuyen_den = $keytuyen->idBenDen;
@@ -178,22 +176,12 @@ class DatVeController extends Controller
             $message->to('loiduong0511@yahoo.com')->subject("Chúc mừng bạn đã đặt vé thành công");
             $message->from('loiduong0511@gmail.com','Hệ thống bán vé xe điện tử LD.');
         });
-            // $HoTen = $request->all();
-            // $Email = $request->all();
-            // Mail::send(['html'=>'page.layout.mailfb'], array('HoTen'=>$HoTen,'Email'=>$Email), function($message){
-            //     $message->to('loiduong0511@yahoo.com')->subject('Visitor Feedback!');
-            // });
-            // Session::flash('flash_message', 'Send message successfully!');
-
-        // QrCode::generate($CTV_mbm);
         //check ok
         return Redirect('/checkout')->with('thongbao','Đặt vé thành công');
     }
 
     public function bookticket(Request $request)
     {
-        echo "Post TT <pre>",print_r($request->all(),1),"</pre>";
-
         $lichchay       = lichchay::all();
         $khachhang      = khachhang::all();
         $tuyen          = tuyen::all();
@@ -207,11 +195,12 @@ class DatVeController extends Controller
         $idLC           = $request->idlichchay;
         $id_tuyen       = $request->idtuyen;
         $id_xe          = $request->idxe;
-        $ngaydatve      = $request->ngaydi;
         $SDT_kh         = $request->sdt;
         $tongtien       = $request->tongtien;
         $tongtienUSD    = $request->tongtienUSD;
         $tuyen_xe       = $request->tuyen;
+        $ngaydatve      = $request->ngaydi;
+        $ngaydatve      = date("d-m-Y H:i:s", strtotime($ngaydatve));    
 
         foreach($lichchay as $keyLC){
             $LC_id = $keyLC->id;
@@ -258,7 +247,7 @@ class DatVeController extends Controller
             if($id_xelc == $id_vl_xe){
                 foreach ($TenGhe_array as $vl_ghe) {
                     if(in_array($vl_ghe, $xe_ghe)){
-                        echo json_encode(['status'=>'fasle','message'=>'Chố đã được đặt']);die();
+                        echo json_encode(['status'=>'fasle','message'=>'Chố '.$vl_ghe.' đã được đặt']);die();
                     }else{
                         $xe_ghe         = array_merge(array($vl_ghe),$xe_ghe);
                         $update_ghe     = implode(',', $xe_ghe);
@@ -276,13 +265,12 @@ class DatVeController extends Controller
         $hoadon->TongTien = $tongtien;
         $hoadon->GhiChu = 'Dat ve cho vui';
         $hoadon->idKH = $id_KH;
-        $hoadon->idHTTT = 1;
+        $hoadon->SoLuong = $soluong;
+        $hoadon->GheDaDat = $TenGhe;
         $hoadon->save();
 
         if(($hoadon->save()) !== true){
           echo json_encode(['status'=>'fasle','message'=>'Khong the tao hoa don']);die();  
-        } else{
-            echo json_encode(['status'=>'true','message'=>'Tao. HD okayyy']);
         }
         
         $id_HD = $hoadon->id;
@@ -301,25 +289,6 @@ class DatVeController extends Controller
 
         if(($ve->save()) !== true){
           echo json_encode(['status'=>'fasle','message'=>'Khong the tao ve']);die();  
-        } else{
-            echo json_encode(['status'=>'true','message'=>'Tao. Ve okayyy']);
-        }
-        
-        $id_ve = $ve->id;
-// die();
-        $ct_hoadon = new ct_hoadon;
-        $ct_hoadon->id_hoadon = $id_HD;      
-        $ct_hoadon->idVe = $id_ve;
-        $ct_hoadon->SoLuong = $soluong;
-        $ct_hoadon->GheDaDat = $TenGhe;
-        $ct_hoadon->save();
-
-        if(($ct_hoadon->save()) !== true){
-          echo json_encode(['status'=>'fasle','message'=>'Khong the tao chi tiet hoa don']);die();  
-        }else{
-            echo json_encode(['status'=>'true','message'=>'Tao. chi tiet HD okayyy']);
-        }
-
+        } 
     }
-   
 }

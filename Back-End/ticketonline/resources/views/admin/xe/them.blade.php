@@ -28,19 +28,14 @@
                                 <label>Biển số xe</label>
                                 <input class="form-control" name="BSXe" placeholder="Nhập biển số xe" />
                             </div>
-                            
                             <div class="form-group">
-                                <label>ID Sơ đồ ghế</label>
-                               <select class="form-control" name="idSoDoGhe">
-                                   
-                                    <option value="1">Xe Limousine</option>
-                                    <option value="2">Xe giường nằm</option>
-                                    <option value="3">Xe phòng vip</option>
-                                    
-                                </select>
+                                <label>Danh sách ghế</label>
+                                <input class="form-control" name="TatCaGhe" placeholder="Nhập tên ghế" value="A1,A2,A3,A4,B1,B2,B3,B4,C1,C2,C3,C4,D1,D2,D3,D4,E1,E2,E3,E4,F1,F2,F3,F4" />
                             </div>
-                            
-                            
+                            <div class="form-group">
+                                <label>Sơ đồ ghế</label>
+                                <input class="form-control" name="SoDoGhe" placeholder="Nhập tên ghế" />
+                            </div>
                             <button type="submit" class="btn btn-default">Thêm Xe</button>
                             <button type="reset" class="btn btn-default">Làm mới</button>
                         <form>

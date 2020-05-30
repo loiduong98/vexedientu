@@ -1,53 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('page.layout.index')
+@section('content')
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Đăng bài viết</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/news.css">
+body {
+    background-color: #f5f5f5;
+}
 
-</head>
 
-<body>
+/* Header */
 
-    <section class="menu-search">
+header#header {
+    height: 150px;
+    background-color: #f1f1f1;
+}
+
+header#header .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+header#header .logo-left img {
+    height: 105px;
+    width: 250px;
+    margin: 15px;
+}
+
+.logo-right img {
+    width: 100%;
+}
+
+ul.list__qc {
+    display: flex;
+    list-style: none;
+}
+
+ul.list__qc li {
+    padding: 10px 5px;
+}
+
+
+/* End Header */
+
+
+/* Menu Search */
+
+.menu-search .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0px;
+    background-color: #50a3b8;
+}
+
+.col-md-7.pull-left.search form {
+    display: flex;
+    justify-content: center;
+}
+
+.post-item a {
+    text-decoration: none;
+    color: black;
+}
+
+
+/* End Menu Search */
+
+
+/* Content */
+
+.row.news {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.content__left {
+    background-color: #fff;
+    padding-top: 20px;
+}
+
+.main-category {
+    background-color: #fff;
+    margin-left: 20px;
+    width: 100%;
+}
+
+li.iem__category {
+    list-style: none;
+    margin: 20px;
+}
+
+.main-category h3 {
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+    background-color: #50a3b8;
+}
+
+.new__top {
+    margin-left: 5px;
+    margin-top: 50px;
+    background-color: #fff;
+    width: 100%;
+}
+
+.new__top h3 {
+    text-align: center;
+    padding: 10px;
+    background-color: #50a3b8;
+    font-weight: 600;
+}
+
+.new__top .news {
+    width: 100%;
+    margin: 20px;
+}
+
+
+/* End Content */
+
+
+/* Type */
+
+ul.list__type {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 15px;
+}
+
+.type-ticket {
+    height: 50px;
+    background: black;
+    width: 100%;
+    margin-top: 50px;
+}
+
+li.item__type a {
+    color: #fff;
+    font-size: 1rem;
+}
+
+li.item__type {
+    padding: 0px 70px;
+}
+
+
+/* End Type */
+
+
+/* Panigation */
+
+ul.list__panigation {
+    display: flex;
+}
+
+.page {
+    height: 50px;
+}
+
+ul.list__panigation li {
+    list-style: none;
+    padding-left: 20px;
+}
+
+ul.list__panigation li a {
+    text-decoration: none;
+    color: black;
+}
+
+li.page.selected {
+    width: 30px;
+    height: 30px;
+    background-color: gray;
+}
+
+
+/* End Panigation */
+</style>
+
+<div class="menu-search">
         <div class="row">
-            <div class="col-md-9 pull-left search">
+            <div class="col-md-7 pull-left search">
                 <form class="form-inline search-form" action="#">
                     <div class="form-group search-category">
                         <select class="form-control" name="DanhMuc" id="DanhMuc">
-                <option value="">Danh mục</option>
-                <option value="1">Vé xe khách</option>
-              </select>
+                                    <option value="">Danh mục</option>
+                                    <option value="1">Vé xe khách</option>
+                                </select>
                     </div>
                     <div class="form-group search-location">
                         <select class="form-control" name="Tuyen" id="Tuyen">
-                <option value="">Danh sách tuyến</option>
-                <option value="1">Đà Lạt</option>
-                <option value="1">Cần Thơ</option>
-              </select>
+                                    <option value="">Danh sách tuyến</option>
+                                    <option value="1">Đà Lạt</option>
+                                    <option value="1">Cần Thơ</option>
+                                </select>
                     </div>
                     <div class="form-group search-text">
-                        <input class="form-control" type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm" />
+                        <input class="form-control" type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm">
                     </div>
-                    <div class="btn-search">
-                        <button class="btn btn-primary">Tìm</button>
+                    <div class="btn-search font-bold text-center form-group pull-right">
+                        <button class="">Tìm</button>
                     </div>
                 </form>
             </div>
+            <div class="col-md-3 pull-right post-item">
+                <a href="#">
+                    <div class="btn-post-item font-bold text-center">Đăng tin miễn phí</div>
+                </a>
+            </div>
         </div>
-    </section>
-
-
-    <section class="new-post">
+    </div>
+    <div class="new-post">
         <div class="container">
             <div class="row">
-                <form class="col" action="#" method="post" id="insert-form">
+                <form action="#" method="post" id="insert-form">
+                    <h3>Đăng Tin</h3>
                     <div class="insert-content">1. Nội Dung Tin
                         <span class="insert-alert hidden-xs">(Vui lòng điền đầy đủ tất cả các mục có dấu <span class="insert-require">*</span>)
                         </span>
@@ -58,7 +232,7 @@
                             <select name="TenTuyen" id="" class="form-control">
                                 <option value="0">--Chọn tuyến bán (đổi)--</option>
                                 <option value="1">Thành Phố Hồ Chí Minh - Đà Lạt</option>
-                                <option value="2">Thành Phố Hồ Chí Minh - Đà </option>
+                                <option value="2">Thành Phố Hồ Chí Minh - Đà Lạt</option>
                                 <option value="3">Thành Phố Hồ Chí Minh - Đà Lạt</option>
                         </select>
                         </div>
@@ -127,18 +301,29 @@
                             <input id="" class="form-control" type="text" name="phonenumber" placeholder="Mời bạn nhập số điện thoại" maxlength="10" autocomplete="off" data-error="Vui lòng điền đúng số điện thoại">
                         </div>
                     </div>
-                    <input class="btn btn-primary" type="submit" value="Hoàn tất">
+                    <input type="submit" value="Hoàn tất">
                 </form>
             </div>
         </div>
-    </section>
+    </div>
 
+    <div class="type-ticket">
+        <div class="container-fluid">
+            <ul class="list__type">
+                <li class="item__type">
+                    <a href="">Vé xe đi Thành Phố Hồ Chí Minh</a>
+                </li>
+                <li class="item__type">
+                    <a href="">Vé xe đi Đà Lạt</a>
+                </li>
+                <li class="item__type">
+                    <a href="">Vé xe đi Phan Thiết</a>
+                </li>
+                <li class="item__type">
+                    <a href="">Vé xe đi Cần Thơ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-</body>
-
-</html>
+@endsection

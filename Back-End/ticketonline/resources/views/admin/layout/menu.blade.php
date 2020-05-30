@@ -13,10 +13,10 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="admin/index"><i class="fa fa-dashboard fa-fw"></i> Trang chủ</a>
+                            <a href="admin/index"><i class="fa fa-home"></i> Trang chủ</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Tuyến<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Tuyến<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="admin/tuyen/danhsach">Danh sách tuyến</a>
@@ -40,18 +40,6 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
-                            <a href="#"><i class="fas fa-couch"></i> Sơ đồ ghế<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="admin/sodoghe/danhsach">Danh sách Sơ đồ ghế</a>
-                                </li>
-                                <li>
-                                    <a href="admin/sodoghe/them">Thêm Sơ đồ ghế</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
                         
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-user"></i> Tài khoản<span class="fa arrow"></span></a>
@@ -66,19 +54,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-th-large"></i> Chi tiết ghế<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="admin/chitietghe/danhsach">Danh sách Chi tiết ghế</a>
-                                </li>
-                                <li>
-                                    <a href="admin/chitietghe/them">Thêm chi tiết ghế</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fas fa-th-large"></i> Hóa dơn<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-money-check"></i> Hóa dơn<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="admin/hoadon/danhsach">Danh sách hóa dơn</a>
@@ -87,7 +63,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-th-large"></i> Vé<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-ticket-alt"></i> Vé<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="admin/ve/danhsach">Danh sách vé</a>
@@ -133,19 +109,19 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-file-alt"></i> Tin tức<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fas fa-file-alt"></i> Bảng tin<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="admin/tintuc/danhsach">Danh sách Tin tức</a>
+                                    <a href="admin/bangtin/danhsach">Danh sách bảng tin</a>
                                 </li>
                                 <li>
-                                    <a href="admin/tintuc/them">Thêm Tin tức</a>
+                                    <a href="admin/bangtin/them">Thêm bảng tin</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-file-alt"></i> Bến<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-car-side"></i> Bến<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="admin/ben/danhsach">Danh sách Bến</a>
@@ -157,19 +133,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-file-alt"></i> Hình thức thanh toán<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="admin/hinhthucthanhtoan/danhsach">Danh sách Hình thức thanh toán</a>
-                                </li>
-                                <li>
-                                    <a href="admin/hinhthucthanhtoan/them">Thêm Hình thức thanh toán</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fas fa-file-alt"></i> Lịch chạy<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-clipboard-check"></i> Lịch chạy<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="admin/lichchay/danhsach">Danh sách Lịch chạy</a>

@@ -26,7 +26,8 @@ class apiUsersController extends Controller
      */
     public function store(Request $request)
     {
-        return User::create($request->all());
+        $dangky = app('App\Http\Controllers\UsersController')->postThem($request);
+
     }
 
     /**

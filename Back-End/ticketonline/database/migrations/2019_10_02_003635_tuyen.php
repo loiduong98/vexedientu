@@ -16,10 +16,8 @@ class Tuyen extends Migration
         Schema::create('tuyen',function($table){
             $table->increments('id');
             $table->string('TenTuyen');
-            $table->integer('idBenDi')->unsigned();
-            $table->foreign('idBenDi')->references('id')->on('ben');
-            $table->integer('idBenDen')->unsigned();
-            $table->foreign('idBenDen')->references('id')->on('ben');
+            $table->integer('idBenDi');
+            $table->integer('idBenDen');
         });
     }
 
