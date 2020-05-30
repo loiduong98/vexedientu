@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\khachhang;
+use App\khachhang_login;
 
 class KhachHangController extends Controller
 {
@@ -13,7 +16,6 @@ class KhachHangController extends Controller
     
     public function getDanhSach()
     {
-
     	$khachhang = khachhang::orderBy('id','DESC')->get();
     	return view('admin.khachhang.danhsach', ['khachhang'=>$khachhang]);
     }
@@ -106,4 +108,120 @@ class KhachHangController extends Controller
         $khachhang->delete();
         return redirect('admin/khachhang/danhsach')->with('thongbao','Xóa thành công');
     }
+
+    // Check login khách hàng
+    public function check_kh(Request $request){
+        
+        if(isset($request->name)){
+            // dd($request->all());
+            $this->reg_kh($request);
+        }else{
+            $this->login_kh($request);    
+        }   
+    }
+
+    // Đăng ký khách hàng
+    private function reg_kh(Request $request){
+        $rq_name = $request->name;
+        $rq_email   = $request->email;
+        $rq_phone   = $request->phone;
+        $rq_diachi  = $request->diachi;
+        $rq_pass    = encrypt($request->password);
+
+        $all_kh = khachhang_login::all();
+        
+        if(($all_kh->first()) == null){
+            $kh = new khachhang_login;
+
+            $kh->name       = $rq_name;
+            $kh->email      = $rq_email;
+            $kh->phone      = $rq_phone;
+            $kh->diachi     = $rq_diachi;
+            $kh->password   = $rq_pass;
+
+            if($request->hasFile('urlHinh'))
+            {       
+                $file = $request->file('urlHinh');
+
+                $name = $file->getClientOriginalName();
+                $urlHinh = str_random(4)."_".$name;
+                while(file_exists("upload/kh/".$urlHinh))
+                {
+                    $urlHinh = str_random(4)."_".$name;
+                }
+                $file->move("upload/kh",$urlHinh);
+                $kh->urlHinh = $urlHinh;
+            }
+            else
+            {
+                $kh->urlHinh = "default.png";
+            }
+            $kh->save();
+            if(($kh->save()) !== true){
+                echo json_encode(['status'=>'false','message'=>'Có lỗi !']);die();    
+            }
+            echo json_encode(['status'=>'true']);die();
+        }
+        
+        foreach ($all_kh as $vl_kh) {
+            $phone_kh[] = $vl_kh->phone;
+            $email_kh[] = $vl_kh->email;
+        }
+
+        if(in_array($rq_phone,$phone_kh) || in_array($rq_email,$email_kh)){
+            echo json_encode(['status'=>'false','message'=>'Số điện thoại hoặc email đã tồn tại.']);die();
+        }else{
+            $kh = new khachhang_login;
+
+            $kh->name       = $rq_name;
+            $kh->email      = $rq_email;
+            $kh->phone      = $rq_phone;
+            $kh->diachi     = $rq_diachi;
+            $kh->password   = $rq_pass;
+
+            if($request->hasFile('urlHinh'))
+            {       
+                $file = $request->file('urlHinh');
+
+                $name = $file->getClientOriginalName();
+                $urlHinh = str_random(4)."_".$name;
+                while(file_exists("upload/kh/".$urlHinh))
+                {
+                    $urlHinh = str_random(4)."_".$name;
+                }
+                $file->move("upload/kh",$urlHinh);
+                $kh->urlHinh = $urlHinh;
+            }
+            else
+            {
+                $kh->urlHinh = "default.png";
+            }
+            $kh->save();
+            if(($kh->save()) !== true){
+                echo json_encode(['status'=>'false','message'=>'Có lỗi !']);die();    
+            }
+            echo json_encode(['status'=>'true']);die();
+        }
+
+    }
+    
+    // Đăng nhập khách hàng
+    private function login_kh(Request $request){        
+        $rq_email   = $request->email;
+        $rq_pass    = $request->password;
+
+        $all_kh = khachhang_login::all();
+
+        foreach ($all_kh as $vl_kh) {
+            $email_kh = $vl_kh->email;
+            $pass_kh  = decrypt($vl_kh->password);
+
+            if(($rq_email == $email_kh) && ($rq_pass == $pass_kh)){
+                echo json_encode(['status'=>'true']);die();  
+            }else{
+                echo json_encode(['status'=>'false','message'=>'Mật khẩu hoặc email không đúng !']);die();  
+            }
+        }
+    }
+
 }

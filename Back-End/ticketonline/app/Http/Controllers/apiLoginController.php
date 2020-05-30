@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-use App\User;
+use App\khachhang_login;
 
 class apiLoginController extends Controller
 {
@@ -17,7 +17,7 @@ class apiLoginController extends Controller
      */
     public function index()
     {
-        //
+        return khachhang_login::all();
     }
 
     /**
@@ -28,36 +28,7 @@ class apiLoginController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'email' =>'required|email',
-            'password' => 'required|min:6'
-        ];
-        $messages = [
-            'email.required' => 'Email là trường bắt buộc',
-            'email.email' => 'Email không đúng định dạng',
-            'password.required' => 'Mật khẩu là trường bắt buộc',
-            'password.min' => 'Mật khẩu phải chứa ít nhất 6 ký tự',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
-       
-        if ($validator->fails()) {
-            // Điều kiện dữ liệu không hợp lệ sẽ chuyển về trang đăng nhập và thông báo lỗi
-            return redirect('login')->withErrors($validator)->withInput();
-        } else {
-            // Nếu dữ liệu hợp lệ sẽ kiểm tra trong csdl
-            $email = $request->input('email');
-            $password = $request->input('password');
-            
-            if(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>1])) {
-                return response('true', 200);
-            }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>2])) {
-                return response('true', 200);
-            }elseif(Auth::attempt(['email' => $email, 'password' =>$password, 'level'=>3])) {
-                return response('true', 200);
-            }else {
-                return response('false', 500);
-            }
-        }
+        return app('App\Http\Controllers\KhachHangController')->check_kh($request);
     }
 
     /**
