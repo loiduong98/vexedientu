@@ -17,7 +17,8 @@
                                 <th>Tổng tiền</th>
                                 <th>Ghi chú</th>
                                 <th>Tên khách hàng</th>
-                                <th>Hình thức thanh toán</th>
+                                <th>Ghế đã đặt</th>
+                                <th>Số lượng</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -29,7 +30,8 @@
                                 <td>{{$hd->TongTien}}</td>
                                 <td>{{$hd->GhiChu}}</td>
                                 <td>{{$hd->khachhang->HoTen}}</td>
-                                <td>{{$hd->hinhthucthanhtoan->TenHTTT}}</td>
+                                <td>{{$hd->GheDaDat}}</td>
+                                <td>{{$hd->SoLuong}}</td>
                                 <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/hoadon/chitiet/{{$hd->id}}"> Chi tiết hóa đơn</a></td>                 
                             </tr>
                             @endforeach
