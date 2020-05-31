@@ -56,3 +56,8 @@ section#trade .card img.img-fluid.rounded {
   .listCard .itemCard a {
     text-decoration: none;
   }
+
+  .img-fluid.rounded.imgRounded {
+    height: 75%!important;
+    width: 100%!important;
+}
