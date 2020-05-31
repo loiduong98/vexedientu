@@ -1,82 +1,58 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-
-/* Menu Search */
-
-.menu-search .row {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 0px;
-    background-color: #03A9F4;
-    width: 100%;
-}
-
-.col-md-9.pull-left.search form {
-    display: flex;
-    justify-content: center;
-}
-
-.post-item a {
-    text-decoration: none;
-    color: black;
-}
-
-.search-location {
-    margin: 0 20px;
-}
-
-.btn-search {
-    margin-left: 20px;
-}
-
-
-/* End Menu Search */
-
-
-/* Content */
-
-.row.news {
-    margin-top: 20px;
-    margin-bottom: 30px;
-}
-
-.content__left {
-    background-color: #fff;
-    padding-top: 20px;
-}
-
-
-/* End Content */
-
-
-/* Panigation */
-
-ul.list__panigation {
-    display: flex;
-}
-
-.page {
-    height: 50px;
-}
-
-ul.list__panigation li {
+section#trade .card img.img-fluid.rounded {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 90%;
+    margin-left: 6px;
+  }
+  
+  section#trade p .fa {
+    display: inline-block;
+    width: 25px;
+    color: #fff;
+    height: 25px;
+    text-align: center;
+    background: #1bbc9c;
+    line-height: 25px;
+    border-radius: 2px;
+    font-size: 13px;
+  }
+  
+  section#trade .card .col-md-3 .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+  }
+  
+  section#trade .col-md-8 .card:hover {
+    box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+      0 13px 24px -11px rgba(233, 30, 99, 0.6);
+    transition: 0.5s all;
+  }
+  
+  section#trade .modal-content .card {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 16px;
+  }
+  
+  section#trade .modal-content .card .btn.btn-block.btn-info {
+    font-size: 16px;
+  }
+  .card-body .listCard {
     list-style: none;
-    padding-left: 20px;
-}
-
-ul.list__panigation li a {
+  }
+  
+  .listCard .itemCard {
+    padding: 9px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .listCard .itemCard a {
     text-decoration: none;
-    color: black;
-}
-
-li.page.selected {
-    width: 30px;
-    height: 30px;
-    background-color: gray;
-}
-
-
-/* End Panigation */
+  }
