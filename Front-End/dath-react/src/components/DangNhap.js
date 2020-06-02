@@ -3,28 +3,40 @@ import { Formik, Form, Field } from "formik";
 import Axios from "axios";
 import * as yup from "yup";
 import { connect } from "react-redux";
+import swal from "sweetalert";
+import { Redirect } from "react-router-dom";
 
 class DangNhap extends Component {
   _handleSubmit = (values) => {
-    // var postData = values;
-    // let axiosConfig = {
-    //   headers: {
-    //     "Content-Type": "application/json;charset=UTF-8",
-    //     "Access-Control-Allow-Origin": "*",
-    //   },
-    // };
-    // Axios.post("/api/login", postData, axiosConfig)
-    //   .then((res) => {
-    //     console.log("oke");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // console.log(values);
-    console.log("okay");
-    // this.props.dispatch({
-    //   type: "CHANGE_LOGIN_STATUS",
-    // });
+    // const xsrfToken = this.getCookie("XSRF-TOKEN");
+
+    var postData = values;
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        // "X-XSRF-TOKEN": xsrfToken,
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.post("/api/login", postData, axiosConfig)
+      .then((res) => {
+        if (res.data.status === "true") {
+          this.props.dispatch({
+            type: "CHANGE_LOGIN_STATUS",
+          });
+          this.props.history.push("/");
+        } else {
+          swal({
+            title: "Lỗi Đăng Nhập",
+            text: res.data.message,
+            icon: "warning",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(values);
   };
   render() {
     return (
@@ -99,7 +111,11 @@ class DangNhap extends Component {
                           </div>
                         </div>
                         <div className="text-center">
-                          <button type="submit" className="btn btn-danger">
+                          <button
+                            style={{ marginTop: "32px", marginBottom: "32px" }}
+                            type="submit"
+                            className="btn btn-danger"
+                          >
                             Đăng nhập
                           </button>
                         </div>

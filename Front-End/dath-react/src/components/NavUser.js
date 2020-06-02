@@ -44,6 +44,11 @@ class NavUser extends Component {
                   <i className="material-icons">view_day</i> Liên hệ
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link to="/trao-doi-ve" className="nav-link">
+                  <i className="material-icons">compare_arrows</i> Trao đổi vé
+                </Link>
+              </li>
               <li className="dropdown nav-item">
                 <Link
                   href="#pablo"
@@ -53,7 +58,8 @@ class NavUser extends Component {
                 >
                   <div className="profile-photo-small">
                     <img
-                      src="https://professionalsofthefuture.com/wp-content/uploads/2018/12/user-icon.png"
+                      // src="https://professionalsofthefuture.com/wp-content/uploads/2018/12/user-icon.png"
+                      src="./assets/img/user-icon.png"
                       alt="Circle avata small"
                       className="rounded-circle img-fluid"
                     />
@@ -68,7 +74,7 @@ class NavUser extends Component {
                     Lịch sử vé
                   </Link>
                   <Link
-                    to=""
+                    to="#"
                     onClick={() => this.buttonLogOut()}
                     className="dropdown-item"
                   >
