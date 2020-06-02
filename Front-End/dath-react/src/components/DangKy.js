@@ -44,6 +44,7 @@ class DangKy extends Component {
           text: "Đăng ký tài khoản thành công!",
           icon: "success",
         });
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);

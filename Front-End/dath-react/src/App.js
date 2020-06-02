@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
 import Nav from "./components/Nav";
+import NavUser from "./components/NavUser";
 import Footer from "./components/Footer";
 import DieuHuongURL from "./router/DieuHuongURL";
 import { BrowserRouter as Router } from "react-router-dom";
+import { connect } from "react-redux";
 
 class App extends Component {
   state = {
@@ -24,7 +26,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Nav></Nav>
+          {this.props.loginStatus === false ? <Nav></Nav> : <NavUser></NavUser>}
           <DieuHuongURL></DieuHuongURL>
           <Footer></Footer>
         </div>
@@ -36,4 +38,10 @@ class App extends Component {
 function demoAsyncCall() {
   return new Promise((resolve) => setTimeout(() => resolve(), 2500));
 }
-export default App;
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loginStatus: state.loginReducer,
+  };
+};
+export default connect(mapStateToProps)(App);
