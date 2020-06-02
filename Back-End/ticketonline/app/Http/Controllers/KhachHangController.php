@@ -113,7 +113,7 @@ class KhachHangController extends Controller
     public function check_kh(Request $request)
     {
         
-        if(isset($request->name)){
+        if(isset($request->name) || isset($request->phone)){
             // dd($request->all());
             $this->reg_kh($request);
         }else{
@@ -124,7 +124,7 @@ class KhachHangController extends Controller
     // Đăng ký khách hàng
     private function reg_kh(Request $request)
     {
-        $rq_name = $request->name;
+        $rq_name    = $request->name;
         $rq_email   = $request->email;
         $rq_phone   = $request->phone;
         $rq_diachi  = $request->diachi;
@@ -228,14 +228,20 @@ class KhachHangController extends Controller
 
         foreach ($all_kh as $vl_kh) {
             $email_kh = $vl_kh->email;
-            $pass_kh  = decrypt($vl_kh->password);
+            $pass_kh = decrypt($vl_kh->password);
 
+            $a = "true";
             if(($rq_email == $email_kh) && ($rq_pass == $pass_kh)){
-                echo json_encode(['status'=>'true']);die();  
-            }else{
-                echo json_encode(['status'=>'false','message'=>'Mật khẩu hoặc email không đúng !']);die();  
+                $test = $a;  
             }
         }
+
+        if(isset($test)){
+            echo json_encode(['status'=>'true']);die();      
+        }else{
+            echo json_encode(['status'=>'false','message'=>'Mật khẩu hoặc email không đúng !']);die();
+        }
+        
     }
 
 }
