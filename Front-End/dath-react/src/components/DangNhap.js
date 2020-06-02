@@ -2,39 +2,29 @@ import React, { Component } from "react";
 import { Formik, Form, Field } from "formik";
 import Axios from "axios";
 import * as yup from "yup";
+import { connect } from "react-redux";
 
 class DangNhap extends Component {
   _handleSubmit = (values) => {
-    // Axios({
-    //   method: "POST",
-    //   url: "http://localhost:8000/api/login",
-    //   data: values,
-    // })
+    // var postData = values;
+    // let axiosConfig = {
+    //   headers: {
+    //     "Content-Type": "application/json;charset=UTF-8",
+    //     "Access-Control-Allow-Origin": "*",
+    //   },
+    // };
+    // Axios.post("/api/login", postData, axiosConfig)
     //   .then((res) => {
-    //     alert("Chúc mừng bạn đã đăng ký thành công <3");
+    //     console.log("oke");
     //   })
     //   .catch((err) => {
     //     console.log(err);
     //   });
     // console.log(values);
-
-    var postData = values;
-
-    let axiosConfig = {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    };
-
-    Axios.post("/api/login", postData, axiosConfig)
-      .then((res) => {
-        console.log("oke");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(values);
+    console.log("okay");
+    // this.props.dispatch({
+    //   type: "CHANGE_LOGIN_STATUS",
+    // });
   };
   render() {
     return (
@@ -126,4 +116,9 @@ class DangNhap extends Component {
   }
 }
 
-export default DangNhap;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loginStatus: state.loginReducer,
+  };
+};
+export default connect(mapStateToProps)(DangNhap);
