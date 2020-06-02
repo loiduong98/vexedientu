@@ -17,6 +17,7 @@ class apiLoginController extends Controller
      */
     public function index()
     {
+        // return app('App\Http\Controllers\KhachHangController')->list_ticket();
         return khachhang_login::all();
     }
 

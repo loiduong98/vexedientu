@@ -110,9 +110,10 @@ class KhachHangController extends Controller
     }
 
     // Check login khách hàng
-    public function check_kh(Request $request){
+    public function check_kh(Request $request)
+    {
         
-        if(isset($request->name)){
+        if(isset($request->name) || isset($request->phone)){
             // dd($request->all());
             $this->reg_kh($request);
         }else{
@@ -121,18 +122,30 @@ class KhachHangController extends Controller
     }
 
     // Đăng ký khách hàng
-    private function reg_kh(Request $request){
-        $rq_name = $request->name;
+    private function reg_kh(Request $request)
+    {
+        $rq_name    = $request->name;
         $rq_email   = $request->email;
         $rq_phone   = $request->phone;
         $rq_diachi  = $request->diachi;
         $rq_pass    = encrypt($request->password);
 
         $all_kh = khachhang_login::all();
-        
+        $tb_kh  = khachhang::all();
+
+        foreach ($tb_kh as $vl_tbkh) {
+            $phone_tbkh[] = $vl_tbkh->SDT;
+            $email_tbkh[] = $vl_tbkh->Email;
+        }
+
+        if(in_array($rq_phone,$phone_tbkh)){
+            $id_kh = (khachhang::where('SDT', $rq_phone)->first())->id;
+        }
+
         if(($all_kh->first()) == null){
             $kh = new khachhang_login;
 
+            $kh->id_kh      = $id_kh;
             $kh->name       = $rq_name;
             $kh->email      = $rq_email;
             $kh->phone      = $rq_phone;
@@ -173,6 +186,7 @@ class KhachHangController extends Controller
         }else{
             $kh = new khachhang_login;
 
+            $kh->id_kh      = $id_kh;
             $kh->name       = $rq_name;
             $kh->email      = $rq_email;
             $kh->phone      = $rq_phone;
@@ -202,11 +216,11 @@ class KhachHangController extends Controller
             }
             echo json_encode(['status'=>'true']);die();
         }
-
     }
     
     // Đăng nhập khách hàng
-    private function login_kh(Request $request){        
+    private function login_kh(Request $request)
+    {        
         $rq_email   = $request->email;
         $rq_pass    = $request->password;
 
@@ -214,14 +228,20 @@ class KhachHangController extends Controller
 
         foreach ($all_kh as $vl_kh) {
             $email_kh = $vl_kh->email;
-            $pass_kh  = decrypt($vl_kh->password);
+            $pass_kh = decrypt($vl_kh->password);
 
+            $a = "true";
             if(($rq_email == $email_kh) && ($rq_pass == $pass_kh)){
-                echo json_encode(['status'=>'true']);die();  
-            }else{
-                echo json_encode(['status'=>'false','message'=>'Mật khẩu hoặc email không đúng !']);die();  
+                $test = $a;  
             }
         }
+
+        if(isset($test)){
+            echo json_encode(['status'=>'true']);die();      
+        }else{
+            echo json_encode(['status'=>'false','message'=>'Mật khẩu hoặc email không đúng !']);die();
+        }
+        
     }
 
 }
