@@ -4,7 +4,11 @@ export default class LienHe extends Component {
   render() {
     return (
       <div>
-        <div id="contactUsMap" className="big-map" />
+        <div
+          id="contactUsMap"
+          className="big-map"
+          style={{ marginTop: "100px" }}
+        />
         <div className="main main-raised">
           <div className="contact-content">
             <div className="container">
