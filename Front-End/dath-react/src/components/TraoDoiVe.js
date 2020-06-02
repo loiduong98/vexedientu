@@ -4,58 +4,6 @@ export default class TraoDoiVe extends Component {
   render() {
     return (
       <div>
-        <nav
-          className="navbar fixed-top navbar-expand-lg navbar-white"
-          color-on-scroll={100}
-          id="sectionsNav"
-        >
-          <div className="container">
-            <div className="navbar-translate">
-              <a className="navbar-brand" href="./index.html">
-                Vé xe Online
-              </a>
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon" />
-                <span className="navbar-toggler-icon" />
-                <span className="navbar-toggler-icon" />
-              </button>
-            </div>
-            <div className="collapse navbar-collapse">
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <a href="#" className="nav-link">
-                    <i className="material-icons">apps</i> Giới thiệu
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a href="#" className="nav-link">
-                    <i className="material-icons">view_day</i> Liên hệ
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a href="./login.html" className="nav-link">
-                    <i className="material-icons">view_carousel</i> Đăng nhập
-                  </a>
-                </li>
-                <li className="button-container nav-item">
-                  <a
-                    href="./dangky.html"
-                    target="_blank"
-                    className="btn btn-rose btn-round btn-block"
-                  >
-                    <i className="material-icons">how_to_reg</i> Đăng ký
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
         {/* start secton search */}
         <section id="trade" style={{ marginTop: 100 }}>
           <div className="container">
@@ -103,11 +51,317 @@ export default class TraoDoiVe extends Component {
                       </button>
                     </div>
                   </div>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <img
+                        src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                        className="img-fluid rounded"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <h4 className="card-title">
+                        Thành Phố Hồ Chí Minh - Đà Lạt
+                      </h4>
+                      <p className="category">
+                        <i className="fa fa-usd" />
+                        <span>
+                          Giá bán:
+                          <strong style={{ fontWeight: "bold" }}>
+                            200.000 đ
+                          </strong>
+                        </span>
+                      </p>
+                      <p className="category">
+                        <i className="fa fa-map-marker" />
+                        <span>
+                          Ngày đi:
+                          <strong style={{ fontWeight: "bold" }}>
+                            22/05/2020
+                          </strong>
+                        </span>
+                      </p>
+                    </div>
+                    <div className="col-md-3 text-center">
+                      <button
+                        className="btn-rose btn"
+                        data-toggle="modal"
+                        data-target="#ticketDetails"
+                      >
+                        Liên hệ
+                      </button>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <img
+                        src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                        alt
+                        className="img-fluid rounded"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <h4 className="card-title">
+                        Thành Phố Hồ Chí Minh - Đà Lạt
+                      </h4>
+                      <p className="category">
+                        <i className="fa fa-usd" />
+                        <span>
+                          Giá bán:
+                          <strong style={{ fontWeight: "bold" }}>
+                            200.000 đ
+                          </strong>
+                        </span>
+                      </p>
+                      <p className="category">
+                        <i className="fa fa-map-marker" />
+                        <span>
+                          Ngày đi:
+                          <strong style={{ fontWeight: "bold" }}>
+                            22/05/2020
+                          </strong>
+                        </span>
+                      </p>
+                    </div>
+                    <div className="col-md-3 text-center">
+                      <button
+                        className="btn-rose btn"
+                        data-toggle="modal"
+                        data-target="#ticketDetails"
+                      >
+                        Liên hệ
+                      </button>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <img
+                        src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                        alt
+                        className="img-fluid rounded"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <h4 className="card-title">
+                        Thành Phố Hồ Chí Minh - Đà Lạt
+                      </h4>
+                      <p className="category">
+                        <i className="fa fa-usd" />
+                        <span>
+                          Giá bán:
+                          <strong style={{ fontWeight: "bold" }}>
+                            200.000 đ
+                          </strong>
+                        </span>
+                      </p>
+                      <p className="category">
+                        <i className="fa fa-map-marker" />
+                        <span>
+                          Ngày đi:
+                          <strong style={{ fontWeight: "bold" }}>
+                            22/05/2020
+                          </strong>
+                        </span>
+                      </p>
+                    </div>
+                    <div className="col-md-3 text-center">
+                      <button
+                        className="btn-rose btn"
+                        data-toggle="modal"
+                        data-target="#ticketDetails"
+                      >
+                        Liên hệ
+                      </button>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <img
+                        src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                        alt
+                        className="img-fluid rounded"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <h4 className="card-title">
+                        Thành Phố Hồ Chí Minh - Đà Lạt
+                      </h4>
+                      <p className="category">
+                        <i className="fa fa-usd" />
+                        <span>
+                          Giá bán:
+                          <strong style={{ fontWeight: "bold" }}>
+                            200.000 đ
+                          </strong>
+                        </span>
+                      </p>
+                      <p className="category">
+                        <i className="fa fa-map-marker" />
+                        <span>
+                          Ngày đi:
+                          <strong style={{ fontWeight: "bold" }}>
+                            22/05/2020
+                          </strong>
+                        </span>
+                      </p>
+                    </div>
+                    <div className="col-md-3 text-center">
+                      <button
+                        className="btn-rose btn"
+                        data-toggle="modal"
+                        data-target="#ticketDetails"
+                      >
+                        Liên hệ
+                      </button>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <img
+                        src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                        alt
+                        className="img-fluid rounded"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <h4 className="card-title">
+                        Thành Phố Hồ Chí Minh - Đà Lạt
+                      </h4>
+                      <p className="category">
+                        <i className="fa fa-usd" />
+                        <span>
+                          Giá bán:
+                          <strong style={{ fontWeight: "bold" }}>
+                            200.000 đ
+                          </strong>
+                        </span>
+                      </p>
+                      <p className="category">
+                        <i className="fa fa-map-marker" />
+                        <span>
+                          Ngày đi:
+                          <strong style={{ fontWeight: "bold" }}>
+                            22/05/2020
+                          </strong>
+                        </span>
+                      </p>
+                    </div>
+                    <div className="col-md-3 text-center">
+                      <button
+                        className="btn-rose btn"
+                        data-toggle="modal"
+                        data-target="#ticketDetails"
+                      >
+                        Liên hệ
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 {/* end card item */}
               </div>
               {/* end col 8 */}
-              <div className="col-md-4" />
+              <div className="col-md-4">
+                <div className="row">
+                  <div className="card">
+                    <div className="card-header card-header-danger">
+                      <h4 className="card-title">Danh mục chính</h4>
+                    </div>
+                    <div className="card-body">
+                      <ul className="listCard">
+                        <li className="itemCard">
+                          <a href="#">Vé xe đi Đà Lạt</a>
+                        </li>
+                        <li className="itemCard">
+                          <a href="#">Vé xe đi Đà Lạt</a>
+                        </li>
+                        <li className="itemCard">
+                          <a href="#">Vé xe đi Đà Lạt</a>
+                        </li>
+                        <li className="itemCard">
+                          <a href="#">Vé xe đi Đà Lạt</a>
+                        </li>
+                        <li className="itemCard">
+                          <a href="#">Vé xe đi Đà Lạt</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="card">
+                    <div className="card-header card-header-danger">
+                      <h4 className="card-title">Xem nhiều nhất</h4>
+                    </div>
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-md-3">
+                          <img
+                            src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                            alt
+                            className="img-fluid rounded imgRounded"
+                          />
+                        </div>
+                        <div className="col-md-9">
+                          <h4 className="card-title" data-toggle="modal"
+                        data-target="#ticketDetails" style={{cursor:'pointer'}}>
+                            Thành Phố Hồ Chí Minh - Đà Lạt
+                          </h4>
+                          <p className="category">
+                            <i className="fa fa-usd" />
+                            <span>
+                              Giá bán:
+                              <strong style={{ fontWeight: "bold" }}>
+                                200.000 đ
+                              </strong>
+                            </span>
+                          </p>
+                          <p className="category">
+                            <i className="fa fa-map-marker" />
+                            <span>
+                              Ngày đi:
+                              <strong style={{ fontWeight: "bold" }}>
+                                22/05/2020
+                              </strong>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-3">
+                          <img
+                            src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                            alt
+                            className="img-fluid rounded imgRounded"
+                          />
+                        </div>
+                        <div className="col-md-9">
+                          <h4 className="card-title" data-toggle="modal"
+                        data-target="#ticketDetails" style={{cursor:'pointer'}}>
+                            Thành Phố Hồ Chí Minh - Đà Lạt
+                          </h4>
+                          <p className="category">
+                            <i className="fa fa-usd" />
+                            <span>
+                              Giá bán:
+                              <strong style={{ fontWeight: "bold" }}>
+                                200.000 đ
+                              </strong>
+                            </span>
+                          </p>
+                          <p className="category">
+                            <i className="fa fa-map-marker" />
+                            <span>
+                              Ngày đi:
+                              <strong style={{ fontWeight: "bold" }}>
+                                22/05/2020
+                              </strong>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               {/* end col 4 */}
             </div>
             {/* end row */}
@@ -135,8 +389,19 @@ export default class TraoDoiVe extends Component {
                         <img
                           src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
                           alt
-                          className="img-fluid rounded"
+                          className="img-fluid rounded imgRounded"
                         />
+                        <p className="category mt-3">
+                          <i className="fa fa-usd" />
+                          <span className="price">
+                            Giá bán:
+                            <strong
+                              style={{ fontWeight: "bold", fontSize: 25 }}
+                            >
+                              200.000 đ
+                            </strong>
+                          </span>
+                        </p>
                       </div>
                       <div className="col-md-5">
                         <div className="card">
@@ -173,6 +438,11 @@ export default class TraoDoiVe extends Component {
                           <div className="btn btn-block btn-success text-lowercase">
                             <i className="fa fa-envelope" /> congcc97@gmail.com
                           </div>
+                        </div>
+                        <div className="tradeButton text-center">
+                          <button className="btn btn-danger btn-trade pl-5 pr-5">
+                            Trade
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -223,37 +493,37 @@ export default class TraoDoiVe extends Component {
                   <div className="gallery-feed">
                     <img
                       src="./assets/img/faces/card-profile6-square.jpg"
-                      className="img img-raised rounded"
+                      className="img img-raised rounded imgRounded"
                       alt
                     />
                     <img
                       src="./assets/img/faces/christian.jpg"
-                      className="img img-raised rounded"
+                      className="img img-raised rounded imgRounded"
                       alt
                     />
                     <img
                       src="./assets/img/faces/card-profile4-square.jpg"
-                      className="img img-raised rounded"
+                      className="img img-raised rounded imgRounded"
                       alt
                     />
                     <img
                       src="./assets/img/faces/card-profile1-square.jpg"
-                      className="img img-raised rounded"
+                      className="img img-raised rounded imgRounded"
                       alt
                     />
                     <img
                       src="./assets/img/faces/marc.jpg"
-                      className="img img-raised rounded"
+                      className="img img-raised rounded imgRounded"
                       alt
                     />
                     <img
                       src="./assets/img/faces/kendall.jpg"
-                      className="img img-raised rounded"
+                      className="img img-raised rounded imgRounded"
                       alt
                     />
                     <img
                       src="./assets/img/faces/card-profile5-square.jpg"
-                      className="img img-raised rounded"
+                      className="img img-raised rounded imgRounded"
                       alt
                     />
                     <img

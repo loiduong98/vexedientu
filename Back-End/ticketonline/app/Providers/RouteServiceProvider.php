@@ -98,6 +98,8 @@ class RouteServiceProvider extends ServiceProvider
                 Route::apiResource('checkout', 'DatVeController');  
 
                 Route::apiResource('bookticket', 'apiBookticketController');
+
+                Route::apiResource('news', 'apiBangTinController');
         });
     }
 }
