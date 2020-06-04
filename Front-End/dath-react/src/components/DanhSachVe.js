@@ -9,6 +9,7 @@ class DanhSachVe extends Component {
       Axios.get("http://localhost:8000/api/login"),
       Axios.get("http://localhost:8000/api/khachhang"),
       Axios.get("http://localhost:8000/api/ve"),
+      Axios.get("http://localhost:8000/api/lichchay"),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
@@ -24,13 +25,17 @@ class DanhSachVe extends Component {
           type: "FETCH_DSVE",
           payload: resArr[2].data,
         });
-        // console.log(this.props.dsVeData);
+        this.props.dispatch({
+          type: "FETCH_DSLICHCHAY",
+          payload: resArr[3].data,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  idKH1 = '';
+  idKH1 = "";
+  idLC1 = "";
   renderDSVE() {
     var emailKH = localStorage.getItem("email");
     console.log(emailKH);
@@ -46,12 +51,18 @@ class DanhSachVe extends Component {
         return ve.idKH === this.idKH1;
       })
       .map((ve, index) => {
+        this.props.dsLichChayData
+          .filter((lc, index) => {
+            return lc.id === ve.idLC;
+          })
+          .map((vlLC, index) => {
+            return (this.idLC1 = vlLC.TenLC);
+          });
         return (
           <tr key={index}>
             <td scope="row">{ve.id}</td>
             <td>{ve.NgayDatVe}</td>
-            <td>{ve.idKH}</td>
-            <td>{ve.idHD}</td>
+            <td>{this.idLC1}</td>
             <td>{ve.NgayKhoiHanh}</td>
             <td>{ve.GioKhoiHanh}</td>
             <td>
@@ -77,8 +88,7 @@ class DanhSachVe extends Component {
               <tr>
                 <th>ID</th>
                 <th>Ngày đặt vé</th>
-                <th>ID khách hàng</th>
-                <th>ID hóa đơn</th>
+                <th>Tuyến</th>
                 <th>Ngày khởi hành</th>
                 <th>Giờ khởi hành</th>
                 <th></th>
@@ -97,6 +107,7 @@ const mapStateToProps = (state, ownProps) => {
     loginStatus: state.loginReducer,
     khachhangData: state.khachhangReducer.khachhangData,
     dsVeData: state.dsVeReducer.dsVeData,
+    dsLichChayData: state.dslichchayReducer.dslichchayData,
   };
 };
 

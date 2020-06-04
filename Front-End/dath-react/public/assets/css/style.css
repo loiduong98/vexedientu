@@ -430,3 +430,8 @@ li.itemCard {
   width: 90%!important;
   height: 80%!important;
 }
+label {
+  color: #000;
+  font-weight: 600;
+  font-size: 18px;
+}
