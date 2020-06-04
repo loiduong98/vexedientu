@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Formik, Form, Field } from "formik";
 import Axios from "axios";
-import * as yup from "yup";
+import {connect} from "react-redux";
+
 
 class DangNhap extends Component {
   _handleSubmit = (values) => {
