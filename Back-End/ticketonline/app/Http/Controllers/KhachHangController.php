@@ -133,19 +133,21 @@ class KhachHangController extends Controller
         $all_kh = khachhang_login::all();
         $tb_kh  = khachhang::all();
 
-        foreach ($tb_kh as $vl_tbkh) {
-            $phone_tbkh[] = $vl_tbkh->SDT;
-            $email_tbkh[] = $vl_tbkh->Email;
-        }
+        // foreach ($tb_kh as $vl_tbkh) {
+        //     $phone_tbkh[] = $vl_tbkh->SDT;
+        //     $email_tbkh[] = $vl_tbkh->Email;
+        // }
 
-        if(in_array($rq_phone,$phone_tbkh)){
-            $id_kh = (khachhang::where('SDT', $rq_phone)->first())->id;
-        }
+        // if(in_array($rq_phone,$phone_tbkh)){
+        //     $id_kh = (khachhang::where('SDT', $rq_phone)->first())->id;
+        // }else{
+        //     $id_kh = '';
+        // }
 
         if(($all_kh->first()) == null){
             $kh = new khachhang_login;
 
-            $kh->id_kh      = $id_kh;
+            // $kh->id_kh      = $id_kh;
             $kh->name       = $rq_name;
             $kh->email      = $rq_email;
             $kh->phone      = $rq_phone;
@@ -186,7 +188,7 @@ class KhachHangController extends Controller
         }else{
             $kh = new khachhang_login;
 
-            $kh->id_kh      = $id_kh;
+            // $kh->id_kh      = $id_kh;
             $kh->name       = $rq_name;
             $kh->email      = $rq_email;
             $kh->phone      = $rq_phone;

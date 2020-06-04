@@ -50,7 +50,7 @@
         "classmap": [
             "database/seeds",
             "database/factories",
-            "app/database/migrations"
+            "database/migrations"
         ]
     },
     "autoload-dev": {
