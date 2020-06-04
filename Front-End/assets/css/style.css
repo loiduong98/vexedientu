@@ -35,6 +35,104 @@
 .booking-form input[type="date"] {
   color: white;
 }
+
+#booking .col-md-4 .form-group {
+  padding-top: 26px;
+}
+#booking .col-md-4 .form-group select {
+  color: black;
+  background-color: rgba(251, 243, 243, 0.3);
+  font-weight: 600;
+  padding-left: 5px;
+}
+/* CSS phần chọn ghế */
+section#chonghe {
+  margin-top: 100px;
+}
+
+.seat {
+  transition: 0.4s all;
+}
+
+.booked {
+  color: #968684;
+}
+
+.selecting {
+  color: #ff9e00;
+}
+
+#chonghe i.fa {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.booked i.fa {
+  cursor: none !important;
+}
+/* CSS loading data */
+.loader {
+  width: 50px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#ld2 {
+  display: flex;
+  flex-direction: row;
+}
+#ld2 div {
+  height: 20px;
+  width: 5px;
+  background: #fe4a49;
+  margin: 3px;
+  border-radius: 25px;
+}
+#ld2 div:nth-child(1) {
+  animation: ld2 1s ease-in-out infinite 0s;
+}
+#ld2 div:nth-child(2) {
+  animation: ld2 1s ease-in-out infinite 0.1s;
+}
+#ld2 div:nth-child(3) {
+  animation: ld2 1s ease-in-out infinite 0.2s;
+}
+#ld2 div:nth-child(4) {
+  animation: ld2 1s ease-in-out infinite 0.3s;
+}
+#ld2 div:nth-child(5) {
+  animation: ld2 1s ease-in-out infinite 0.4s;
+}
+#ld2 div:nth-child(6) {
+  animation: ld2 1s ease-in-out infinite 0.5s;
+}
+#ld2 div:nth-child(7) {
+  animation: ld2 1s ease-in-out infinite 0.6s;
+}
+
+@keyframes ld2 {
+  0% {
+    transform: scaleY(1);
+    background: #fed766;
+  }
+  25% {
+    background: #009fb7;
+  }
+  50% {
+    transform: scaleY(2);
+    background: #59cd90;
+  }
+  75% {
+    background: #fe4a49;
+  }
+  100% {
+    transform: scaleY(1);
+    background: #d91e36;
+  }
+}
 /* css stepper */
 .md-stepper-horizontal {
   display: table;
@@ -42,6 +140,8 @@
   margin: 0 auto;
   background-color: #ffffff;
   box-shadow: 0 3px 8px -6px rgba(0, 0, 0, 0.5);
+  margin-bottom: 48px;
+  border-radius: 8px;
 }
 .md-stepper-horizontal .md-step {
   display: table-cell;
@@ -156,13 +256,24 @@
 .md-stepper-horizontal .md-step .md-step-circle .material-icons {
   line-height: inherit;
 }
+
+#chonghe td span.material-icons {
+  cursor: pointer;
+}
+#chonghe td.reserved span.material-icons {
+  color: rgb(255, 158, 0);
+}
+#chonghe td.booked span.material-icons {
+  color: #eaeaea;
+}
+/* css banner trang chu */
 .cloud {
   position: absolute;
   top: 0px;
   left: 0px;
   height: 100%;
   width: 100%;
-  background: url(../../dath-react/public/assets/img/cloud.png);
+  background: url(../img/cloud.png);
   animation: cloudy 60s linear infinite;
 }
 
@@ -172,5 +283,71 @@
   }
   100% {
     background-position: -5440px;
+  }
+}
+/*css for loader page*/
+#root:not(:empty) + .triple-spinner {
+  display: none;
+}
+
+.triple-spinner {
+  width: 126px;
+  height: 126px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  border-top: 4px solid #f15e41;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: calc(50% - 84px);
+  left: calc(50% - 84px);
+  transform: (-50%, -50%);
+}
+
+.triple-spinner::before,
+.triple-spinner::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 4px solid transparent;
+}
+.triple-spinner::before {
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-top-color: #bad375;
+  -webkit-animation: spin 3s linear infinite;
+  animation: spin 3.5s linear infinite;
+}
+.triple-spinner::after {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border-top-color: #26a9e0;
+  -webkit-animation: spin 1.5s linear infinite;
+  animation: spin 1.75s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }

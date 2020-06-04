@@ -16,12 +16,13 @@ class Ve extends Migration
         Schema::create('ve',function($table){
             $table->increments('id');
             $table->string('NgayDatVe');
-            $table->integer('idKH')->unsigned();
-            $table->foreign('idKH')->references('id')->on('khachhang');
-            $table->integer('idLC')->unsigned();
-            $table->foreign('idLC')->references('id')->on('lichchay');
-            $table->integer('idHD')->unsigned();
-            $table->foreign('idHD')->references('id')->on('hoadon');
+            $table->integer('idKH');
+            $table->integer('idLC');
+            $table->integer('idHD');
+            $table->integer('idXe');
+            $table->string('NgayKhoiHanh');
+            $table->string('GioKhoiHanh');
+            $table->integer('TrangThai');
         });
     }
 

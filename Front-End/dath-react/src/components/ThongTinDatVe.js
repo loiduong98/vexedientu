@@ -240,11 +240,6 @@ class ThongTinDatVe extends Component {
       return <Redirect to="/thanh-toan" />;
     }
 
-    //điều kiện chuyển hướng
-    if (this.state.isGoPayment === true) {
-      return <Redirect to="/thanh-toan" />;
-    }
-
     return (
       <div className="container" style={{ marginTop: "100px" }}>
         <ReactNotification />

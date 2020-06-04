@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\xe;
-use App\sodoghe;
 
 class XeController extends Controller
 {
@@ -14,7 +13,6 @@ class XeController extends Controller
     
     public function getDanhSach()
     {
-		$sodoghe = sodoghe::all();
     	$xe = xe::orderBy('id','DESC')->get();
     	return view('admin.xe.danhsach', ['xe'=>$xe]);
     }
@@ -26,7 +24,6 @@ class XeController extends Controller
 
     public function postThem(Request $request)
     {
-		$sodoghe = sodoghe::all();
     	$this->validate($request,
     		[
     			'BSXe' => 'required|min:3|max:20|unique:xe'
@@ -39,7 +36,9 @@ class XeController extends Controller
     		]);
     	$xe = new xe;
     	$xe->BSXe = $request->BSXe;
-    	$xe->idSoDoGhe = $request->idSoDoGhe;
+		$xe->TatCaGhe = $request->TatCaGhe;
+		$xe->GheDaDat = $request->GheDaDat;
+		$xe->SoDoGhe = $request->SoDoGhe;
     	$xe->save();
     	return redirect('admin/xe/them')->with('thongbao','Thêm thành công');
     }
@@ -47,14 +46,12 @@ class XeController extends Controller
     public function getSua($id)
     {
 		$xe = xe::find($id);
-		$sodoghe = sodoghe::all();
         return view('admin.xe.sua', ['xe'=>$xe]);
     }
 
     public function postSua(Request $request,$id)
     {
 		$xe = xe::find($id);
-		$sodoghe = sodoghe::all();
     	$this->validate($request,
     		[
     			'BSXe' => 'required|min:3|max:100:xe'
@@ -65,7 +62,9 @@ class XeController extends Controller
     			'BSXe.max'=>'Bạn phải nhập dưới 20 ký tự'
     		]);
 			$xe->BSXe = $request->BSXe;
-			$xe->idSoDoGhe = $request->sodoghe;
+			$xe->TatCaGhe = $request->TatCaGhe;
+			$xe->GheDaDat = $request->GheDaDat;
+			$xe->SoDoGhe = $request->SoDoGhe;
 			$xe->save();
     	return redirect('admin/xe/sua/'.$id)->with('thongbao','Sửa thành công');
     }

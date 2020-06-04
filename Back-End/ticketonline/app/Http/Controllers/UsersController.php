@@ -30,7 +30,7 @@ class UsersController extends Controller
         $this->validate($request,
             [
                 'email'=>'required|min:3|max:100|unique:users',
-                'password'=>'required|min:3|max:100|unique:users',
+                'password'=>'required',
                 'level'=>'required',
             ],
             [
@@ -39,14 +39,14 @@ class UsersController extends Controller
                 'username.min'=>'Username quá ngắn',
                 'username.max'=>'Username quá dài',
                 'password.required'=>'Bạn chưa nhập password',
-                'password.min'=>'password quá ngắn',
-                'password.max'=>'password quá dài'
             ]);
+        
         $users = new User;
         $users->name = $request->name;
         $users->email = $request->email;
         $users->password = bcrypt($request->password);
         $users->level = $request->level;
+
         if($request->hasFile('urlHinh'))
         {
             $file = $request->file('urlHinh');  
@@ -68,6 +68,8 @@ class UsersController extends Controller
             $users->urlHinh = "";
         }
         $users->save();
+        echo json_encode(['status'=>200]);
+        die();
         return redirect('admin/users/them')->with('thongbao','Thêm thành công');
     }
 

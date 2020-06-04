@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Khách hàng
+                        <h1 class="page-header">Bảng tin
                             <small>danh sách</small>
                         </h1>
                     </div>
@@ -16,19 +16,23 @@
                                 <th>Tiêu đề</th>
                                 <th>Nội dung</th>
                                 <th>Hình</th>
+                                <th>Nơi bán</th>
+                                <th>Giá</th>
                                 <th>Xóa</th>
                                 <th>Sửa</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($tintuc as $t)
+                            @foreach($bang_tin as $bt)
                             <tr class="odd gradeX" align="center">
-                                <td>{{$t->id}}</td>
-                                <td>{{$t->TieuDe}}</td>
-                                <td>{{$t->NoiDung}}</td>
-                                <td>{{$t->urlHinh}}</td>
-                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/tintuc/xoa/{{$t->id}}"> Xóa</a></td>
-                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/tintuc/sua/{{$t->id}}">Sửa</a></td>
+                                <td>{{$bt->id}}</td>
+                                <td>{{$bt->TieuDe}}</td>
+                                <td>{{$bt->NoiDung}}</td>
+                                <td>{{$bt->urlHinh}}</td>
+                                <td>{{$bt->NoiBan}}</td>
+                                <td>{{$bt->Gia}}</td>
+                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/bang_tin/xoa/{{$bt->id}}"> Xóa</a></td>
+                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/bang_tin/sua/{{$bt->id}}">Sửa</a></td>
                             </tr>
                             @endforeach
                         </tbody>

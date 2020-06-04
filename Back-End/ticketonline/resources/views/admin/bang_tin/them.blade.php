@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Tin Tức
+                        <h1 class="page-header">Bảng tin
                             <small>thêm</small>
                         </h1>
                     </div>
@@ -22,7 +22,7 @@
                                 {{session('thongbao')}}
                             </div>
                         @endif
-                        <form action="admin/tintuc/them" method="POST" enctype="multipart/form-data">
+                        <form action="admin/bang_tin/them" method="POST" enctype="multipart/form-data">
                              <input type="hidden" name="_token" value="{{csrf_token()}}" />
                             <div class="form-group">
                                 <label>Tiêu đề</label>
@@ -35,7 +35,15 @@
                             <div class="form-group">
                                 <label>Hình</label>
                                 <input type="file" name="urlHinh">
-                            </div>  
+                            </div>
+                            <div class="form-group">
+                                <label>Nơi bán</label>
+                                <input class="form-control" name="NoiBan" placeholder="Nhập nơi bán"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Giá</label>
+                                <input class="form-control" name="Gia" placeholder="Nhập giá"/>
+                            </div>
                             <button type="submit" class="btn btn-default">Thêm tin tức</button>
                             <button type="reset" class="btn btn-default">Làm mới</button>
                         <form>

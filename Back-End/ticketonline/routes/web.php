@@ -183,16 +183,16 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 Route::group(['prefix'=>'admin'], function(){
-	Route::group(['prefix'=>'tintuc'], function(){
-		Route::get('danhsach','TinTucController@getDanhSach');
+	Route::group(['prefix'=>'bang_tin'], function(){
+		Route::get('danhsach','BangTinController@getDanhSach');
 
-		Route::get('them','TinTucController@getThem');
-		Route::post('them','TinTucController@postThem');
+		Route::get('them','BangTinController@getThem');
+		Route::post('them','BangTinController@postThem');
 
-		Route::get('sua/{id}','TinTucController@getSua');
-		Route::post('sua/{id}','TinTucController@postSua');
+		Route::get('sua/{id}','BangTinController@getSua');
+		Route::post('sua/{id}','BangTinController@postSua');
 
-		Route::get('xoa/{id}','TinTucController@getXoa');
+		Route::get('xoa/{id}','BangTinController@getXoa');
 
 	});
 });
@@ -244,17 +244,10 @@ Route::group(['prefix'=>'page'], function(){
 
 Auth::routes();
 
-// Route::group(['prefix'=>'admin'], function(){
-// 	Route::group(['prefix'=>'login'], function(){
-// 		Route::get('/home', 'HomeController@index')->name('home');
-// 		Route::post('/home', 'HomeController@index')->name('home');
-// 	});	
-// });
-
-
 Route::group(['prefix'=>'trade'], function(){
 		Route::get('index','TradeTicketController@getLayout');
 		Route::get('index','TradeTicketController@getDanhSachTuyen');
+		Route::get('news','TradeTicketController@getNews');
 });
 
 // Đăng ký thành viên

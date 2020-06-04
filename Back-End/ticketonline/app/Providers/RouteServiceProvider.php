@@ -88,14 +88,14 @@ class RouteServiceProvider extends ServiceProvider
                 Route::apiResource('nhanvien', 'apiNhanVienController');
                 
                 Route::apiResource('users', 'apiUsersController');
+
+                Route::apiResource('login', 'apiLoginController');
                 
                 Route::apiResource('ve', 'apiVeController');      
 
                 Route::apiResource('lichchay', 'apiLichChayController');
 
                 Route::apiResource('checkout', 'DatVeController');  
-
-                Route::apiResource('login', 'apiLoginController');
 
                 Route::apiResource('bookticket', 'apiBookticketController');
         });
