@@ -5,7 +5,9 @@ import { combineReducers } from "redux";
 import khachhangReducer from "./khachhangReducer";
 import dslichchayReducer from "./dslichchayReducer";
 import dsxeReducer from "./dsxeReducer";
-import userReducer from "./userReducer"
+import loginReducer from "./loginReducer";
+import dskhachhangReducer from "./dsKhachHang";
+import dsVeReducer from "./dsVeReducer";
 
 const allReducer = combineReducers({
   dsbenReducer: dsbenReducer,
@@ -13,6 +15,8 @@ const allReducer = combineReducers({
   khachhangReducer: khachhangReducer,
   dslichchayReducer: dslichchayReducer,
   dsxeReducer: dsxeReducer,
-  userReducer:userReducer
+  loginReducer: loginReducer,
+  dskhachhangReducer: dskhachhangReducer,
+  dsVeReducer
 });
 export default allReducer;

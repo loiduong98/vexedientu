@@ -39,6 +39,11 @@ class Nav extends Component {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link to="/trao-doi-ve" className="nav-link">
+                  <i className="material-icons">compare_arrows</i> Trao đổi vé
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/dang-nhap" className="nav-link">
                   <i className="material-icons">view_carousel</i> Đăng nhập
                 </Link>
