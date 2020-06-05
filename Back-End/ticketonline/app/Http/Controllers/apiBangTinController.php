@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\bang_tin;
+use App\ve;
+use DB;
 
 class apiBangTinController extends Controller
 {
@@ -15,7 +17,13 @@ class apiBangTinController extends Controller
      */
     public function index()
     {
-        return bang_tin::all();
+        $all_bangtin = DB::table('ve')
+            ->join('bang_tin', 've.id', '=', 'bang_tin.idVe')
+            ->join('khachhang', 've.idKH', '=', 'khachhang.id')
+            ->select('bang_tin.*', 've.*', 'khachhang.*')
+            ->get();
+
+        return $all_bangtin;
     }
 
     /**
