@@ -1,14 +1,13 @@
-import { userService } from '../service'
-import { FETCH_CREDENTIALS } from './type';
+import {userService} from '../service'
 
 export const login = user => {
     return dispatch => {
         userService
-            .dangNhap(user)
-            .then(res => {
-                dispatch(createAction(FETCH_CREDENTIALS, res.data))
-            }).catch(err => {
-                console.log(err);
-            });
+        .dangNhap(user)
+        .then(res=>{
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
     };
 };

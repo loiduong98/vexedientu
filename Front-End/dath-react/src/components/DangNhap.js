@@ -1,25 +1,46 @@
 import React, { Component } from "react";
 import { Formik, Form, Field } from "formik";
 import Axios from "axios";
-import {connect} from "react-redux";
-
+import * as yup from "yup";
+import { connect } from "react-redux";
+import swal from "sweetalert";
+import { Redirect } from "react-router-dom";
 
 class DangNhap extends Component {
   _handleSubmit = (values) => {
-    Axios({
-      method: "POST",
-      url: "http://127.0.0.1:8000/api/login",
-      data: values,
-    })
+    // const xsrfToken = this.getCookie("XSRF-TOKEN");
+    var postData = values;
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        // "X-XSRF-TOKEN": xsrfToken,
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.post("/api/login", postData, axiosConfig)
       .then((res) => {
-        alert("Chúc mừng bạn đã đăng ký thành công <3");
+        if (res.data.status === "true") {
+          this.props.dispatch({
+            type: "CHANGE_LOGIN_STATUS",
+          });
+          localStorage.setItem('email', values.email);
+          this.props.history.push("/");
+        } else {
+          swal({
+            title: "Lỗi Đăng Nhập",
+            text: res.data.message,
+            icon: "warning",
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
       });
     console.log(values);
   };
+
   render() {
+
     return (
       <div className="login-page">
         <div
@@ -39,9 +60,7 @@ class DangNhap extends Component {
                       email: "",
                       password: "",
                     }}
-                    onSubmit={(values) => {
-                      console.log(values);
-                    }}
+                    onSubmit={this._handleSubmit}
                     render={({ handleChange }) => (
                       <Form className="form">
                         <div className="card-header card-header-primary text-center">
@@ -94,7 +113,13 @@ class DangNhap extends Component {
                           </div>
                         </div>
                         <div className="text-center">
-                          <button className="btn btn-danger">Đăng nhập</button>
+                          <button
+                            style={{ marginTop: "32px", marginBottom: "32px" }}
+                            type="submit"
+                            className="btn btn-danger"
+                          >
+                            Đăng nhập
+                          </button>
                         </div>
                       </Form>
                     )}
@@ -109,4 +134,9 @@ class DangNhap extends Component {
   }
 }
 
-export default connect() (DangNhap);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loginStatus: state.loginReducer,
+  };
+};
+export default connect(mapStateToProps)(DangNhap);

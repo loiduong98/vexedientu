@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
 import Nav from "./components/Nav";
+import NavUser from "./components/NavUser";
 import Footer from "./components/Footer";
 import DieuHuongURL from "./router/DieuHuongURL";
 import { BrowserRouter as Router } from "react-router-dom";
-import {connect} from "react-redux";
-import createAction from "./redux/Actions";
-import { FETCH_CREDENTIALS } from "./redux/Actions/type";
+import { connect } from "react-redux";
 
 class App extends Component {
   state = {
@@ -16,7 +15,6 @@ class App extends Component {
   componentDidMount() {
     // this simulates an async action, after which the component will render the content
     demoAsyncCall().then(() => this.setState({ loading: false }));
-    this._getCredentialFromLocal();
   }
   render() {
     const { loading } = this.state;
@@ -28,23 +26,22 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Nav></Nav>
+          {this.props.loginStatus === false ? <Nav></Nav> : <NavUser></NavUser>}
           <DieuHuongURL></DieuHuongURL>
           <Footer></Footer>
         </div>
       </Router>
     );
   }
-
-  _getCredentialFromLocal = () => {
-    const credentialsStr = localStorage.getItem('credentials');
-    if (credentialsStr){
-      this.props.dispatch(createAction(FETCH_CREDENTIALS, JSON.parse(credentialsStr)))
-    }
-  }
 }
 
 function demoAsyncCall() {
-  return new Promise((resolve) => setTimeout(() => resolve(), 2500));
+  return new Promise((resolve) => setTimeout(() => resolve(), 2000));
 }
-export default connect() (App);
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loginStatus: state.loginReducer,
+  };
+};
+export default connect(mapStateToProps)(App);

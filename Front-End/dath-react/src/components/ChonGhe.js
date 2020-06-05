@@ -123,8 +123,8 @@ class ChonGhe extends Component {
   //get data từ API
   getDataAPI() {
     Axios.all([
-      Axios.get("http://127.0.0.1:8000/api/lichchay"),
-      Axios.get("http://127.0.0.1:8000/api/xe"),
+      Axios.get("http://localhost:8000/api/lichchay"),
+      Axios.get("http://localhost:8000/api/xe"),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer

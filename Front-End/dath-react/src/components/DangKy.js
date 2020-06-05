@@ -5,16 +5,30 @@ import * as yup from "yup";
 import swal from "sweetalert";
 
 const UserSchema = yup.object().shape({
-  name: yup.string().required("*Bạn chưa nhập họ tên"),
+  name: yup.string().required("(*) Bạn chưa nhập họ tên"),
   email: yup
     .string()
-    .required("*Bạn chưa nhập email")
+    .required("(*) Bạn chưa nhập email")
     .email("Không đúng định dạng email"),
-  password: yup.string().required("*Bạn chưa nhập password"),
+  password: yup.string().required("(*) Bạn chưa nhập password"),
+  phone: yup.string().required("(*) Bạn chưa nhập số điện thoại"),
+  diachi: yup.string().required("(*) Bạn chưa nhập địa chỉ"),
 });
 
 class DangKy extends Component {
   _handleSubmit = (values) => {
+    // Axios({
+    //   method: "POST",
+    //   url: "http://localhost:8000/api/users",
+    //   data: values,
+    // })
+    //   .then((res) => {
+    //     alert("Chúc mừng bạn đã đăng ký thành công <3");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // console.log(values);
 
     var postData = values;
 
@@ -25,13 +39,14 @@ class DangKy extends Component {
       },
     };
 
-    Axios.post("/api/users", postData, axiosConfig)
+    Axios.post("/api/login", postData, axiosConfig)
       .then((res) => {
         swal({
           title: "Tuyệt vời!",
           text: "Đăng ký tài khoản thành công!",
           icon: "success",
         });
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -143,6 +158,29 @@ class DangKy extends Component {
                                 <div className="input-group">
                                   <span className="input-group-addon">
                                     <i className="material-icons">
+                                      settings_phone
+                                    </i>
+                                  </span>
+                                  <Field
+                                    type="text"
+                                    name="phone"
+                                    className="form-control"
+                                    onChange={formikProps.handleChange}
+                                    placeholder="Số điện thoại"
+                                  />
+                                  <ErrorMessage name="phone">
+                                    {(msg) => (
+                                      <div className="alert alert-danger">
+                                        {msg}
+                                      </div>
+                                    )}
+                                  </ErrorMessage>
+                                </div>
+                              </div>
+                              <div className="form-group">
+                                <div className="input-group">
+                                  <span className="input-group-addon">
+                                    <i className="material-icons">
                                       lock_outline
                                     </i>
                                   </span>
@@ -165,6 +203,30 @@ class DangKy extends Component {
                               <div className="form-group">
                                 <div className="input-group">
                                   <span className="input-group-addon">
+                                    <i className="material-icons">home</i>
+                                  </span>
+                                  <Field
+                                    type="text"
+                                    name="diachi"
+                                    className="form-control"
+                                    onChange={formikProps.handleChange}
+                                    placeholder="Địa chỉ ..."
+                                  />
+                                  <ErrorMessage name="diachi">
+                                    {(msg) => (
+                                      <div className="alert alert-danger">
+                                        {msg}
+                                      </div>
+                                    )}
+                                  </ErrorMessage>
+                                </div>
+                              </div>
+                              <div
+                                className="form-group"
+                                style={{ display: "none" }}
+                              >
+                                <div className="input-group">
+                                  <span className="input-group-addon">
                                     <i className="material-icons">image</i>
                                   </span>
                                   <input
@@ -173,6 +235,7 @@ class DangKy extends Component {
                                     className="form-control"
                                     onChange={formikProps.handleChange}
                                     placeholder="Url hình..."
+                                    defaultValue="./assets/img/user-icon.png"
                                   />
                                 </div>
                               </div>
@@ -187,8 +250,8 @@ class DangKy extends Component {
                                   <span className="form-check-sign">
                                     <span className="check" />
                                   </span>
-                                  I agree to the
-                                  <a href="#something">terms and conditions</a>.
+                                  Tôi đồng ý
+                                  <a href="#"> các điều khoản sử dụng</a>.
                                 </label>
                               </div>
                               <div className="text-center">
