@@ -420,12 +420,13 @@ section#trade .card {
 }
 ul.listCard {
   list-style: none;
-  font-size: 25px;
+  font-size: 18px;
   line-height: 30px;
+  font-weight: 400;
 }
 
 li.itemCard {
-  padding-top: 5px;
+  padding-top: 10px;
 }
 
 .imgRounded {
