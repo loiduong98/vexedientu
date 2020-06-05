@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
-use App\khachhang_login;
+// use App\khachhang_login;
+use App\ve;
 
-class apiLoginController extends Controller
+class apiTradeticketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,18 @@ class apiLoginController extends Controller
      */
     public function index()
     {
-        // return app('App\Http\Controllers\KhachHangController')->list_ticket();
-        return khachhang_login::all();
+        //
+        return ve::all();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -29,7 +38,7 @@ class apiLoginController extends Controller
      */
     public function store(Request $request)
     {
-        return app('App\Http\Controllers\KhachHangController')->check_kh($request);
+        //
     }
 
     /**
@@ -38,10 +47,20 @@ class apiLoginController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(khachhang_login $khachhang_login)
+    public function show(ve_xe $ve)
+    {
+        return $ve;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
         //
-        return $khachhang_login;
     }
 
     /**
@@ -53,7 +72,15 @@ class apiLoginController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ve_array       = array(
+            'idKH'           => $request->idKH,  
+        );
+        $trade = ve::where('id', $id)->update($ve_array);
+        if($trade == 1) {
+            return json_encode(['status'=>'true','message'=>'Trao đổi vé thành công']);
+        }else{
+            return json_encode(['status'=>'false','message'=>'Trao đổi vé thất bại']);
+        }
     }
 
     /**
