@@ -42,7 +42,7 @@ export default class ThanhToan extends Component {
   step1; // dữ liệu bước chọn tuyến
   step2; // dữ liệu bước chọn ghế
   step3; // dữ liệu bước điền thông tin khách hàng
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (typeof Storage !== "undefined") {
       // get sessionStorage
       this.step1 = JSON.parse(sessionStorage.getItem("chonTuyen"));
@@ -186,7 +186,7 @@ export default class ThanhToan extends Component {
                 </div>
                 <div className="card-body">
                   <div className="panel">
-                    <form action className="form-horizontal">
+                    <form className="form-horizontal">
                       <div className="form-group">
                         <div className="col-md-12">
                           <table className="table">

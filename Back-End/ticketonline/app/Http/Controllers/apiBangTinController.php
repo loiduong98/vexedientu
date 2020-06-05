@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
-use App\khachhang_login;
+use App\bang_tin;
 
-class apiLoginController extends Controller
+class apiBangTinController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +15,7 @@ class apiLoginController extends Controller
      */
     public function index()
     {
-        // return app('App\Http\Controllers\KhachHangController')->list_ticket();
-        return khachhang_login::all();
+        return bang_tin::all();
     }
 
     /**
@@ -29,7 +26,7 @@ class apiLoginController extends Controller
      */
     public function store(Request $request)
     {
-        return app('App\Http\Controllers\KhachHangController')->check_kh($request);
+        return bang_tin::create($request->all());
     }
 
     /**
@@ -38,9 +35,9 @@ class apiLoginController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(bang_tin $bang_tin)
     {
-        //
+        return $bang_tin;
     }
 
     /**
@@ -50,9 +47,10 @@ class apiLoginController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, bang_tin $bang_tin)
     {
-        //
+        $bang_tin->update($request->all());
+        return $bang_tin;
     }
 
     /**
@@ -61,8 +59,9 @@ class apiLoginController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(bang_tin $bang_tin)
     {
-        //
+        $bang_tin->delete();
+        return $bang_tin;
     }
 }

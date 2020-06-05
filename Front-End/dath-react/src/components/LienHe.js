@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export default class LienHe extends Component {
   render() {
     return (
-      <div>
+      <div id="lienhe">
         <div id="contactUsMap" className="big-map" />
         <div className="main main-raised">
           <div className="contact-content">

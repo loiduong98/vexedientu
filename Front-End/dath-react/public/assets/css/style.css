@@ -40,10 +40,10 @@
   padding-top: 26px;
 }
 #booking .col-md-4 .form-group select {
-  color: black;
-  background-color: rgba(251, 243, 243, 0.3);
-  font-weight: 600;
+  color: #000;
   padding-left: 5px;
+  background: #fff;
+  font-weight: 600;
 }
 /* CSS phần chọn ghế */
 section#chonghe {
@@ -350,4 +350,90 @@ section#chonghe {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+/* trade css */
+
+section#trade .card img.img-fluid.rounded {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 90%;
+  margin-left: 6px;
+}
+
+section#trade p .fa {
+  display: inline-block;
+  width: 25px;
+  color: #fff;
+  height: 25px;
+  text-align: center;
+  background: #1bbc9c;
+  line-height: 25px;
+  border-radius: 2px;
+  font-size: 13px;
+}
+
+section#trade .card .col-md-3 .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+}
+
+section#trade .col-md-8 .card:hover {
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(233, 30, 99, 0.6);
+  transition: 0.5s all;
+}
+
+section#trade .modal-content .card {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 16px;
+}
+
+section#trade .modal-content .card .btn.btn-block.btn-info {
+  font-size: 16px;
+}
+
+section#trade .card {
+  text-align: left !important;
+}
+/* lien he component css*/
+#lienhe {
+  margin-top: 200px;
+  margin-bottom: 100px;
+  text-align: left !important;
+}
+
+#lienhe .contact-content {
+  padding-top: 48px;
+  padding-bottom: 32px;
+}
+
+#lienhe .contact-content .info.info-horizontal {
+  padding-top: 0px;
+}
+ul.listCard {
+  list-style: none;
+  font-size: 25px;
+  line-height: 30px;
+}
+
+li.itemCard {
+  padding-top: 5px;
+}
+
+.imgRounded {
+  width: 90%!important;
+  height: 80%!important;
+}
+label {
+  color: #000;
+  font-weight: 600;
+  font-size: 18px;
 }
