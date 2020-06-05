@@ -50,6 +50,9 @@ class DanhSachVe extends Component {
   
   
   _handleSubmit = (values) => {
+    values.idVe = this.state.idveban;
+    values.TieuDe = this.state.idLC1;
+    values.Gia = this.state.giaLC;
     var postData = values;
 
     let axiosConfig = {
