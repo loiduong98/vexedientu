@@ -8,10 +8,8 @@ class bang_tin extends Model
 {
     protected $fillable = [
         'id',
+        'idVe',
         'TieuDe',
-        'NoiDung',
-        'urlHinh',
-        'NoiBan',
         'Gia',
     ];
     protected $table = "bang_tin";

@@ -2,8 +2,21 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Axios from "axios";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import swal from "sweetalert";
 
 class DanhSachVe extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      idKH1:'',
+      idLC1:'',
+      giaLC:'',
+      idVe1:'',
+      idveban:''
+    };
+  }
+
   getDataAPI() {
     Axios.all([
       Axios.get("http://localhost:8000/api/login"),
@@ -34,32 +47,34 @@ class DanhSachVe extends Component {
         console.log(err);
       });
   }
-  idKH1 = "";
-  idLC1 = "";
-  giaLC = "";
-  idVe1 = "";
- getIDveban(x){
-  return this.setState({idveban: x}, ()=>{
-    return console.log('id ve ban la' + this.state.idveban)
-  })
- }
+  
+  
+  _handleSubmit = (values) => {
+    var postData = values;
 
-  renderVe() {
-    var emailKH = localStorage.getItem("email");
-    this.props.khachhangData
-      .filter((kh) => {
-        return kh.Email === emailKH;
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    Axios.post("/api/news", postData, axiosConfig)
+      .then((res) => {
+        swal({
+          title: "Tuyệt vời!",
+          text: "Bạn đã đăng vé thành công!",
+          icon: "success",
+        });
+        console.log(res);
       })
-      .map((vlKH) => {
-        return (this.idKH1 = vlKH.id);
+      .catch((err) => {
+        console.log(err);
       });
-    return this.props.dsVeData
-      .filter((ve) => {
-        return ve.idKH === this.idKH1;
-      })
-      .map((vlVe, index) => {
-        return <option key={index}>{vlVe.id}</option>;
-      });
+    console.log(values);
+  };
+  getIDveban(x) {
+    return this.setState({ idveban: x.toString() });
   }
   renderDSVE() {
     var emailKH = localStorage.getItem("email");
@@ -68,26 +83,26 @@ class DanhSachVe extends Component {
         return kh.Email === emailKH;
       })
       .map((vlKH) => {
-        return (this.idKH1 = vlKH.id);
+        return (this.state.idKH1 = vlKH.id);
       });
     return this.props.dsVeData
       .filter((ve) => {
-        return ve.idKH === this.idKH1;
+        return ve.idKH === this.state.idKH1;
       })
       .map((ve, index) => {
-        this.idVe1 = ve.id;
+        this.state.idVe1 = ve.id;
         this.props.dsLichChayData
           .filter((lc) => {
             return lc.id === ve.idLC;
           })
           .map((vlLC) => {
-            return (this.idLC1 = vlLC.TenLC,this.giaLC = vlLC.Gia);
+            return (this.state.idLC1 = vlLC.TenLC), (this.state.giaLC = vlLC.Gia);
           });
         return (
           <tr key={index}>
             <td scope="row">{ve.id}</td>
             <td>{ve.NgayDatVe}</td>
-            <td>{this.idLC1}</td>
+            <td>{this.state.idLC1}</td>
             <td>{ve.NgayKhoiHanh}</td>
             <td>{ve.GioKhoiHanh}</td>
             <td>
@@ -101,81 +116,100 @@ class DanhSachVe extends Component {
               </button>
             </td>
             <div
-          class="modal fade"
-          id="modelId"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="modelTitleId"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Thông tin vé</h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form className="bg-white rounded p-4 text-left" action method>
-                  <div className="form-group">
-                    <label htmlFor="exampleFormControlSelect2">
-                      Chọn vé*
-                    </label>
-                    <input
-                      type="text"
-                      name="idVe"
-                      value={this.state.idveban}
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      disabled
+              className="modal fade"
+              id="modelId"
+              tabIndex={-1}
+              role="dialog"
+              aria-labelledby="modelTitleId"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Thông tin vé</h5>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    <Formik
+                      initialValues={{
+                        idVe: this.state.idveban,
+                        TieuDe: this.state.idLC1,
+                        Gia: this.state.giaLC,
+                      }}
+                      onSubmit={this._handleSubmit}
+                      render={(formikProps) => (
+                        <Form
+                      className="bg-white rounded p-4 text-left"
+                      action
+                      method
+                    >
+                      <div className="form-group">
+                        <label htmlfor="exampleFormControlSelect2">
+                          Chọn vé*
+                        </label>
+                        <Field
+                          type="text"
+                          name="idVe"
+                          value={this.state.idveban}
+                          className="form-control"
+                          id="idVeBan"
+                          disabled
+                          onChange={formikProps.handleChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlfor="exampleFormControlInput1">
+                          Tiêu đề*
+                        </label>
+                        <Field
+                          type="text"
+                          name="TieuDe"
+                          value={this.state.idLC1}
+                          className="form-control"
+                          id="exampleFormControlInput1"
+                          disabled
+                          onChange={formikProps.handleChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlfor="exampleFormControlInput1">Giá*</label>
+                        <Field
+                          type="text"
+                          name="Gia"
+                          className="form-control"
+                          id="exampleFormControlInput1"
+                          value={this.state.giaLC}
+                          disabled
+                          onChange={formikProps.handleChange}
+                        />
+                      </div>
+                      <button className="btn btn-success">Đăng tin</button>
+                    </Form>
+                      )}
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleFormControlInput1">Tiêu đề*</label>
-                    <input
-                      type="text"
-                      name="TieuDe"
-                      value={this.idLC1}
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      disabled
-                    />
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Đóng
+                    </button>
+                    <button type="button" className="btn btn-primary">
+                      Lưu
+                    </button>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleFormControlInput1">Giá*</label>
-                    <input
-                      type="text"
-                      name="Gia"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      value={this.giaLC}
-                      disabled
-                    />
-                  </div>
-                  <button className="btn btn-success">Đăng tin</button>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Đóng
-                </button>
-                <button type="button" class="btn btn-primary">
-                  Lưu
-                </button>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
           </tr>
         );
       });
@@ -184,6 +218,7 @@ class DanhSachVe extends Component {
   componentDidMount() {
     this.getDataAPI();
   }
+  
   render() {
     if (this.props.loginStatus === false) {
       return <Redirect to="/dang-nhap" />;
