@@ -8,6 +8,8 @@ import ChonGhe from "../components/ChonGhe";
 import ThongTinDatVe from "../components/ThongTinDatVe";
 import ThanhToan from "../components/ThanhToan";
 import TraoDoiVe from "../components/TraoDoiVe";
+import News from "../components/News";
+import DanhSachVe from "../components/DanhSachVe";
 
 class DieuHuongURL extends Component {
   render() {
@@ -21,6 +23,8 @@ class DieuHuongURL extends Component {
         <Route path="/thong-tin-dat-ve" component={ThongTinDatVe} />
         <Route path="/thanh-toan" component={ThanhToan} />
         <Route path="/trao-doi-ve" component={TraoDoiVe} />
+        <Route path="/news" component={News} />
+        <Route path="/danh-sach-ve" component={DanhSachVe} />
       </Switch>
     );
   }

@@ -416,3 +416,17 @@ section#trade .card {
 #lienhe .contact-content .info.info-horizontal {
   padding-top: 0px;
 }
+ul.listCard {
+  list-style: none;
+  font-size: 25px;
+  line-height: 30px;
+}
+
+li.itemCard {
+  padding-top: 5px;
+}
+
+.imgRounded {
+  width: 90%!important;
+  height: 80%!important;
+}

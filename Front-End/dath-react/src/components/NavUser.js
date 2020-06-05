@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import Axios from "axios";
+import swal from "sweetalert";
 
 class NavUser extends Component {
   buttonLogOut() {
@@ -8,6 +10,70 @@ class NavUser extends Component {
       type: "CHANGE_LOGIN_STATUS",
     });
   }
+  // getDataAPI() {
+  //   Axios.all([
+  //     Axios.get("http://localhost:8000/api/login"),
+  //     Axios.get("http://localhost:8000/api/khachhang"),
+  //     Axios.get("http://localhost:8000/api/ve"),
+  //   ])
+  //     .then((resArr) => {
+  //       // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
+  //       this.props.dispatch({
+  //         type: "FETCH_DSKHACHHANG",
+  //         payload: resArr[0].data,
+  //       });
+  //       this.props.dispatch({
+  //         type: "FETCH_KHACHHANG",
+  //         payload: resArr[1].data,
+  //       });
+  //       this.props.dispatch({
+  //         type: "FETCH_DSVE",
+  //         payload: resArr[2].data,
+  //       });
+  //       console.log(this.props.dskhachhangData);
+  //       console.log(this.props.khachhangData);
+  //       console.log(this.props.dsVeData);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
+  // componentDidMount() {
+  //   this.getDataAPI();
+  // }
+  _handleSubmit = (values) => {
+    // const xsrfToken = this.getCookie("XSRF-TOKEN");
+
+    var postData = values;
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        // "X-XSRF-TOKEN": xsrfToken,
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.post("/api/login", postData, axiosConfig)
+      .then((res) => {
+        if (res.data.status === "true") {
+          this.props.dispatch({
+            type: "CHANGE_LOGIN_STATUS",
+          });
+          this.props.history.push("/");
+        } else {
+          swal({
+            title: "Lỗi Đăng Nhập",
+            text: res.data.message,
+            icon: "warning",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(values);
+  };
+
   render() {
     return (
       <nav
@@ -70,8 +136,11 @@ class NavUser extends Component {
                   <Link to="#pablo" className="dropdown-item">
                     Thông tin cá nhân
                   </Link>
-                  <Link to="#pablo" className="dropdown-item">
-                    Lịch sử vé
+                  <Link to="danh-sach-ve" className="dropdown-item">
+                    Danh sách vé của bạn
+                  </Link>
+                  <Link to="news" className="dropdown-item">
+                    Đăng bán vé
                   </Link>
                   <Link
                     to="#"
@@ -93,6 +162,9 @@ class NavUser extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     loginStatus: state.loginReducer,
+    dskhachhangData: state.dskhachhangReducer.dskhachhangData,
+    khachhangData: state.khachhangReducer.khachhangData,
+    dsVeData: state.dsVeReducer.dsVeData,
   };
 };
 export default connect(mapStateToProps)(NavUser);

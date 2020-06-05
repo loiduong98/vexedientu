@@ -6,6 +6,8 @@ import khachhangReducer from "./khachhangReducer";
 import dslichchayReducer from "./dslichchayReducer";
 import dsxeReducer from "./dsxeReducer";
 import loginReducer from "./loginReducer";
+import dskhachhangReducer from "./dsKhachHang";
+import dsVeReducer from "./dsVeReducer";
 
 const allReducer = combineReducers({
   dsbenReducer: dsbenReducer,
@@ -14,5 +16,7 @@ const allReducer = combineReducers({
   dslichchayReducer: dslichchayReducer,
   dsxeReducer: dsxeReducer,
   loginReducer: loginReducer,
+  dskhachhangReducer: dskhachhangReducer,
+  dsVeReducer
 });
 export default allReducer;

@@ -128,6 +128,7 @@ class Home extends Component {
   a1 = [];
 
   render() {
+    
     // lấy id những bến có thể đến sau khi chọn bến đi
     if (this.state.idBenDi === 0) {
       console.log("Chưa chọn bến đi");
@@ -154,7 +155,7 @@ class Home extends Component {
     if (this.state.isRedirectToChonGhe === true) {
       return <Redirect to="/chon-ghe" />;
     }
-
+    
     return (
       <div>
         <div id="booking" className="section">

@@ -9,7 +9,6 @@ import { Redirect } from "react-router-dom";
 class DangNhap extends Component {
   _handleSubmit = (values) => {
     // const xsrfToken = this.getCookie("XSRF-TOKEN");
-
     var postData = values;
     let axiosConfig = {
       headers: {
@@ -24,7 +23,12 @@ class DangNhap extends Component {
           this.props.dispatch({
             type: "CHANGE_LOGIN_STATUS",
           });
-          this.props.history.push("/");
+          localStorage.setItem("email", values.email);
+          if (this.props.location.state === undefined) {
+            this.props.history.push("/");
+          } else {
+            this.props.history.push(this.props.location.state.prevPage);
+          }
         } else {
           swal({
             title: "Lỗi Đăng Nhập",
@@ -38,9 +42,13 @@ class DangNhap extends Component {
       });
     console.log(values);
   };
+
   render() {
     return (
       <div className="login-page">
+        {console.log("test his prevPage")}
+        {console.log(this.props.location.state)}
+        {console.log(typeof this.props.location.state)}
         <div
           className="page-header header-filter"
           style={{
