@@ -40,8 +40,10 @@
   padding-top: 26px;
 }
 #booking .col-md-4 .form-group select {
-  color: white;
+  color: #000;
   padding-left: 5px;
+  background: #fff;
+  font-weight: 600;
 }
 /* CSS phần chọn ghế */
 section#chonghe {
@@ -429,4 +431,9 @@ li.itemCard {
 .imgRounded {
   width: 90%!important;
   height: 80%!important;
+}
+label {
+  color: #000;
+  font-weight: 600;
+  font-size: 18px;
 }

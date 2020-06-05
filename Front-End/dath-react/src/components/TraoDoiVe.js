@@ -1,6 +1,44 @@
 import React, { Component } from "react";
+import Axios from "axios";
+
 
 export default class TraoDoiVe extends Component {
+  getDataAPI() {
+    Axios.all([
+      Axios.get("http://localhost:8000/api/login"),
+      Axios.get("http://localhost:8000/api/khachhang"),
+      Axios.get("http://localhost:8000/api/ve"),
+      Axios.get("http://localhost:8000/api/lichchay"),
+    ])
+      .then((resArr) => {
+        // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
+        this.props.dispatch({
+          type: "FETCH_DSKHACHHANG",
+          payload: resArr[0].data,
+        });
+        this.props.dispatch({
+          type: "FETCH_KHACHHANG",
+          payload: resArr[1].data,
+        });
+        this.props.dispatch({
+          type: "FETCH_DSVE",
+          payload: resArr[2].data,
+        });
+        this.props.dispatch({
+          type: "FETCH_DSLICHCHAY",
+          payload: resArr[3].data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  componentDidMount() {
+    this.getDataAPI();
+  }
+  renderVeDoi = () => {
+    
+  }
   render() {
     return (
       <section id="trade" style={{ marginTop: 100 }}>
