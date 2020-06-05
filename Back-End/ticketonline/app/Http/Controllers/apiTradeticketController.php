@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\khachhang_login;
+// use App\khachhang_login;
+use App\ve;
 
 class apiTradeticketController extends Controller
 {
@@ -16,6 +17,7 @@ class apiTradeticketController extends Controller
     public function index()
     {
         //
+        return ve::all();
     }
 
     /**
@@ -45,9 +47,9 @@ class apiTradeticketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ve_xe $ve)
     {
-        //
+        return $ve;
     }
 
     /**
@@ -70,8 +72,15 @@ class apiTradeticketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-
+        $ve_array       = array(
+            'idKH'           => $request->idKH,  
+        );
+        $trade = ve::where('id', $id)->update($ve_array);
+        if($trade == 1) {
+            return json_encode(['status'=>'true','message'=>'Trao đổi vé thành công']);
+        }else{
+            return json_encode(['status'=>'false','message'=>'Trao đổi vé thất bại']);
+        }
     }
 
     /**
