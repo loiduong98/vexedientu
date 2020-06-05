@@ -9,7 +9,6 @@ import { Redirect } from "react-router-dom";
 class News extends Component {
   _handleSubmit = (values) => {
     var postData = values;
-
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

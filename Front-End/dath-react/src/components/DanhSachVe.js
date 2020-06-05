@@ -36,27 +36,52 @@ class DanhSachVe extends Component {
   }
   idKH1 = "";
   idLC1 = "";
-  renderDSVE() {
+  giaLC = "";
+  idVe1 = "";
+ getIDveban(x){
+  return this.setState({idveban: x}, ()=>{
+    return console.log('id ve ban la' + this.state.idveban)
+  })
+ }
+
+  renderVe() {
     var emailKH = localStorage.getItem("email");
-    console.log(emailKH);
     this.props.khachhangData
-      .filter((kh, index) => {
+      .filter((kh) => {
         return kh.Email === emailKH;
       })
-      .map((vlKH, index) => {
+      .map((vlKH) => {
         return (this.idKH1 = vlKH.id);
       });
     return this.props.dsVeData
-      .filter((ve, index) => {
+      .filter((ve) => {
+        return ve.idKH === this.idKH1;
+      })
+      .map((vlVe, index) => {
+        return <option key={index}>{vlVe.id}</option>;
+      });
+  }
+  renderDSVE() {
+    var emailKH = localStorage.getItem("email");
+    this.props.khachhangData
+      .filter((kh) => {
+        return kh.Email === emailKH;
+      })
+      .map((vlKH) => {
+        return (this.idKH1 = vlKH.id);
+      });
+    return this.props.dsVeData
+      .filter((ve) => {
         return ve.idKH === this.idKH1;
       })
       .map((ve, index) => {
+        this.idVe1 = ve.id;
         this.props.dsLichChayData
-          .filter((lc, index) => {
+          .filter((lc) => {
             return lc.id === ve.idLC;
           })
-          .map((vlLC, index) => {
-            return (this.idLC1 = vlLC.TenLC);
+          .map((vlLC) => {
+            return (this.idLC1 = vlLC.TenLC,this.giaLC = vlLC.Gia);
           });
         return (
           <tr key={index}>
@@ -66,12 +91,96 @@ class DanhSachVe extends Component {
             <td>{ve.NgayKhoiHanh}</td>
             <td>{ve.GioKhoiHanh}</td>
             <td>
-              <button className="btn btn-success">Đăng vé</button>
+              <button
+                className="btn btn-success"
+                data-toggle="modal"
+                data-target="#modelId"
+                onClick={() => this.getIDveban(ve.id)}
+              >
+                Đăng vé
+              </button>
             </td>
+            <div
+          class="modal fade"
+          id="modelId"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="modelTitleId"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thông tin vé</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form className="bg-white rounded p-4 text-left" action method>
+                  <div className="form-group">
+                    <label htmlFor="exampleFormControlSelect2">
+                      Chọn vé*
+                    </label>
+                    <input
+                      type="text"
+                      name="idVe"
+                      value={this.state.idveban}
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      disabled
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="exampleFormControlInput1">Tiêu đề*</label>
+                    <input
+                      type="text"
+                      name="TieuDe"
+                      value={this.idLC1}
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      disabled
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="exampleFormControlInput1">Giá*</label>
+                    <input
+                      type="text"
+                      name="Gia"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      value={this.giaLC}
+                      disabled
+                    />
+                  </div>
+                  <button className="btn btn-success">Đăng tin</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Đóng
+                </button>
+                <button type="button" class="btn btn-primary">
+                  Lưu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
           </tr>
         );
       });
   }
+
   componentDidMount() {
     this.getDataAPI();
   }
