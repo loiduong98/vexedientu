@@ -44,7 +44,7 @@ class apiBangTinController extends Controller
 
                 $update_ve  = ve::where('id', $id_ve)->update(array('TrangThai' => 1));
                 if($update_ve !== 1) {
-                    return json_encode(['status'=>'fasle','message'=>'Cập nhật trạng thái vé có vấn đề.']);
+                    return json_encode(['status'=>'fasle','message'=>'Vé đang được trao đổi.']);
                 }
 
                 return json_encode(['status'=>'true','message'=>'Đăng bài trao đổi vé thành công.']);
@@ -86,8 +86,20 @@ class apiBangTinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(bang_tin $bang_tin)
+    public function destroy($id)
     {
+        $new    = bang_tin::where('id', $id)->first();
+
+        $id_ve  = $new->idVe;
+
+        if(isset($id_ve)) {
+            $update_ve  = ve::where('id', $id_ve)->update(array('TrangThai' => 1));
+            if($update_ve !== 1) {
+                return json_encode(['status'=>'fasle','message'=>'Vé đang được trao đổi.']);
+            }
+        }
+        dd($new);
+        DB::table('users')->where('id', $id)->delete();
         $bang_tin->delete();
         return $bang_tin;
     }
