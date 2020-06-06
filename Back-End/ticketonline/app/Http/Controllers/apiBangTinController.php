@@ -34,6 +34,7 @@ class apiBangTinController extends Controller
      */
     public function store(Request $request)
     {
+        
         return bang_tin::create($request->all());
     }
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { connect } from "react-redux";
+import swal from "sweetalert";
 
 class TraoDoiVe extends Component {
   constructor(props) {
@@ -31,6 +32,34 @@ class TraoDoiVe extends Component {
         console.log(err);
       });
   }
+  getIDVeBan(x) {
+    return this.setState({ idVeBan: x.toString() });
+  }
+  _handleSubmit = (values) => {
+    var postData = values;
+
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    Axios.post("/api/tradeticket", postData, axiosConfig)
+      .then((res) => {
+        swal({
+          title: "Tuyệt vời!",
+          text: "Bạn đã đổi vé thành công!",
+          icon: "success",
+        });
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(values);
+  };
+
 
   renderVeDoi() {
     return this.props.dsVeBanData.map((veBan, index) => {
@@ -86,9 +115,7 @@ class TraoDoiVe extends Component {
             <div className="modal-dialog modal-lg">
               <div className="modal-content">
                 <div className="modal-header text-center">
-                  <h3 className="modal-title card-title">
-                    {veBan.TieuDe}
-                  </h3>
+                  <h3 className="modal-title card-title">{veBan.TieuDe}</h3>
                 </div>
                 <div className="modal-body">
                   <div className="container">
@@ -125,7 +152,7 @@ class TraoDoiVe extends Component {
                             <span>
                               Ngày đi:{" "}
                               <strong style={{ fontWeight: "bold" }}>
-                                {veBan.NgayKhoiHanh.substr(0,10)}
+                                {veBan.NgayKhoiHanh.substr(0, 10)}
                               </strong>
                             </span>
                           </p>
@@ -135,6 +162,8 @@ class TraoDoiVe extends Component {
                           <div className="btn btn-block btn-success text-lowercase">
                             <i className="fa fa-envelope" /> {veBan.Email}
                           </div>
+                          <button className="btn btn-success"
+                          onClick={this.getIDVeBan(veBan.id)}>Đổi vé</button>
                         </div>
                       </div>
                     </div>
@@ -171,43 +200,43 @@ class TraoDoiVe extends Component {
       );
     });
   }
-  renderVeXemNhieu(){
-    return this.props.dsVeBanData.filter((viewVe)=> {
-      return viewVe.LuotXem >= 1200;
-    }).map((vlVe,index)=> {
-      return (<div className="row" key={index}>
-      <div className="col-md-4">
-        <img
-          src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
-          alt
-          className="img-fluid rounded imgRounded"
-        />
-      </div>
-      <div className="col-md-8">
-        <h4 className="card-title">
-          {vlVe.TieuDe}
-        </h4>
-        <p className="category">
-          <i className="fa fa-usd" />
-          <span>
-            Giá bán:
-            <strong style={{ fontWeight: "bold" }}>
-              {vlVe.Gia}
-            </strong>
-          </span>
-        </p>
-        <p className="category">
-          <i className="fa fa-map-marker" />
-          <span>
-            Ngày đi:
-            <strong style={{ fontWeight: "bold" }}>
-              {vlVe.NgayKhoiHanh.substr(0,10)}
-            </strong>
-          </span>
-        </p>
-      </div>
-    </div>)
-    })
+  renderVeXemNhieu() {
+    return this.props.dsVeBanData
+      .filter((viewVe) => {
+        return viewVe.LuotXem >= 1200;
+      })
+      .map((vlVe, index) => {
+        return (
+          <div className="row" key={index}>
+            <div className="col-md-4">
+              <img
+                src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                alt
+                className="img-fluid rounded imgRounded"
+              />
+            </div>
+            <div className="col-md-8">
+              <h4 className="card-title">{vlVe.TieuDe}</h4>
+              <p className="category">
+                <i className="fa fa-usd" />
+                <span>
+                  Giá bán:
+                  <strong style={{ fontWeight: "bold" }}>{vlVe.Gia}</strong>
+                </span>
+              </p>
+              <p className="category">
+                <i className="fa fa-map-marker" />
+                <span>
+                  Ngày đi:
+                  <strong style={{ fontWeight: "bold" }}>
+                    {vlVe.NgayKhoiHanh.substr(0, 10)}
+                  </strong>
+                </span>
+              </p>
+            </div>
+          </div>
+        );
+      });
   }
   render() {
     return (
@@ -232,9 +261,7 @@ class TraoDoiVe extends Component {
                   <div className="card-header card-header-danger">
                     <h4 className="card-title">Xem nhiều nhất</h4>
                   </div>
-                  <div className="card-body">
-                    {this.renderVeXemNhieu()}
-                  </div>
+                  <div className="card-body">{this.renderVeXemNhieu()}</div>
                 </div>
               </div>
             </div>

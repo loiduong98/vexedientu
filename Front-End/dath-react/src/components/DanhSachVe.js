@@ -51,8 +51,8 @@ class DanhSachVe extends Component {
   
   _handleSubmit = (values) => {
     values.idVe = this.state.idveban;
-    values.TieuDe = this.state.idLC1;
-    values.Gia = this.state.giaLC;
+    values.TieuDe = this.idLC1;
+    values.Gia = this.giaLC;
     var postData = values;
 
     let axiosConfig = {
@@ -76,8 +76,8 @@ class DanhSachVe extends Component {
       });
     console.log(values);
   };
-  getIDveban(x) {
-    return this.setState({ idveban: x.toString() });
+  getTTVeBan(x,y,z) {
+    return this.setState({ idveban: x.toString(),idLC1:y,giaLC:z });
   }
   renderDSVE() {
     var emailKH = localStorage.getItem("email");
@@ -86,26 +86,28 @@ class DanhSachVe extends Component {
         return kh.Email === emailKH;
       })
       .map((vlKH) => {
-        return (this.state.idKH1 = vlKH.id);
+        return (this.idKH1 = vlKH.id);
       });
     return this.props.dsVeData
       .filter((ve) => {
-        return ve.idKH === this.state.idKH1;
+        return ve.idKH === this.idKH1;
       })
       .map((ve, index) => {
-        this.state.idVe1 = ve.id;
+        this.idVe1 = ve.id;
         this.props.dsLichChayData
           .filter((lc) => {
             return lc.id === ve.idLC;
           })
           .map((vlLC) => {
-            return (this.state.idLC1 = vlLC.TenLC), (this.state.giaLC = vlLC.Gia);
+            console.log(vlLC.TenLC)
+            console.log(vlLC.Gia)
+            return (this.idLC1 = vlLC.TenLC), (this.giaLC = vlLC.Gia);
           });
         return (
           <tr key={index}>
             <td scope="row">{ve.id}</td>
             <td>{ve.NgayDatVe}</td>
-            <td>{this.state.idLC1}</td>
+            <td>{this.idLC1}</td>
             <td>{ve.NgayKhoiHanh}</td>
             <td>{ve.GioKhoiHanh}</td>
             <td>
@@ -113,7 +115,7 @@ class DanhSachVe extends Component {
                 className="btn btn-success"
                 data-toggle="modal"
                 data-target="#modelId"
-                onClick={() => this.getIDveban(ve.id)}
+                onClick={() => this.getTTVeBan(ve.id,this.idLC1,this.giaLC1)}
               >
                 Đăng vé
               </button>
@@ -142,9 +144,9 @@ class DanhSachVe extends Component {
                   <div className="modal-body">
                     <Formik
                       initialValues={{
-                        idVe: this.state.idveban,
-                        TieuDe: this.state.idLC1,
-                        Gia: this.state.giaLC,
+                        idVe: '',
+                        TieuDe: '',
+                        Gia: '',
                       }}
                       onSubmit={this._handleSubmit}
                       render={(formikProps) => (
@@ -188,7 +190,7 @@ class DanhSachVe extends Component {
                           name="Gia"
                           className="form-control"
                           id="exampleFormControlInput1"
-                          value={this.state.giaLC}
+                          value={this.giaLC}
                           disabled
                           onChange={formikProps.handleChange}
                         />
