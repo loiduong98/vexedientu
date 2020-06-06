@@ -10,38 +10,54 @@ class NavUser extends Component {
       type: "CHANGE_LOGIN_STATUS",
     });
   }
-  // getDataAPI() {
-  //   Axios.all([
-  //     Axios.get("http://localhost:8000/api/login"),
-  //     Axios.get("http://localhost:8000/api/khachhang"),
-  //     Axios.get("http://localhost:8000/api/ve"),
-  //   ])
-  //     .then((resArr) => {
-  //       // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
-  //       this.props.dispatch({
-  //         type: "FETCH_DSKHACHHANG",
-  //         payload: resArr[0].data,
-  //       });
-  //       this.props.dispatch({
-  //         type: "FETCH_KHACHHANG",
-  //         payload: resArr[1].data,
-  //       });
-  //       this.props.dispatch({
-  //         type: "FETCH_DSVE",
-  //         payload: resArr[2].data,
-  //       });
-  //       console.log(this.props.dskhachhangData);
-  //       console.log(this.props.khachhangData);
-  //       console.log(this.props.dsVeData);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
+  SDT =''
+  idKH1='';
+  getDataAPI() {
+    Axios.all([
+      Axios.get("http://localhost:8000/api/login"),
+      Axios.get("http://localhost:8000/api/khachhang"),
+      Axios.get("http://localhost:8000/api/ve"),
+    ])
+      .then((resArr) => {
+        // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
+        this.props.dispatch({
+          type: "FETCH_DSKHACHHANG",
+          payload: resArr[0].data,
+        });
+        this.props.dispatch({
+          type: "FETCH_KHACHHANG",
+          payload: resArr[1].data,
+        });
+        this.props.dispatch({
+          type: "FETCH_DSVE",
+          payload: resArr[2].data,
+        });
+        
+        // console.log(this.props.khachhangData);
+        // console.log(this.props.dsVeData);
+        var emailKH = localStorage.getItem("email");
+        console.log(emailKH);
+        
+        this.props.dskhachhangData.filter((kh,index)=> {
+          return kh.email === emailKH;
+        }).map((sdtKH,index)=> {
+          return this.SDT = sdtKH.phone;
+        });
+        this.props.khachhangData.filter((kh1,index)=> {
+          return kh1.SDT === this.SDT;
+        }).map((idKH,index)=> {
+          return this.idKH1 = idKH.id ;
+        })
+        localStorage.setItem("idKH", this.idKH1)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-  // componentDidMount() {
-  //   this.getDataAPI();
-  // }
+  componentDidMount() {
+    this.getDataAPI();
+  }
   _handleSubmit = (values) => {
     // const xsrfToken = this.getCookie("XSRF-TOKEN");
 

@@ -32,34 +32,7 @@ class TraoDoiVe extends Component {
         console.log(err);
       });
   }
-  getIDVeBan(x) {
-    return this.setState({ idVeBan: x.toString() });
-  }
-  _handleSubmit = (values) => {
-    var postData = values;
-
-    let axiosConfig = {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    };
-
-    Axios.post("/api/tradeticket", postData, axiosConfig)
-      .then((res) => {
-        swal({
-          title: "Tuyệt vời!",
-          text: "Bạn đã đổi vé thành công!",
-          icon: "success",
-        });
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(values);
-  };
-
+  
 
   renderVeDoi() {
     return this.props.dsVeBanData.map((veBan, index) => {
@@ -162,8 +135,7 @@ class TraoDoiVe extends Component {
                           <div className="btn btn-block btn-success text-lowercase">
                             <i className="fa fa-envelope" /> {veBan.Email}
                           </div>
-                          <button className="btn btn-success"
-                          onClick={this.getIDVeBan(veBan.id)}>Đổi vé</button>
+                          <button className="btn btn-success">Đổi vé</button>
                         </div>
                       </div>
                     </div>

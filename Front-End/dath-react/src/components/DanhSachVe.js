@@ -9,13 +9,12 @@ class DanhSachVe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      idKH1:'',
-      idLC1:'',
-      giaLC:'',
-      idVe1:'',
-      idveban:''
+      id: '',
+      tenLC:'',
+      gia:''
     };
   }
+  idKhachHang = localStorage.getItem("idKH");
 
   getDataAPI() {
     Axios.all([
@@ -23,6 +22,7 @@ class DanhSachVe extends Component {
       Axios.get("http://localhost:8000/api/khachhang"),
       Axios.get("http://localhost:8000/api/ve"),
       Axios.get("http://localhost:8000/api/lichchay"),
+      Axios.get("http://localhost:8000/api/TicketUser/" + this.idKhachHang),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
@@ -42,17 +42,25 @@ class DanhSachVe extends Component {
           type: "FETCH_DSLICHCHAY",
           payload: resArr[3].data,
         });
+        this.props.dispatch({
+          type: "FETCH_TICKETUSER",
+          payload: resArr[4].data,
+        });
+        console.log(this.idKhachHang);
+        console.log(this.props.ticketUserData);
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  
-  
+  getTTVeBan(x,y,z) {
+    return this.setState({ id: x.toString(),TenLC:y,Gia:z });
+  }
+
   _handleSubmit = (values) => {
-    values.idVe = this.state.idveban;
-    values.TieuDe = this.idLC1;
-    values.Gia = this.giaLC;
+    values.idVe = this.state.id;
+    values.TieuDe = this.state.TenLC;
+    values.Gia = this.state.Gia;
     var postData = values;
 
     let axiosConfig = {
@@ -76,51 +84,30 @@ class DanhSachVe extends Component {
       });
     console.log(values);
   };
-  getTTVeBan(x,y,z) {
-    return this.setState({ idveban: x.toString(),idLC1:y,giaLC:z });
+
+  componentDidMount() {
+    this.getDataAPI();
   }
   renderDSVE() {
-    var emailKH = localStorage.getItem("email");
-    this.props.khachhangData
-      .filter((kh) => {
-        return kh.Email === emailKH;
-      })
-      .map((vlKH) => {
-        return (this.idKH1 = vlKH.id);
-      });
-    return this.props.dsVeData
-      .filter((ve) => {
-        return ve.idKH === this.idKH1;
-      })
-      .map((ve, index) => {
-        this.idVe1 = ve.id;
-        this.props.dsLichChayData
-          .filter((lc) => {
-            return lc.id === ve.idLC;
-          })
-          .map((vlLC) => {
-            console.log(vlLC.TenLC)
-            console.log(vlLC.Gia)
-            return (this.idLC1 = vlLC.TenLC), (this.giaLC = vlLC.Gia);
-          });
-        return (
-          <tr key={index}>
-            <td scope="row">{ve.id}</td>
-            <td>{ve.NgayDatVe}</td>
-            <td>{this.idLC1}</td>
-            <td>{ve.NgayKhoiHanh}</td>
-            <td>{ve.GioKhoiHanh}</td>
-            <td>
-              <button
-                className="btn btn-success"
-                data-toggle="modal"
-                data-target="#modelId"
-                onClick={() => this.getTTVeBan(ve.id,this.idLC1,this.giaLC1)}
-              >
-                Đăng vé
-              </button>
-            </td>
-            <div
+    return this.props.ticketUserData.map((ticket, index) => {
+      return (
+        <tr key={index}>
+          <td>{ticket.id}</td>
+          <td>{ticket.NgayDatVe}</td>
+          <td>{ticket.TenLC}</td>
+          <td>{ticket.NgayKhoiHanh}</td>
+          <td>{ticket.GioKhoiHanh}</td>
+          <td>
+            <button
+              className="btn btn-success"
+              data-toggle="modal"
+              data-target="#modelId"
+              onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
+            >
+              Đăng vé
+            </button>
+          </td>
+          <div
               className="modal fade"
               id="modelId"
               tabIndex={-1}
@@ -144,9 +131,9 @@ class DanhSachVe extends Component {
                   <div className="modal-body">
                     <Formik
                       initialValues={{
-                        idVe: '',
-                        TieuDe: '',
-                        Gia: '',
+                        idVe: this.state.id,
+                        TieuDe: this.state.TenLC,
+                        Gia: this.state.Gia,
                       }}
                       onSubmit={this._handleSubmit}
                       render={(formikProps) => (
@@ -162,7 +149,7 @@ class DanhSachVe extends Component {
                         <Field
                           type="text"
                           name="idVe"
-                          value={this.state.idveban}
+                          value={this.state.id}
                           className="form-control"
                           id="idVeBan"
                           disabled
@@ -176,7 +163,7 @@ class DanhSachVe extends Component {
                         <Field
                           type="text"
                           name="TieuDe"
-                          value={this.state.idLC1}
+                          value={this.state.TenLC}
                           className="form-control"
                           id="exampleFormControlInput1"
                           disabled
@@ -190,7 +177,7 @@ class DanhSachVe extends Component {
                           name="Gia"
                           className="form-control"
                           id="exampleFormControlInput1"
-                          value={this.giaLC}
+                          value={this.state.Gia}
                           disabled
                           onChange={formikProps.handleChange}
                         />
@@ -215,15 +202,11 @@ class DanhSachVe extends Component {
                 </div>
               </div>
             </div>
-          </tr>
-        );
-      });
+        </tr>
+      );
+    });
   }
 
-  componentDidMount() {
-    this.getDataAPI();
-  }
-  
   render() {
     if (this.props.loginStatus === false) {
       return <Redirect to="/dang-nhap" />;
@@ -250,13 +233,13 @@ class DanhSachVe extends Component {
     );
   }
 }
-
 const mapStateToProps = (state, ownProps) => {
   return {
     loginStatus: state.loginReducer,
     khachhangData: state.khachhangReducer.khachhangData,
     dsVeData: state.dsVeReducer.dsVeData,
     dsLichChayData: state.dslichchayReducer.dslichchayData,
+    ticketUserData: state.ticketUserReducer.ticketUserData,
   };
 };
 

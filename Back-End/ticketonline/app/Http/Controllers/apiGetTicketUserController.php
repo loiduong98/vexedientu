@@ -25,9 +25,9 @@ class apiGetTicketUserController extends Controller
             ->join('lichchay', 've.idLC', '=', 'lichchay.id')
             ->select('khachhang.*', 've.*', 'lichchay.*')
             ->get();
-            dd($all_ve);
+            
 
-        return $all_bangtin;
+        return $all_ve;
     }
 
     /**
