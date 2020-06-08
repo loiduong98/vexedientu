@@ -211,6 +211,9 @@ class TraoDoiVe extends Component {
       });
   }
   render() {
+    if (this.props.loginStatus === false) {
+      return <Redirect to="/dang-nhap" />;
+    }
     return (
       <section id="trade" style={{ marginTop: 100 }}>
         <div className="container">
