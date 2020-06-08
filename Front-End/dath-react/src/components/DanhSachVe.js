@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, version } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Axios from "axios";
@@ -98,14 +98,38 @@ class DanhSachVe extends Component {
           <td>{ticket.NgayKhoiHanh}</td>
           <td>{ticket.GioKhoiHanh}</td>
           <td>
-            <button
+            {ticket.TrangThai == 0 ? <button
               className="btn btn-success"
               data-toggle="modal"
               data-target="#modelId"
               onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
             >
               Đăng vé
+            </button> : ticket.TrangThai == 1 ? <div>
+            <button
+              className="btn btn-warning"
+              data-toggle="modal"
+              data-target="#modelId"
+              onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
+              disabled
+            >
+              Đang trao đổi
+            </button> <button
+              className="btn btn-danger"
+              data-toggle="modal"
+              data-target="#modelId"
+              onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
+            >
+              Hủy
             </button>
+            </div> : <button
+              className="btn btn-primary"
+              data-toggle="modal"
+              data-target="#modelId"
+              onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
+            >
+              Xác nhận
+            </button>}
           </td>
           <div
               className="modal fade"
@@ -223,7 +247,7 @@ class DanhSachVe extends Component {
                 <th>Tuyến</th>
                 <th>Ngày khởi hành</th>
                 <th>Giờ khởi hành</th>
-                <th></th>
+                <th>Trạng thái</th>
               </tr>
             </thead>
             <tbody>{this.renderDSVE()}</tbody>
