@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class bang_tin extends Model
 {
     protected $fillable = [
-        'id',
+        'id_new',
         'idVe',
         'TieuDe',
         'Gia',
