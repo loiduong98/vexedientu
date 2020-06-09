@@ -84,10 +84,9 @@ class DanhSachVe extends Component {
       });
     console.log(values);
   };
-  update(e) {
-    e.preventDefault();
+  update(x) {
     const employee = {
-      idKH: this.idKhachHang,
+      idVe: this.state.id,
     };
     let axiosConfig = {
       headers: {
@@ -96,13 +95,11 @@ class DanhSachVe extends Component {
       },
     };
     Axios.put(
-      "http://localhost:8000/api/news/{this.state.id}",
-      employee,
+      "http://localhost:8000/api/tradeticket/" + x,employee,
       axiosConfig
     ).then((res) => console.log(res.data));
   }
   delete(x) {
-    alert('ok')
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -161,10 +158,8 @@ class DanhSachVe extends Component {
             ) : (
               <button
                 className="btn btn-primary"
-                data-toggle="modal"
-                data-target="#modelId"
                 onClick={() =>
-                  this.getTTVeBan(ticket.id, ticket.TenLC, ticket.Gia)
+                  this.update(ticket.id)
                 }
               >
                 Xác nhận

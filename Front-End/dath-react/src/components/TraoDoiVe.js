@@ -41,7 +41,22 @@ class TraoDoiVe extends Component {
         console.log(err);
       });
   }
-  
+  update(x) {
+    const employee = {
+      idKH_trade: x,
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.put(
+      "http://localhost:8000/api/news/" + this.state.id_new,
+      employee,
+      axiosConfig
+    ).then((res) => console.log(res.data));
+  }
   getTTVe(id, HoTen, TieuDe, GioKH, NgayKH, Gia, Email, SDT) {
     this.setState({
       id_new: id,
@@ -73,7 +88,10 @@ class TraoDoiVe extends Component {
                 <span>
                   Giá bán:{" "}
                   <strong style={{ fontWeight: "bold" }}>
-                    {(parseInt(veBan.Gia)).toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+                    {parseInt(veBan.Gia).toLocaleString("vi", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
                   </strong>
                 </span>
               </p>
@@ -101,7 +119,7 @@ class TraoDoiVe extends Component {
                     veBan.NgayKhoiHanh,
                     veBan.Gia,
                     veBan.Email,
-                    veBan.SDT,
+                    veBan.SDT
                   )
                 }
               >
@@ -122,6 +140,7 @@ class TraoDoiVe extends Component {
                 <div className="modal-header text-center">
                   <h3 className="modal-title card-title">
                     {this.state.TieuDe}
+                    {this.state.id_new}
                   </h3>
                 </div>
                 <div className="modal-body">
@@ -159,7 +178,7 @@ class TraoDoiVe extends Component {
                             <span>
                               Ngày đi:{" "}
                               <strong style={{ fontWeight: "bold" }}>
-                                {(this.state.NgayKH).substr(0,10)}
+                                {this.state.NgayKH.substr(0, 10)}
                               </strong>
                             </span>
                           </p>
@@ -171,7 +190,12 @@ class TraoDoiVe extends Component {
                           <div className="btn btn-block btn-success text-lowercase">
                             <i className="fa fa-envelope" /> {this.state.Email}
                           </div>
-                          <button className="btn btn-success">Đổi vé</button>
+                          <button
+                            className="btn btn-success"
+                            onClick={() => this.update(this.idKhachHang)}
+                          >
+                            Đổi vé
+                          </button>
                         </div>
                       </div>
                     </div>
