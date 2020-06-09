@@ -9,9 +9,9 @@ class DanhSachVe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      tenLC:'',
-      gia:''
+      id: "",
+      tenLC: "",
+      gia: "",
     };
   }
   idKhachHang = localStorage.getItem("idKH");
@@ -46,15 +46,15 @@ class DanhSachVe extends Component {
           type: "FETCH_TICKETUSER",
           payload: resArr[4].data,
         });
-        console.log(this.idKhachHang);
+        // console.log(this.idKhachHang);
         console.log(this.props.ticketUserData);
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  getTTVeBan(x,y,z) {
-    return this.setState({ id: x.toString(),TenLC:y,Gia:z });
+  getTTVeBan(x, y, z) {
+    return this.setState({ id: x.toString(), TenLC: y, Gia: z });
   }
 
   _handleSubmit = (values) => {
@@ -89,7 +89,7 @@ class DanhSachVe extends Component {
     this.getDataAPI();
   }
   renderDSVE() {
-    return this.props.ticketUserData.map((ticket, index) => {
+    return this.props.ticketUserData?.map((ticket, index) => {
       return (
         <tr key={index}>
           <td>{ticket.id}</td>
@@ -98,134 +98,149 @@ class DanhSachVe extends Component {
           <td>{ticket.NgayKhoiHanh}</td>
           <td>{ticket.GioKhoiHanh}</td>
           <td>
-            {ticket.TrangThai == 0 ? <button
-              className="btn btn-success"
-              data-toggle="modal"
-              data-target="#modelId"
-              onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
-            >
-              Đăng vé
-            </button> : ticket.TrangThai == 1 ? <div>
-            <button
-              className="btn btn-warning"
-              data-toggle="modal"
-              data-target="#modelId"
-              onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
-              disabled
-            >
-              Đang trao đổi
-            </button> <button
-              className="btn btn-danger"
-              data-toggle="modal"
-              data-target="#modelId"
-              onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
-            >
-              Hủy
-            </button>
-            </div> : <button
-              className="btn btn-primary"
-              data-toggle="modal"
-              data-target="#modelId"
-              onClick={() => this.getTTVeBan(ticket.id,ticket.TenLC,ticket.Gia)}
-            >
-              Xác nhận
-            </button>}
+            {ticket.TrangThai == 0 ? (
+              <button
+                className="btn btn-success"
+                data-toggle="modal"
+                data-target="#modelId"
+                onClick={() =>
+                  this.getTTVeBan(ticket.id, ticket.TenLC, ticket.Gia)
+                }
+              >
+                Đăng vé
+              </button>
+            ) : ticket.TrangThai == 1 ? (
+              <div>
+                <button
+                  className="btn btn-warning"
+                  data-toggle="modal"
+                  data-target="#modelId"
+                  onClick={() =>
+                    this.getTTVeBan(ticket.id, ticket.TenLC, ticket.Gia)
+                  }
+                  disabled
+                >
+                  Đang trao đổi
+                </button>{" "}
+                <button
+                  className="btn btn-danger"
+                  data-toggle="modal"
+                  data-target="#modelId"
+                  onClick={() =>
+                    this.getTTVeBan(ticket.id, ticket.TenLC, ticket.Gia)
+                  }
+                >
+                  Hủy
+                </button>
+              </div>
+            ) : (
+              <button
+                className="btn btn-primary"
+                data-toggle="modal"
+                data-target="#modelId"
+                onClick={() =>
+                  this.getTTVeBan(ticket.id, ticket.TenLC, ticket.Gia)
+                }
+              >
+                Xác nhận
+              </button>
+            )}
           </td>
           <div
-              className="modal fade"
-              id="modelId"
-              tabIndex={-1}
-              role="dialog"
-              aria-labelledby="modelTitleId"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title">Thông tin vé</h5>
-                    <button
-                      type="button"
-                      className="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </div>
-                  <div className="modal-body">
-                    <Formik
-                      initialValues={{
-                        idVe: this.state.id,
-                        TieuDe: this.state.TenLC,
-                        Gia: this.state.Gia,
-                      }}
-                      onSubmit={this._handleSubmit}
-                      render={(formikProps) => (
-                        <Form
-                      className="bg-white rounded p-4 text-left"
-                      action
-                      method
-                    >
-                      <div className="form-group">
-                        <label htmlfor="exampleFormControlSelect2">
-                          Chọn vé*
-                        </label>
-                        <Field
-                          type="text"
-                          name="idVe"
-                          value={this.state.id}
-                          className="form-control"
-                          id="idVeBan"
-                          disabled
-                          onChange={formikProps.handleChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlfor="exampleFormControlInput1">
-                          Tiêu đề*
-                        </label>
-                        <Field
-                          type="text"
-                          name="TieuDe"
-                          value={this.state.TenLC}
-                          className="form-control"
-                          id="exampleFormControlInput1"
-                          disabled
-                          onChange={formikProps.handleChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlfor="exampleFormControlInput1">Giá*</label>
-                        <Field
-                          type="text"
-                          name="Gia"
-                          className="form-control"
-                          id="exampleFormControlInput1"
-                          value={this.state.Gia}
-                          disabled
-                          onChange={formikProps.handleChange}
-                        />
-                      </div>
-                      <button className="btn btn-success">Đăng tin</button>
-                    </Form>
-                      )}
-                    />
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Đóng
-                    </button>
-                    <button type="button" className="btn btn-primary">
-                      Lưu
-                    </button>
-                  </div>
+            className="modal fade"
+            id="modelId"
+            tabIndex={-1}
+            role="dialog"
+            aria-labelledby="modelTitleId"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Thông tin vé</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <Formik
+                    initialValues={{
+                      idVe: this.state.id,
+                      TieuDe: this.state.TenLC,
+                      Gia: this.state.Gia,
+                    }}
+                    onSubmit={this._handleSubmit}
+                    render={(formikProps) => (
+                      <Form
+                        className="bg-white rounded p-4 text-left"
+                        action
+                        method
+                      >
+                        <div className="form-group">
+                          <label htmlfor="exampleFormControlSelect2">
+                            Chọn vé*
+                          </label>
+                          <Field
+                            type="text"
+                            name="idVe"
+                            value={this.state.id}
+                            className="form-control"
+                            id="idVeBan"
+                            disabled
+                            onChange={formikProps.handleChange}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlfor="exampleFormControlInput1">
+                            Tiêu đề*
+                          </label>
+                          <Field
+                            type="text"
+                            name="TieuDe"
+                            value={this.state.TenLC}
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            disabled
+                            onChange={formikProps.handleChange}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlfor="exampleFormControlInput1">Giá*</label>
+                          <Field
+                            type="text"
+                            name="Gia"
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            value={this.state.Gia}
+                            disabled
+                            onChange={formikProps.handleChange}
+                          />
+                        </div>
+                        <button className="btn btn-success">Đăng tin</button>
+                      </Form>
+                    )}
+                  />
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Đóng
+                  </button>
+                  <button type="button" className="btn btn-primary">
+                    Lưu
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
         </tr>
       );
     });

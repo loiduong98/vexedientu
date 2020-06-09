@@ -32,9 +32,7 @@ class NavUser extends Component {
           type: "FETCH_DSVE",
           payload: resArr[2].data,
         });
-        
-        // console.log(this.props.khachhangData);
-        // console.log(this.props.dsVeData);
+       
         var emailKH = localStorage.getItem("email");
         console.log(emailKH);
         
@@ -127,6 +125,11 @@ class NavUser extends Component {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link to="/danh-sach-ve" className="nav-link">
+                  <i className="material-icons">article</i> Danh sách vé
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/trao-doi-ve" className="nav-link">
                   <i className="material-icons">compare_arrows</i> Trao đổi vé
                 </Link>
@@ -148,18 +151,13 @@ class NavUser extends Component {
                   </div>
                 </Link>
                 <div className="ripple-container" />
+    
                 <div className="dropdown-menu dropdown-menu-right">
                   <Link to="#pablo" className="dropdown-item">
                     Thông tin cá nhân
                   </Link>
                   <Link to="#pablo" className="dropdown-item">
                     Lịch sử vé
-                  </Link>
-                  <Link to="news" className="dropdown-item">
-                    Đăng vé
-                  </Link>
-                  <Link to="danh-sach-ve" className="dropdown-item">
-                    Danh sách vé của bạn
                   </Link>
                   <Link
                     to="#"

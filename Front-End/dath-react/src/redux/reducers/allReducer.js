@@ -21,6 +21,6 @@ const allReducer = combineReducers({
   dskhachhangReducer: dskhachhangReducer,
   dsVeReducer,
   dsVeBanReducer,
-  ticketUserReducer
+  ticketUserReducer,
 });
 export default allReducer;
