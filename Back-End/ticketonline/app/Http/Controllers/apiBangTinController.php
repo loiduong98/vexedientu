@@ -34,7 +34,35 @@ class apiBangTinController extends Controller
      */
     public function store(Request $request)
     {
-        return bang_tin::create($request->all());
+        $id_ve      = $request->idVe;
+        $title      = $request->TieuDe;
+        $price      = $request->Gia;
+        $idKH_old   = (ve::where('id', $id_ve)->first())->idKH;
+        
+        $all_rq   = [
+            'idVe'          => $request->idVe,
+            'TieuDe'        => $request->TieuDe,
+            'Gia'           => $request->Gia,
+            'TrangThai'     => 0,
+            'idKH_old'      => $idKH_old
+        ];
+
+        if(isset($id_ve)) {           
+            if($title !== null && $price !== null) {
+                $create_new = bang_tin::create($all_rq);
+
+                $update_ve  = ve::where('id', $id_ve)->update(array('TrangThai' => 1));
+                if($update_ve !== 1) {
+                    return json_encode(['status'=>'fasle','message'=>'Vé đang được trao đổi.']);
+                }
+
+                return json_encode(['status'=>'true','message'=>'Đăng bài trao đổi vé thành công.']);
+            } else {
+                return json_encode(['status'=>'fasle','message'=>'Không lấy được đầy đủ dữ liệu vé']);    
+            }
+        } else {
+            return json_encode(['status'=>'fasle','message'=>'Không lấy được id vé']);
+        }
     }
 
     /**
@@ -49,27 +77,60 @@ class apiBangTinController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * YÊU CẦU TRAO ĐỔI VÉ
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int  $idKH_trade GIÁ TRỊ ID CỦA USER MUỐN TRAO ĐỔI VÉ
+     * @param  int  $id GIÁ TRỊ ID THỨ TỰ VÉ TRONG BẢNG TIN 
      */
-    public function update(Request $request, bang_tin $bang_tin)
+    public function update(Request $request, $id)
     {
-        $bang_tin->update($request->all());
-        return $bang_tin;
+        $ve_array       = array(
+            'TrangThai'       => 1,
+            'idKH_trade'      => $request->idKH_trade,  
+        );
+
+        $all_bangtin = bang_tin::all();
+
+        foreach ($all_bangtin as $vl_bt) {
+            $all_id[] = $vl_bt->id_new;
+        }
+
+        if(in_array($id, $all_id)){
+            $trade      = bang_tin::where('id_new', $id)->update($ve_array);
+        
+            if($trade == 1) {
+                $id_ve      = (bang_tin::where('id_new', $id)->first())->idVe;
+                $update_ve  = ve::where('id', $id_ve)->update(array('TrangThai' => 2));
+                return json_encode(['status'=>'true','message'=>'Yêu cầu đổi vé thành công.']);
+            }else{
+                return json_encode(['status'=>'false','message'=>'Yêu cầu đổi vé thất bại.']);
+            }
+        }else{
+            return json_encode(['status'=>'false','message'=>'ID bài viết không tồn tại.']);
+        }
+        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int  $id của vé
      */
-    public function destroy(bang_tin $bang_tin)
+    public function destroy($id)
     {
-        $bang_tin->delete();
-        return $bang_tin;
+        $idKH_old     = (bang_tin::where('idVe', $id)->where('TrangThai', 0)->where('idKH_trade', null)->first())->idKH_old;
+        $id_news        = (bang_tin::where('idVe', $id)->where('TrangThai', 0)->where('idKH_old', $idKH_old)->first())->id_new;
+
+        if(isset($id) && isset($id_news)) {
+            $update_ve      = ve::where('id', $id)->update(array('TrangThai' => 0));
+            $update_news    = bang_tin::where('id_new', $id_news)->update(array('TrangThai' => 2));
+            if(($update_news !== 1) && ($update_ve !== 1)) {
+                return json_encode(['status'=>'fasle','message'=>'Hủy trao đổi vé không thành công.']);
+            }else{
+                return json_encode(['status'=>'true','message'=>'Đã hủy trao đổi vé.']);
+            }
+        }else{
+            return json_encode(['status'=>'fasle','message'=>'Hủy trao đổi vé không thành công.']);
+        }
     }
 }

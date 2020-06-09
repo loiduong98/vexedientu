@@ -102,6 +102,8 @@ class RouteServiceProvider extends ServiceProvider
                 Route::apiResource('tradeticket','apiTradeticketController');
 
                 Route::apiResource('news', 'apiBangTinController');
+
+                Route::apiResource('TicketUser','apiGetTicketUserController');
         });
     }
 }

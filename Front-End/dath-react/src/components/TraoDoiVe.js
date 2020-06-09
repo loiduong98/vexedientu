@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { connect } from "react-redux";
+import swal from "sweetalert";
+import { Redirect } from "react-router-dom";
 
 class TraoDoiVe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      idVeBan: "",
+      id: "",
+      HoTen: "",
+      TenLC: "",
+      GioKH: "",
+      NgayKH: "",
+      Gia: "",
+      Email: "",
+      SDT: "",
     };
   }
+  idKhachHang = localStorage.getItem("idKH");
   getDataAPI() {
     Axios.all([
       Axios.get("http://localhost:8000/api/login"),
@@ -31,7 +41,34 @@ class TraoDoiVe extends Component {
         console.log(err);
       });
   }
-
+  update(x) {
+    const employee = {
+      idKH_trade: x,
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.put(
+      "http://localhost:8000/api/news/" + this.state.id_new,
+      employee,
+      axiosConfig
+    ).then((res) => console.log(res.data));
+  }
+  getTTVe(id, HoTen, TieuDe, GioKH, NgayKH, Gia, Email, SDT) {
+    this.setState({
+      id_new: id,
+      HoTen: HoTen,
+      TieuDe: TieuDe,
+      GioKH: GioKH,
+      NgayKH: NgayKH,
+      Gia: Gia,
+      Email: Email,
+      SDT: SDT,
+    });
+  }
   renderVeDoi() {
     return this.props.dsVeBanData.map((veBan, index) => {
       return (
@@ -51,7 +88,10 @@ class TraoDoiVe extends Component {
                 <span>
                   Giá bán:{" "}
                   <strong style={{ fontWeight: "bold" }}>
-                    {veBan.Gia} VND
+                    {parseInt(veBan.Gia).toLocaleString("vi", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
                   </strong>
                 </span>
               </p>
@@ -70,6 +110,18 @@ class TraoDoiVe extends Component {
                 className="btn-rose btn"
                 data-toggle="modal"
                 data-target="#ticketDetails"
+                onClick={() =>
+                  this.getTTVe(
+                    veBan.id_new,
+                    veBan.HoTen,
+                    veBan.TieuDe,
+                    veBan.GioKhoiHanh,
+                    veBan.NgayKhoiHanh,
+                    veBan.Gia,
+                    veBan.Email,
+                    veBan.SDT
+                  )
+                }
               >
                 Liên hệ
               </button>
@@ -87,7 +139,8 @@ class TraoDoiVe extends Component {
               <div className="modal-content">
                 <div className="modal-header text-center">
                   <h3 className="modal-title card-title">
-                    {veBan.TieuDe}
+                    {this.state.TieuDe}
+                    {this.state.id_new}
                   </h3>
                 </div>
                 <div className="modal-body">
@@ -107,7 +160,7 @@ class TraoDoiVe extends Component {
                             <span>
                               Đăng bởi:{" "}
                               <strong style={{ fontWeight: "bold" }}>
-                                {veBan.HoTen}
+                                {this.state.HoTen}
                               </strong>
                             </span>
                           </p>
@@ -116,7 +169,7 @@ class TraoDoiVe extends Component {
                             <span>
                               Lúc:{" "}
                               <strong style={{ fontWeight: "bold" }}>
-                                {veBan.GioKhoiHanh}
+                                {this.state.GioKH}
                               </strong>
                             </span>
                           </p>
@@ -125,16 +178,24 @@ class TraoDoiVe extends Component {
                             <span>
                               Ngày đi:{" "}
                               <strong style={{ fontWeight: "bold" }}>
-                                {veBan.NgayKhoiHanh.substr(0,10)}
+                                {this.state.NgayKH.substr(0, 10)}
                               </strong>
                             </span>
                           </p>
                           <div className="btn btn-block btn-info">
-                            <i className="fa fa-phone" /> {veBan.SDT}
+                            <span>
+                              <i className="fa fa-phone" /> {this.state.SDT}
+                            </span>
                           </div>
                           <div className="btn btn-block btn-success text-lowercase">
-                            <i className="fa fa-envelope" /> {veBan.Email}
+                            <i className="fa fa-envelope" /> {this.state.Email}
                           </div>
+                          <button
+                            className="btn btn-success"
+                            onClick={() => this.update(this.idKhachHang)}
+                          >
+                            Đổi vé
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -171,47 +232,51 @@ class TraoDoiVe extends Component {
       );
     });
   }
-  renderVeXemNhieu(){
-    return this.props.dsVeBanData.filter((viewVe)=> {
-      return viewVe.LuotXem >= 1200;
-    }).map((vlVe,index)=> {
-      return (<div className="row" key={index}>
-      <div className="col-md-4">
-        <img
-          src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
-          alt
-          className="img-fluid rounded imgRounded"
-        />
-      </div>
-      <div className="col-md-8">
-        <h4 className="card-title">
-          {vlVe.TieuDe}
-        </h4>
-        <p className="category">
-          <i className="fa fa-usd" />
-          <span>
-            Giá bán:
-            <strong style={{ fontWeight: "bold" }}>
-              {vlVe.Gia}
-            </strong>
-          </span>
-        </p>
-        <p className="category">
-          <i className="fa fa-map-marker" />
-          <span>
-            Ngày đi:
-            <strong style={{ fontWeight: "bold" }}>
-              {vlVe.NgayKhoiHanh.substr(0,10)}
-            </strong>
-          </span>
-        </p>
-      </div>
-    </div>)
-    })
+  renderVeXemNhieu() {
+    return this.props.dsVeBanData
+      .filter((viewVe) => {
+        return viewVe.LuotXem >= 1200;
+      })
+      .map((vlVe, index) => {
+        return (
+          <div className="row" key={index}>
+            <div className="col-md-4">
+              <img
+                src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                alt
+                className="img-fluid rounded imgRounded"
+              />
+            </div>
+            <div className="col-md-8">
+              <h4 className="card-title">{vlVe.TieuDe}</h4>
+              <p className="category">
+                <i className="fa fa-usd" />
+                <span>
+                  Giá bán:
+                  <strong style={{ fontWeight: "bold" }}>{vlVe.Gia}</strong>
+                </span>
+              </p>
+              <p className="category">
+                <i className="fa fa-map-marker" />
+                <span>
+                  Ngày đi:
+                  <strong style={{ fontWeight: "bold" }}>
+                    {vlVe.NgayKhoiHanh.substr(0, 10)}
+                  </strong>
+                </span>
+              </p>
+            </div>
+          </div>
+        );
+      });
   }
   render() {
+    if (this.props.loginStatus === false) {
+      return <Redirect to="/dang-nhap" />;
+    }
     return (
       <section id="trade" style={{ marginTop: 100 }}>
+        <h2>Trao đổi vé xe</h2>
         <div className="container">
           <div className="row">
             <div className="col-md-8">{this.renderVeDoi()}</div>
@@ -232,9 +297,7 @@ class TraoDoiVe extends Component {
                   <div className="card-header card-header-danger">
                     <h4 className="card-title">Xem nhiều nhất</h4>
                   </div>
-                  <div className="card-body">
-                    {this.renderVeXemNhieu()}
-                  </div>
+                  <div className="card-body">{this.renderVeXemNhieu()}</div>
                 </div>
               </div>
             </div>

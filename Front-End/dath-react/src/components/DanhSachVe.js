@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, version } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Axios from "axios";
@@ -9,13 +9,12 @@ class DanhSachVe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      idKH1:'',
-      idLC1:'',
-      giaLC:'',
-      idVe1:'',
-      idveban:''
+      id: "",
+      tenLC: "",
+      gia: "",
     };
   }
+  idKhachHang = localStorage.getItem("idKH");
 
   getDataAPI() {
     Axios.all([
@@ -23,6 +22,7 @@ class DanhSachVe extends Component {
       Axios.get("http://localhost:8000/api/khachhang"),
       Axios.get("http://localhost:8000/api/ve"),
       Axios.get("http://localhost:8000/api/lichchay"),
+      Axios.get("http://localhost:8000/api/TicketUser/" + this.idKhachHang),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
@@ -42,17 +42,25 @@ class DanhSachVe extends Component {
           type: "FETCH_DSLICHCHAY",
           payload: resArr[3].data,
         });
+        this.props.dispatch({
+          type: "FETCH_TICKETUSER",
+          payload: resArr[4].data,
+        });
+        // console.log(this.idKhachHang);
+        console.log(this.props.ticketUserData);
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  
-  
+  getTTVeBan(x, y, z) {
+    return this.setState({ id: x.toString(), TenLC: y, Gia: z });
+  }
+
   _handleSubmit = (values) => {
-    values.idVe = this.state.idveban;
-    values.TieuDe = this.state.idLC1;
-    values.Gia = this.state.giaLC;
+    values.idVe = this.state.id;
+    values.TieuDe = this.state.TenLC;
+    values.Gia = this.state.Gia;
     var postData = values;
 
     let axiosConfig = {
@@ -76,152 +84,188 @@ class DanhSachVe extends Component {
       });
     console.log(values);
   };
-  getIDveban(x) {
-    return this.setState({ idveban: x.toString() });
+  update(x) {
+    const employee = {
+      idVe: this.state.id,
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.put(
+      "http://localhost:8000/api/tradeticket/" + x,employee,
+      axiosConfig
+    ).then((res) => console.log(res.data));
   }
-  renderDSVE() {
-    var emailKH = localStorage.getItem("email");
-    this.props.khachhangData
-      .filter((kh) => {
-        return kh.Email === emailKH;
-      })
-      .map((vlKH) => {
-        return (this.state.idKH1 = vlKH.id);
-      });
-    return this.props.dsVeData
-      .filter((ve) => {
-        return ve.idKH === this.state.idKH1;
-      })
-      .map((ve, index) => {
-        this.state.idVe1 = ve.id;
-        this.props.dsLichChayData
-          .filter((lc) => {
-            return lc.id === ve.idLC;
-          })
-          .map((vlLC) => {
-            return (this.state.idLC1 = vlLC.TenLC), (this.state.giaLC = vlLC.Gia);
-          });
-        return (
-          <tr key={index}>
-            <td scope="row">{ve.id}</td>
-            <td>{ve.NgayDatVe}</td>
-            <td>{this.state.idLC1}</td>
-            <td>{ve.NgayKhoiHanh}</td>
-            <td>{ve.GioKhoiHanh}</td>
-            <td>
-              <button
-                className="btn btn-success"
-                data-toggle="modal"
-                data-target="#modelId"
-                onClick={() => this.getIDveban(ve.id)}
-              >
-                Đăng vé
-              </button>
-            </td>
-            <div
-              className="modal fade"
-              id="modelId"
-              tabIndex={-1}
-              role="dialog"
-              aria-labelledby="modelTitleId"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title">Thông tin vé</h5>
-                    <button
-                      type="button"
-                      className="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </div>
-                  <div className="modal-body">
-                    <Formik
-                      initialValues={{
-                        idVe: this.state.idveban,
-                        TieuDe: this.state.idLC1,
-                        Gia: this.state.giaLC,
-                      }}
-                      onSubmit={this._handleSubmit}
-                      render={(formikProps) => (
-                        <Form
-                      className="bg-white rounded p-4 text-left"
-                      action
-                      method
-                    >
-                      <div className="form-group">
-                        <label htmlfor="exampleFormControlSelect2">
-                          Chọn vé*
-                        </label>
-                        <Field
-                          type="text"
-                          name="idVe"
-                          value={this.state.idveban}
-                          className="form-control"
-                          id="idVeBan"
-                          disabled
-                          onChange={formikProps.handleChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlfor="exampleFormControlInput1">
-                          Tiêu đề*
-                        </label>
-                        <Field
-                          type="text"
-                          name="TieuDe"
-                          value={this.state.idLC1}
-                          className="form-control"
-                          id="exampleFormControlInput1"
-                          disabled
-                          onChange={formikProps.handleChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlfor="exampleFormControlInput1">Giá*</label>
-                        <Field
-                          type="text"
-                          name="Gia"
-                          className="form-control"
-                          id="exampleFormControlInput1"
-                          value={this.state.giaLC}
-                          disabled
-                          onChange={formikProps.handleChange}
-                        />
-                      </div>
-                      <button className="btn btn-success">Đăng tin</button>
-                    </Form>
-                      )}
-                    />
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-dismiss="modal"
-                    >
-                      Đóng
-                    </button>
-                    <button type="button" className="btn btn-primary">
-                      Lưu
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </tr>
-        );
-      });
+  delete(x) {
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.delete("http://localhost:8000/api/news/" + x, axiosConfig).then((res) =>
+      console.log(res.data)
+    );
   }
 
   componentDidMount() {
     this.getDataAPI();
   }
-  
+  renderDSVE() {
+    return this.props.ticketUserData?.map((ticket, index) => {
+      return (
+        <tr key={index}>
+          <td>{ticket.id}</td>
+          <td>{ticket.NgayDatVe}</td>
+          <td>{ticket.TenLC}</td>
+          <td>{ticket.NgayKhoiHanh}</td>
+          <td>{ticket.GioKhoiHanh}</td>
+          <td>
+            {ticket.TrangThai == 0 ? (
+              <button
+                className="btn btn-success"
+                data-toggle="modal"
+                data-target="#modelId"
+                onClick={() =>
+                  this.getTTVeBan(ticket.id, ticket.TenLC, ticket.Gia)
+                }
+              >
+                Đăng vé
+              </button>
+            ) : ticket.TrangThai == 1 ? (
+              <div>
+                <button
+                  className="btn btn-warning"
+                  data-toggle="modal"
+                  data-target="#modelId"
+                  onClick={() =>
+                    this.getTTVeBan(ticket.id, ticket.TenLC, ticket.Gia)
+                  }
+                  disabled
+                >
+                  Đang trao đổi
+                </button>{" "}
+                <button
+                  className="btn btn-danger"
+                  onClick={()=>this.delete(ticket.id)}
+                >
+                  Hủy
+                </button>
+              </div>
+            ) : (
+              <button
+                className="btn btn-primary"
+                onClick={() =>
+                  this.update(ticket.id)
+                }
+              >
+                Xác nhận
+              </button>
+            )}
+          </td>
+          <div
+            className="modal fade"
+            id="modelId"
+            tabIndex={-1}
+            role="dialog"
+            aria-labelledby="modelTitleId"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Thông tin vé</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <Formik
+                    initialValues={{
+                      idVe: this.state.id,
+                      TieuDe: this.state.TenLC,
+                      Gia: this.state.Gia,
+                    }}
+                    onSubmit={this._handleSubmit}
+                    render={(formikProps) => (
+                      <Form
+                        className="bg-white rounded p-4 text-left"
+                        action
+                        method
+                      >
+                        <div className="form-group">
+                          <label htmlfor="exampleFormControlSelect2">
+                            Chọn vé*
+                          </label>
+                          <Field
+                            type="text"
+                            name="idVe"
+                            value={this.state.id}
+                            className="form-control"
+                            id="idVeBan"
+                            disabled
+                            onChange={formikProps.handleChange}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlfor="exampleFormControlInput1">
+                            Tiêu đề*
+                          </label>
+                          <Field
+                            type="text"
+                            name="TieuDe"
+                            value={this.state.TenLC}
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            disabled
+                            onChange={formikProps.handleChange}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlfor="exampleFormControlInput1">Giá*</label>
+                          <Field
+                            type="text"
+                            name="Gia"
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            value={this.state.Gia}
+                            disabled
+                            onChange={formikProps.handleChange}
+                          />
+                        </div>
+                        <button className="btn btn-success">Đăng tin</button>
+                      </Form>
+                    )}
+                  />
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Đóng
+                  </button>
+                  <button type="button" className="btn btn-primary">
+                    Lưu
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tr>
+      );
+    });
+  }
+
   render() {
     if (this.props.loginStatus === false) {
       return <Redirect to="/dang-nhap" />;
@@ -238,7 +282,7 @@ class DanhSachVe extends Component {
                 <th>Tuyến</th>
                 <th>Ngày khởi hành</th>
                 <th>Giờ khởi hành</th>
-                <th></th>
+                <th>Trạng thái</th>
               </tr>
             </thead>
             <tbody>{this.renderDSVE()}</tbody>
@@ -248,13 +292,13 @@ class DanhSachVe extends Component {
     );
   }
 }
-
 const mapStateToProps = (state, ownProps) => {
   return {
     loginStatus: state.loginReducer,
     khachhangData: state.khachhangReducer.khachhangData,
     dsVeData: state.dsVeReducer.dsVeData,
     dsLichChayData: state.dslichchayReducer.dslichchayData,
+    ticketUserData: state.ticketUserReducer.ticketUserData,
   };
 };
 

@@ -1,7 +1,7 @@
 const dskhachhangReducerInitialState = {
     dskhachhangData: [],
   };
-  const dskhachhangReducer = (state = dskhachhangReducerInitialState, action) => {
+  const dsKhachHangReducer = (state = dskhachhangReducerInitialState, action) => {
     switch (action.type) {
       case "FETCH_DSKHACHHANG":
         state.dskhachhangData = action.payload;
@@ -11,5 +11,5 @@ const dskhachhangReducerInitialState = {
     }
   };
   
-  export default dskhachhangReducer;
+  export default dsKhachHangReducer;
   
