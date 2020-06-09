@@ -18,30 +18,7 @@ class TraoDoiVe extends Component {
       SDT: "",
     };
   }
-  _handleSubmit = (values) => {
-    
-
-    let axiosConfig = {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    };
-
-    Axios.put("/api/news/" + this.state.id_new + this.idKhachHang, axiosConfig)
-      .then((res) => {
-        swal({
-          title: "Tuyệt vời!",
-          text: "Bạn đã đăng vé thành công!",
-          icon: "success",
-        });
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  idKhachHang = localStorage.getItem("idKH");
   getDataAPI() {
     Axios.all([
       Axios.get("http://localhost:8000/api/login"),
@@ -64,7 +41,7 @@ class TraoDoiVe extends Component {
         console.log(err);
       });
   }
-  idKhachHang = localStorage.getItem("idKH");
+  
   getTTVe(id, HoTen, TieuDe, GioKH, NgayKH, Gia, Email, SDT) {
     this.setState({
       id_new: id,

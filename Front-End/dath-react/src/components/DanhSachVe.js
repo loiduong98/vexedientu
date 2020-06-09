@@ -84,6 +84,35 @@ class DanhSachVe extends Component {
       });
     console.log(values);
   };
+  update(e) {
+    e.preventDefault();
+    const employee = {
+      idKH: this.idKhachHang,
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.put(
+      "http://localhost:8000/api/news/{this.state.id}",
+      employee,
+      axiosConfig
+    ).then((res) => console.log(res.data));
+  }
+  delete(x) {
+    alert('ok')
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    Axios.delete("http://localhost:8000/api/news/" + x, axiosConfig).then((res) =>
+      console.log(res.data)
+    );
+  }
 
   componentDidMount() {
     this.getDataAPI();
@@ -124,11 +153,7 @@ class DanhSachVe extends Component {
                 </button>{" "}
                 <button
                   className="btn btn-danger"
-                  data-toggle="modal"
-                  data-target="#modelId"
-                  onClick={() =>
-                    this.getTTVeBan(ticket.id, ticket.TenLC, ticket.Gia)
-                  }
+                  onClick={()=>this.delete(ticket.id)}
                 >
                   Hủy
                 </button>
