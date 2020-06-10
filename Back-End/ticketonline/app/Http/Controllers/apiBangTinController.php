@@ -44,7 +44,7 @@ class apiBangTinController extends Controller
             'idVe'          => $request->idVe,
             'TieuDe'        => $request->TieuDe,
             'Gia'           => $request->Gia,
-            'TrangThai'     => 0,
+            'TrangThai_new' => 0,
             'idKH_old'      => $idKH_old
         ];
 
@@ -86,7 +86,7 @@ class apiBangTinController extends Controller
     public function update(Request $request, $id)
     {
         $ve_array       = array(
-            'TrangThai'       => 1,
+            'TrangThai_new'   => 1,
             'idKH_trade'      => $request->idKH_trade,  
         );
 
@@ -119,12 +119,12 @@ class apiBangTinController extends Controller
      */
     public function destroy($id)
     {
-        $idKH_old     = (bang_tin::where('idVe', $id)->where('TrangThai', 0)->where('idKH_trade', null)->first())->idKH_old;
-        $id_news        = (bang_tin::where('idVe', $id)->where('TrangThai', 0)->where('idKH_old', $idKH_old)->first())->id_new;
+        $idKH_old     = (bang_tin::where('idVe', $id)->where('TrangThai_new', 0)->where('idKH_trade', null)->first())->idKH_old;
+        $id_news        = (bang_tin::where('idVe', $id)->where('TrangThai_new', 0)->where('idKH_old', $idKH_old)->first())->id_new;
 
         if(isset($id) && isset($id_news)) {
             $update_ve      = ve::where('id', $id)->update(array('TrangThai' => 0));
-            $update_news    = bang_tin::where('id_new', $id_news)->update(array('TrangThai' => 2));
+            $update_news    = bang_tin::where('id_new', $id_news)->update(array('TrangThai_new' => 2));
             if(($update_news !== 1) && ($update_ve !== 1)) {
                 return json_encode(['status'=>'fasle','message'=>'Hủy trao đổi vé không thành công.']);
             }else{
