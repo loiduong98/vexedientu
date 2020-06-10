@@ -8,6 +8,8 @@ import dsxeReducer from "./dsxeReducer";
 import loginReducer from "./loginReducer";
 import dskhachhangReducer from "./dsKhachHang";
 import dsVeReducer from "./dsVeReducer";
+import dsVeBanReducer from "./dsVeBanReducer";
+import ticketUserReducer from "./ticketUserReducer";
 
 const allReducer = combineReducers({
   dsbenReducer: dsbenReducer,
@@ -17,6 +19,8 @@ const allReducer = combineReducers({
   dsxeReducer: dsxeReducer,
   loginReducer: loginReducer,
   dskhachhangReducer: dskhachhangReducer,
-  dsVeReducer
+  dsVeReducer,
+  dsVeBanReducer,
+  ticketUserReducer,
 });
 export default allReducer;

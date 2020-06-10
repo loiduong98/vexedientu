@@ -34,7 +34,6 @@ class apiBangTinController extends Controller
      */
     public function store(Request $request)
     {
-
         $id_ve      = $request->idVe;
         $title      = $request->TieuDe;
         $price      = $request->Gia;

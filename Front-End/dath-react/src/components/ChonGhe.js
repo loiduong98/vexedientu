@@ -361,11 +361,12 @@ class ChonGhe extends Component {
                       <select
                         className="form-control"
                         id="exampleFormControlSelect1"
+                        name="GioKhoiHanh"
                       >
-                        <option>06:00</option>
-                        <option>09:00</option>
-                        <option>12:00</option>
-                        <option>18:00</option>
+                        <option value="06:00">06:00</option>
+                        <option value="09:00">09:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="18:00">18:00</option>
                       </select>
                     </div>
                     <div className="form-group">
