@@ -13,7 +13,7 @@ class bang_tin extends Model
         'Gia',
         'urlHinh',
         'LuotXem',
-        'TrangThai',
+        'TrangThai_new',
         'idKH_trade',
         'idKH_old'
     ];
