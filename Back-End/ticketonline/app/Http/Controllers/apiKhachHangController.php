@@ -37,7 +37,6 @@ class apiKhachHangController extends Controller
      */
     public function show(khachhang $khachhang)
     {
-        dd($khachhang);
         return $khachhang;
     }
 
