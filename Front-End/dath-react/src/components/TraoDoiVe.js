@@ -21,9 +21,9 @@ class TraoDoiVe extends Component {
   idKhachHang = localStorage.getItem("idKH");
   getDataAPI() {
     Axios.all([
-      Axios.get("http://localhost:8000/api/login"),
-      Axios.get("http://localhost:8000/api/tuyen"),
-      Axios.get("http://localhost:8000/api/news"),
+      Axios.get("/api/login"),
+      Axios.get("/api/tuyen"),
+      Axios.get("/api/news"),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
@@ -52,7 +52,7 @@ class TraoDoiVe extends Component {
       },
     };
     Axios.put(
-      "http://localhost:8000/api/news/" + this.state.id_new,
+      "/api/news/" + this.state.id_new,
       employee,
       axiosConfig
     ).then((res) => console.log(res.data));

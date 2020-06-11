@@ -18,11 +18,11 @@ class DanhSachVe extends Component {
 
   getDataAPI() {
     Axios.all([
-      Axios.get("http://localhost:8000/api/login"),
-      Axios.get("http://localhost:8000/api/khachhang"),
-      Axios.get("http://localhost:8000/api/ve"),
-      Axios.get("http://localhost:8000/api/lichchay"),
-      Axios.get("http://localhost:8000/api/TicketUser/" + this.idKhachHang),
+      Axios.get("/api/login"),
+      Axios.get("/api/khachhang"),
+      Axios.get("/api/ve"),
+      Axios.get("/api/lichchay"),
+      Axios.get("/api/TicketUser/" + this.idKhachHang),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
@@ -77,6 +77,7 @@ class DanhSachVe extends Component {
           text: "Bạn đã đăng vé thành công!",
           icon: "success",
         });
+        
         console.log(res);
       })
       .catch((err) => {
@@ -95,9 +96,12 @@ class DanhSachVe extends Component {
       },
     };
     Axios.put(
-      "http://localhost:8000/api/tradeticket/" + x,employee,
+      "/api/tradeticket/" + x,employee,
       axiosConfig
-    ).then((res) => console.log(res.data));
+    ).then((res)=> {
+      console.log(res.data);
+      this.getDataAPI();
+    });
   }
   delete(x) {
     let axiosConfig = {
@@ -106,9 +110,11 @@ class DanhSachVe extends Component {
         "Access-Control-Allow-Origin": "*",
       },
     };
-    Axios.delete("http://localhost:8000/api/news/" + x, axiosConfig).then((res) =>
-      console.log(res.data)
-    );
+    Axios.delete("/api/news/" + x, axiosConfig).then((res)=> {
+      console.log(res.data);
+      
+      this.getDataAPI();
+    })
   }
 
   componentDidMount() {
