@@ -76,7 +76,7 @@ class apiTradeticketController extends Controller
 
         $ve_array       = array(
             'idKH'           => $idKH_trade,  
-            'TrangThai_new'  => 0
+            'TrangThai'      => 0
         );
 
         $trade = ve::where('id', $id)->update($ve_array);

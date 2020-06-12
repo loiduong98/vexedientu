@@ -77,7 +77,7 @@ class DanhSachVe extends Component {
           text: "Bạn đã đăng vé thành công!",
           icon: "success",
         });
-        
+
         console.log(res);
       })
       .catch((err) => {
@@ -95,10 +95,7 @@ class DanhSachVe extends Component {
         "Access-Control-Allow-Origin": "*",
       },
     };
-    Axios.put(
-      "/api/tradeticket/" + x,employee,
-      axiosConfig
-    ).then((res)=> {
+    Axios.put("/api/tradeticket/" + x, employee, axiosConfig).then((res) => {
       console.log(res.data);
       this.getDataAPI();
     });
@@ -110,18 +107,17 @@ class DanhSachVe extends Component {
         "Access-Control-Allow-Origin": "*",
       },
     };
-    Axios.delete("/api/news/" + x, axiosConfig).then((res)=> {
+    Axios.delete("/api/news/" + x, axiosConfig).then((res) => {
       console.log(res.data);
-      
       this.getDataAPI();
-    })
+    });
   }
 
   componentDidMount() {
     this.getDataAPI();
   }
   renderDSVE() {
-    return this.props.ticketUserData?.map((ticket, index) => {
+    return this.props.ticketUserData.map((ticket, index) => {
       return (
         <tr key={index}>
           <td>{ticket.id}</td>
@@ -156,7 +152,7 @@ class DanhSachVe extends Component {
                 </button>{" "}
                 <button
                   className="btn btn-danger"
-                  onClick={()=>this.delete(ticket.id)}
+                  onClick={() => this.delete(ticket.id)}
                 >
                   Hủy
                 </button>
@@ -164,9 +160,7 @@ class DanhSachVe extends Component {
             ) : (
               <button
                 className="btn btn-primary"
-                onClick={() =>
-                  this.update(ticket.id)
-                }
+                onClick={() => this.update(ticket.id)}
               >
                 Xác nhận
               </button>
