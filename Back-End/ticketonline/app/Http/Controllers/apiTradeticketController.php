@@ -81,7 +81,7 @@ class apiTradeticketController extends Controller
 
         $trade = ve::where('id', $id)->update($ve_array);
         if($trade == 1) {
-            $update_ve  = bang_tin::where('id_new', $id_bt)->update(array('TrangThai_new' => 0));
+            $update_ve  = bang_tin::where('id_new', $id_bt)->update(array('TrangThai_new' => 3));
             return json_encode(['status'=>'true','message'=>'Trao đổi vé thành công']);
         }else{
             return json_encode(['status'=>'false','message'=>'Trao đổi vé thất bại']);

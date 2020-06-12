@@ -14,9 +14,9 @@ class NavUser extends Component {
   idKH1='';
   getDataAPI() {
     Axios.all([
-      Axios.get("http://localhost:8000/api/login"),
-      Axios.get("http://localhost:8000/api/khachhang"),
-      Axios.get("http://localhost:8000/api/ve"),
+      Axios.get("/api/login"),
+      Axios.get("/api/khachhang"),
+      Axios.get("/api/ve"),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer

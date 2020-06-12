@@ -99,6 +99,11 @@ class DanhSachVe extends Component {
     Axios.put("/api/tradeticket/" + x, employee, axiosConfig).then((res) => {
       console.log(res.data);
       this.getDataAPI();
+      swal({
+        title: "Tuyệt vời!",
+        text: "Bạn đã đổi vé thành công!",
+        icon: "success",
+      });
     });
   }
   delete(x) {
@@ -122,9 +127,9 @@ class DanhSachVe extends Component {
       return (
         <tr key={index}>
           <td>{ticket.id}</td>
-          <td>{ticket.NgayDatVe}</td>
+          <td>{(ticket.NgayDatVe).substr(0,10)}</td>
           <td>{ticket.TenLC}</td>
-          <td>{ticket.NgayKhoiHanh}</td>
+          <td>{(ticket.NgayKhoiHanh).substr(0,10)}</td>
           <td>{ticket.GioKhoiHanh}</td>
           <td>
             {ticket.TrangThai == 0 ? (
