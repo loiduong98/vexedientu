@@ -55,7 +55,11 @@ class TraoDoiVe extends Component {
       "/api/news/" + this.state.id_new,
       employee,
       axiosConfig
-    ).then((res) => console.log(res.data));
+    ).then((res)=> {
+      this.getDataAPI();
+      console.log(res.data);
+      
+    });
   }
   getTTVe(id, HoTen, TieuDe, GioKH, NgayKH, Gia, Email, SDT) {
     this.setState({

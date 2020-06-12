@@ -62,6 +62,7 @@ class DanhSachVe extends Component {
     values.TieuDe = this.state.TenLC;
     values.Gia = this.state.Gia;
     var postData = values;
+    this.getDataAPI();
 
     let axiosConfig = {
       headers: {
