@@ -112,7 +112,7 @@ class apiBangTinController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * HỦY ĐĂNG BÀI
      *
      * @param  int  $id của vé
      */
