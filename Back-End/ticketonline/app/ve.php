@@ -16,7 +16,8 @@ class ve extends Model
         'idXe',
         'NgayKhoiHanh',
         'GioKhoiHanh',
-        'TrangThai'
+        'TrangThai',
+        'maVe'
     ];
     protected $table = "ve";
 
