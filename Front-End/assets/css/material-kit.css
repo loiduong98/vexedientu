@@ -11,7 +11,7 @@
  *
  * ========================================================= */
 
-.card {
+ .card {
     font-size: .875rem;
 }
 
@@ -17450,6 +17450,9 @@ h2.title {
 
 .modal-dialog .modal-body+.modal-footer {
     padding-top: 0;
+    position: absolute;
+    right: 0%;
+    top: 5%;
 }
 
 .modal-backdrop {

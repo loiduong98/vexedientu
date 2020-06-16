@@ -10,38 +10,52 @@ class NavUser extends Component {
       type: "CHANGE_LOGIN_STATUS",
     });
   }
-  // getDataAPI() {
-  //   Axios.all([
-  //     Axios.get("http://localhost:8000/api/login"),
-  //     Axios.get("http://localhost:8000/api/khachhang"),
-  //     Axios.get("http://localhost:8000/api/ve"),
-  //   ])
-  //     .then((resArr) => {
-  //       // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
-  //       this.props.dispatch({
-  //         type: "FETCH_DSKHACHHANG",
-  //         payload: resArr[0].data,
-  //       });
-  //       this.props.dispatch({
-  //         type: "FETCH_KHACHHANG",
-  //         payload: resArr[1].data,
-  //       });
-  //       this.props.dispatch({
-  //         type: "FETCH_DSVE",
-  //         payload: resArr[2].data,
-  //       });
-  //       console.log(this.props.dskhachhangData);
-  //       console.log(this.props.khachhangData);
-  //       console.log(this.props.dsVeData);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
+  SDT = ''
+  idKH1 = '';
+  getDataAPI() {
+    Axios.all([
+      Axios.get("/api/login"),
+      Axios.get("/api/khachhang"),
+      Axios.get("/api/ve"),
+    ])
+      .then((resArr) => {
+        // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
+        this.props.dispatch({
+          type: "FETCH_DSKHACHHANG",
+          payload: resArr[0].data,
+        });
+        this.props.dispatch({
+          type: "FETCH_KHACHHANG",
+          payload: resArr[1].data,
+        });
+        this.props.dispatch({
+          type: "FETCH_DSVE",
+          payload: resArr[2].data,
+        });
 
-  // componentDidMount() {
-  //   this.getDataAPI();
-  // }
+        var emailKH = localStorage.getItem("email");
+        console.log(emailKH);
+
+        this.props.dskhachhangData.filter((kh, index) => {
+          return kh.email === emailKH;
+        }).map((sdtKH, index) => {
+          return this.SDT = sdtKH.phone;
+        });
+        this.props.khachhangData.filter((kh1, index) => {
+          return kh1.SDT === this.SDT;
+        }).map((idKH, index) => {
+          return this.idKH1 = idKH.id;
+        })
+        localStorage.setItem("idKH", this.idKH1)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  componentDidMount() {
+    this.getDataAPI();
+  }
   _handleSubmit = (values) => {
     // const xsrfToken = this.getCookie("XSRF-TOKEN");
 
@@ -111,6 +125,11 @@ class NavUser extends Component {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link to="/danh-sach-ve" className="nav-link">
+                  <i className="material-icons">article</i> Danh sách vé
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/trao-doi-ve" className="nav-link">
                   <i className="material-icons">compare_arrows</i> Trao đổi vé
                 </Link>
@@ -132,18 +151,13 @@ class NavUser extends Component {
                   </div>
                 </Link>
                 <div className="ripple-container" />
+
                 <div className="dropdown-menu dropdown-menu-right">
                   <Link to="#pablo" className="dropdown-item">
                     Thông tin cá nhân
                   </Link>
                   <Link to="#pablo" className="dropdown-item">
                     Lịch sử vé
-                  </Link>
-                  <Link to="news" className="dropdown-item">
-                    Đăng vé
-                  </Link>
-                  <Link to="danh-sach-ve" className="dropdown-item">
-                    Danh sách vé của bạn
                   </Link>
                   <Link
                     to="#"

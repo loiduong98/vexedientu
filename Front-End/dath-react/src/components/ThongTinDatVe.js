@@ -119,7 +119,7 @@ class ThongTinDatVe extends Component {
   }
   // get danh sach khach hang tu API
   getdskhachhang() {
-    Axios.get("http://localhost:8000/api/khachhang")
+    Axios.get("/api/khachhang")
       .then((res) => {
         this.props.dispatch({
           type: "FETCH_KHACHHANG",

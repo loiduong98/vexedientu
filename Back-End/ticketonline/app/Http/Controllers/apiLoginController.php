@@ -17,6 +17,7 @@ class apiLoginController extends Controller
      */
     public function index()
     {
+        // return app('App\Http\Controllers\KhachHangController')->list_ticket();
         return khachhang_login::all();
     }
 
@@ -37,9 +38,10 @@ class apiLoginController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(khachhang_login $khachhang_login)
     {
         //
+        return $khachhang_login;
     }
 
     /**

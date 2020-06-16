@@ -17,21 +17,9 @@ const UserSchema = yup.object().shape({
 
 class DangKy extends Component {
   _handleSubmit = (values) => {
-    // Axios({
-    //   method: "POST",
-    //   url: "http://localhost:8000/api/users",
-    //   data: values,
-    // })
-    //   .then((res) => {
-    //     alert("Chúc mừng bạn đã đăng ký thành công <3");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // console.log(values);
 
     var postData = values;
-
+    
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

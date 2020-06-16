@@ -40,8 +40,14 @@
   padding-top: 26px;
 }
 #booking .col-md-4 .form-group select {
+<<<<<<< HEAD
   color: white;
+=======
+  color: #000;
+>>>>>>> backend-loi
   padding-left: 5px;
+  background: #fff;
+  font-weight: 600;
 }
 /* CSS phần chọn ghế */
 section#chonghe {
@@ -418,15 +424,37 @@ section#trade .card {
 }
 ul.listCard {
   list-style: none;
+<<<<<<< HEAD
   font-size: 25px;
   line-height: 30px;
 }
 
 li.itemCard {
   padding-top: 5px;
+=======
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 400;
+}
+
+li.itemCard {
+  padding-top: 10px;
+>>>>>>> backend-loi
 }
 
 .imgRounded {
   width: 90%!important;
   height: 80%!important;
 }
+<<<<<<< HEAD
+=======
+label {
+  color: #000;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.non-toggle {
+  display: none;
+}
+>>>>>>> backend-loi

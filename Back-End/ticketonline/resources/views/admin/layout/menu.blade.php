@@ -112,10 +112,17 @@
                             <a href="#"><i class="fas fa-file-alt"></i> Bảng tin<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
+<<<<<<< HEAD
                                     <a href="admin/bangtin/danhsach">Danh sách bảng tin</a>
                                 </li>
                                 <li>
                                     <a href="admin/bangtin/them">Thêm bảng tin</a>
+=======
+                                    <a href="admin/bang_tin/danhsach">Danh sách bảng tin</a>
+                                </li>
+                                <li>
+                                    <a href="admin/bang_tin/them">Thêm bảng tin</a>
+>>>>>>> backend-loi
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

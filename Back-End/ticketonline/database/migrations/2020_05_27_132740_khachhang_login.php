@@ -15,6 +15,7 @@ class KhachhangLogin extends Migration
     {
         Schema::create('khachhang_login', function (Blueprint $table) {
             $table->Increments('id');
+            $table->Integer('id_kh');
             $table->string('name');
             $table->string('email');
             $table->Integer('phone');
