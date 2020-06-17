@@ -63,7 +63,6 @@ class DanhSachVe extends Component {
     values.Gia = this.state.Gia;
     var postData = values;
     this.getDataAPI();
-
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -78,7 +77,7 @@ class DanhSachVe extends Component {
           text: "Bạn đã đăng vé thành công!",
           icon: "success",
         });
-
+        this.getDataAPI();
         console.log(res);
       })
       .catch((err) => {
@@ -127,9 +126,9 @@ class DanhSachVe extends Component {
       return (
         <tr key={index}>
           <td>{ticket.id}</td>
-          <td>{(ticket.NgayDatVe).substr(0,10)}</td>
+          <td>{ticket.NgayDatVe.substr(0, 10)}</td>
           <td>{ticket.TenLC}</td>
-          <td>{(ticket.NgayKhoiHanh).substr(0,10)}</td>
+          <td>{ticket.NgayKhoiHanh.substr(0, 10)}</td>
           <td>{ticket.GioKhoiHanh}</td>
           <td>
             {ticket.TrangThai == 0 ? (
@@ -260,9 +259,6 @@ class DanhSachVe extends Component {
                   >
                     Đóng
                   </button>
-                  <button type="button" className="btn btn-primary">
-                    Lưu
-                  </button>
                 </div>
               </div>
             </div>
@@ -271,7 +267,6 @@ class DanhSachVe extends Component {
       );
     });
   }
-
   render() {
     if (this.props.loginStatus === false) {
       return <Redirect to="/dang-nhap" />;
@@ -279,6 +274,12 @@ class DanhSachVe extends Component {
     return (
       <div className="container" style={{ marginTop: "100px" }}>
         <h3>Danh sách vé</h3>
+        <button
+          className="cheat-ok"
+          onMouseOver={() => this.componentDidMount()}
+        >
+          
+        </button>
         <div className="row">
           <table class="table">
             <thead>
