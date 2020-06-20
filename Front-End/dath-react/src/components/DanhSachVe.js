@@ -18,11 +18,11 @@ class DanhSachVe extends Component {
 
   getDataAPI() {
     Axios.all([
-      Axios.get("http://localhost:8000/api/login"),
-      Axios.get("http://localhost:8000/api/khachhang"),
-      Axios.get("http://localhost:8000/api/ve"),
-      Axios.get("http://localhost:8000/api/lichchay"),
-      Axios.get("http://localhost:8000/api/TicketUser/" + this.idKhachHang),
+      Axios.get("/api/login"),
+      Axios.get("/api/khachhang"),
+      Axios.get("/api/ve"),
+      Axios.get("/api/lichchay"),
+      Axios.get("/api/TicketUser/" + this.idKhachHang),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
@@ -62,7 +62,7 @@ class DanhSachVe extends Component {
     values.TieuDe = this.state.TenLC;
     values.Gia = this.state.Gia;
     var postData = values;
-
+    this.getDataAPI();
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -77,6 +77,7 @@ class DanhSachVe extends Component {
           text: "Bạn đã đăng vé thành công!",
           icon: "success",
         });
+        this.getDataAPI();
         console.log(res);
       })
       .catch((err) => {
@@ -94,10 +95,15 @@ class DanhSachVe extends Component {
         "Access-Control-Allow-Origin": "*",
       },
     };
-    Axios.put(
-      "http://localhost:8000/api/tradeticket/" + x,employee,
-      axiosConfig
-    ).then((res) => console.log(res.data));
+    Axios.put("/api/tradeticket/" + x, employee, axiosConfig).then((res) => {
+      console.log(res.data);
+      this.getDataAPI();
+      swal({
+        title: "Tuyệt vời!",
+        text: "Bạn đã đổi vé thành công!",
+        icon: "success",
+      });
+    });
   }
   delete(x) {
     let axiosConfig = {
@@ -106,22 +112,23 @@ class DanhSachVe extends Component {
         "Access-Control-Allow-Origin": "*",
       },
     };
-    Axios.delete("http://localhost:8000/api/news/" + x, axiosConfig).then((res) =>
-      console.log(res.data)
-    );
+    Axios.delete("/api/news/" + x, axiosConfig).then((res) => {
+      console.log(res.data);
+      this.getDataAPI();
+    });
   }
 
   componentDidMount() {
     this.getDataAPI();
   }
   renderDSVE() {
-    return this.props.ticketUserData?.map((ticket, index) => {
+    return this.props.ticketUserData.map((ticket, index) => {
       return (
         <tr key={index}>
           <td>{ticket.id}</td>
-          <td>{ticket.NgayDatVe}</td>
+          <td>{ticket.NgayDatVe.substr(0, 10)}</td>
           <td>{ticket.TenLC}</td>
-          <td>{ticket.NgayKhoiHanh}</td>
+          <td>{ticket.NgayKhoiHanh.substr(0, 10)}</td>
           <td>{ticket.GioKhoiHanh}</td>
           <td>
             {ticket.TrangThai == 0 ? (
@@ -150,7 +157,7 @@ class DanhSachVe extends Component {
                 </button>{" "}
                 <button
                   className="btn btn-danger"
-                  onClick={()=>this.delete(ticket.id)}
+                  onClick={() => this.delete(ticket.id)}
                 >
                   Hủy
                 </button>
@@ -158,9 +165,7 @@ class DanhSachVe extends Component {
             ) : (
               <button
                 className="btn btn-primary"
-                onClick={() =>
-                  this.update(ticket.id)
-                }
+                onClick={() => this.update(ticket.id)}
               >
                 Xác nhận
               </button>
@@ -254,9 +259,6 @@ class DanhSachVe extends Component {
                   >
                     Đóng
                   </button>
-                  <button type="button" className="btn btn-primary">
-                    Lưu
-                  </button>
                 </div>
               </div>
             </div>
@@ -265,7 +267,6 @@ class DanhSachVe extends Component {
       );
     });
   }
-
   render() {
     if (this.props.loginStatus === false) {
       return <Redirect to="/dang-nhap" />;
@@ -273,6 +274,12 @@ class DanhSachVe extends Component {
     return (
       <div className="container" style={{ marginTop: "100px" }}>
         <h3>Danh sách vé</h3>
+        <button
+          className="cheat-ok"
+          onMouseOver={() => this.componentDidMount()}
+        >
+          
+        </button>
         <div className="row">
           <table class="table">
             <thead>

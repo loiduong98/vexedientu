@@ -16,14 +16,15 @@ class TraoDoiVe extends Component {
       Gia: "",
       Email: "",
       SDT: "",
+      TrangThai_new:""
     };
   }
   idKhachHang = localStorage.getItem("idKH");
   getDataAPI() {
     Axios.all([
-      Axios.get("http://localhost:8000/api/login"),
-      Axios.get("http://localhost:8000/api/tuyen"),
-      Axios.get("http://localhost:8000/api/news"),
+      Axios.get("/api/login"),
+      Axios.get("/api/tuyen"),
+      Axios.get("/api/news"),
     ])
       .then((resArr) => {
         // đẩy dữ liệu danh sách lịch chạy từ API get được vào reducer
@@ -52,12 +53,20 @@ class TraoDoiVe extends Component {
       },
     };
     Axios.put(
-      "http://localhost:8000/api/news/" + this.state.id_new,
+      "/api/news/" + this.state.id_new,
       employee,
       axiosConfig
-    ).then((res) => console.log(res.data));
+    ).then((res)=> {
+      this.getDataAPI();
+      swal({
+        title: "Tuyệt vời!",
+        text: "Bạn đã yêu cầu đổi vé thành công!",
+        icon: "success",
+      });
+      
+    });
   }
-  getTTVe(id, HoTen, TieuDe, GioKH, NgayKH, Gia, Email, SDT) {
+  getTTVe(id, HoTen, TieuDe, GioKH, NgayKH, Gia, Email, SDT,TrangThai_new) {
     this.setState({
       id_new: id,
       HoTen: HoTen,
@@ -67,157 +76,163 @@ class TraoDoiVe extends Component {
       Gia: Gia,
       Email: Email,
       SDT: SDT,
+      TrangThai_new:TrangThai_new
     });
   }
   renderVeDoi() {
-    return this.props.dsVeBanData.map((veBan, index) => {
-      return (
-        <div className="card">
-          <div className="row">
-            <div className="col-md-3" key={index}>
-              <img
-                src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
-                alt
-                className="img-fluid rounded"
-              />
+    let dsVeBanData = this.props.dsVeBanData;
+    return dsVeBanData.filter((veHien => {
+      return veHien.TrangThai_new == 0;
+    })).map((veBan, index) => {
+       
+        return (
+          <div className="card">
+            <div className="row">
+              <div className="col-md-3" key={index}>
+                <img
+                  src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                  alt
+                  className="img-fluid rounded"
+                />
+              </div>
+              <div className="col-md-6">
+                <h4 className="card-title">{veBan.TieuDe}</h4>
+                <p className="category">
+                  <i className="fa fa-usd" />{" "}
+                  <span>
+                    Giá bán:{" "}
+                    <strong style={{ fontWeight: "bold" }}>
+                      {parseInt(veBan.Gia).toLocaleString("vi", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
+                    </strong>
+                  </span>
+                </p>
+                <p className="category">
+                  <i className="fa fa-map-marker" />{" "}
+                  <span>
+                    Ngày đi:{" "}
+                    <strong style={{ fontWeight: "bold" }}>
+                      {veBan.NgayKhoiHanh.substr(0, 11)}
+                    </strong>
+                  </span>
+                </p>
+              </div>
+              <div className="col-md-3 text-center">
+                <button
+                  className="btn-rose btn"
+                  data-toggle="modal"
+                  data-target="#ticketDetails"
+                  onClick={() =>
+                    this.getTTVe(
+                      veBan.id_new,
+                      veBan.HoTen,
+                      veBan.TieuDe,
+                      veBan.GioKhoiHanh,
+                      veBan.NgayKhoiHanh,
+                      veBan.Gia,
+                      veBan.Email,
+                      veBan.SDT,
+                      veBan.TrangThai_new
+                    )
+                  }
+                >
+                  Liên hệ
+                </button>
+              </div>
             </div>
-            <div className="col-md-6">
-              <h4 className="card-title">{veBan.TieuDe}</h4>
-              <p className="category">
-                <i className="fa fa-usd" />{" "}
-                <span>
-                  Giá bán:{" "}
-                  <strong style={{ fontWeight: "bold" }}>
-                    {parseInt(veBan.Gia).toLocaleString("vi", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
-                  </strong>
-                </span>
-              </p>
-              <p className="category">
-                <i className="fa fa-map-marker" />{" "}
-                <span>
-                  Ngày đi:{" "}
-                  <strong style={{ fontWeight: "bold" }}>
-                    {veBan.NgayKhoiHanh.substr(0, 11)}
-                  </strong>
-                </span>
-              </p>
-            </div>
-            <div className="col-md-3 text-center">
-              <button
-                className="btn-rose btn"
-                data-toggle="modal"
-                data-target="#ticketDetails"
-                onClick={() =>
-                  this.getTTVe(
-                    veBan.id_new,
-                    veBan.HoTen,
-                    veBan.TieuDe,
-                    veBan.GioKhoiHanh,
-                    veBan.NgayKhoiHanh,
-                    veBan.Gia,
-                    veBan.Email,
-                    veBan.SDT
-                  )
-                }
-              >
-                Liên hệ
-              </button>
-            </div>
-          </div>
-          <div
-            className="modal fade bd-example-modal-lg"
-            id="ticketDetails"
-            tabIndex={-1}
-            role="dialog"
-            aria-labelledby="myLargeModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-lg">
-              <div className="modal-content">
-                <div className="modal-header text-center">
-                  <h3 className="modal-title card-title">
-                    {this.state.TieuDe}
-                    {this.state.id_new}
-                  </h3>
-                </div>
-                <div className="modal-body">
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-md-7">
-                        <img
-                          src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
-                          alt
-                          className="img-fluid rounded"
-                        />
-                      </div>
-                      <div className="col-md-5">
-                        <div className="card">
-                          <p className="category">
-                            <i className="fa fa-user" />{" "}
-                            <span>
-                              Đăng bởi:{" "}
-                              <strong style={{ fontWeight: "bold" }}>
-                                {this.state.HoTen}
-                              </strong>
-                            </span>
-                          </p>
-                          <p className="category">
-                            <i className="fa fa-clock-o" />{" "}
-                            <span>
-                              Lúc:{" "}
-                              <strong style={{ fontWeight: "bold" }}>
-                                {this.state.GioKH}
-                              </strong>
-                            </span>
-                          </p>
-                          <p className="category">
-                            <i className="fa fa-calendar" />{" "}
-                            <span>
-                              Ngày đi:{" "}
-                              <strong style={{ fontWeight: "bold" }}>
-                                {this.state.NgayKH.substr(0, 10)}
-                              </strong>
-                            </span>
-                          </p>
-                          <div className="btn btn-block btn-info">
-                            <span>
-                              <i className="fa fa-phone" /> {this.state.SDT}
-                            </span>
+            <div
+              className="modal fade bd-example-modal-lg"
+              id="ticketDetails"
+              tabIndex={-1}
+              role="dialog"
+              aria-labelledby="myLargeModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-lg">
+                <div className="modal-content">
+                  <div className="modal-header text-center">
+                    <h3 className="modal-title card-title">
+                      {this.state.TieuDe}
+                      {this.state.id_new}
+                    </h3>
+                  </div>
+                  <div className="modal-body">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-md-7">
+                          <img
+                            src="https://hyundaibinhtrieu.com/wp-content/uploads/2019/09/Mclaren-720s-dau-xe.jpg"
+                            alt
+                            className="img-fluid rounded"
+                          />
+                        </div>
+                        <div className="col-md-5">
+                          <div className="card">
+                            <p className="category">
+                              <i className="fa fa-user" />{" "}
+                              <span>
+                                Đăng bởi:{" "}
+                                <strong style={{ fontWeight: "bold" }}>
+                                  {this.state.HoTen}
+                                </strong>
+                              </span>
+                            </p>
+                            <p className="category">
+                              <i className="fa fa-clock-o" />{" "}
+                              <span>
+                                Lúc:{" "}
+                                <strong style={{ fontWeight: "bold" }}>
+                                  {this.state.GioKH}
+                                </strong>
+                              </span>
+                            </p>
+                            <p className="category">
+                              <i className="fa fa-calendar" />{" "}
+                              <span>
+                                Ngày đi:{" "}
+                                <strong style={{ fontWeight: "bold" }}>
+                                  {this.state.NgayKH.substr(0, 10)}
+                                </strong>
+                              </span>
+                            </p>
+                            <div className="btn btn-block btn-info">
+                              <span>
+                                <i className="fa fa-phone" /> {this.state.SDT}
+                              </span>
+                            </div>
+                            <div className="btn btn-block btn-success text-lowercase">
+                              <i className="fa fa-envelope" /> {this.state.Email}
+                            </div>
+                            <button
+                              className="btn btn-success"
+                              onClick={() => this.update(this.idKhachHang)}
+                            >
+                              Đổi vé
+                            </button>
                           </div>
-                          <div className="btn btn-block btn-success text-lowercase">
-                            <i className="fa fa-envelope" /> {this.state.Email}
-                          </div>
-                          <button
-                            className="btn btn-success"
-                            onClick={() => this.update(this.idKhachHang)}
-                          >
-                            Đổi vé
-                          </button>
                         </div>
                       </div>
+                      {/* end row */}
                     </div>
-                    {/* end row */}
+                    {/* end container */}
                   </div>
-                  {/* end container */}
-                </div>
-                {/* end modal content */}
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-dismiss="modal"
-                  >
-                    Đóng
-                  </button>
+                  {/* end modal content */}
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Đóng
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        );
     });
   }
   componentDidMount() {
