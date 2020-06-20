@@ -37,6 +37,14 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <!-- <div class="form-group" style="display: none;">
+                                <label>Tên Tuyến</label>
+                                <select class="form-control" name="tenTuyen">
+                                    @foreach($tuyen as $t)
+                                    <option value="{{$t['TenTuyen']}}">{{$t['TenTuyen']}}</option>
+                                    @endforeach
+                                </select>
+                            </div> -->
                             <div class="form-group">
                                 <label>Biển số xe</label>
                                 <select class="form-control" name="idXe">

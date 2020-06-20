@@ -31,14 +31,15 @@ class LichChayController extends Controller
     public function postThem(Request $request)
     {
         
-        $tuyen = tuyen::all();
+        $TenLC = (tuyen::where('id',($request->idTuyen))->get())[0]['TenTuyen'];
         $xe = xe::all();
-        
+
         $lichchay = new lichchay;
-        
+
         $lichchay->Gia = $request->Gia;
         $lichchay->idTuyen = $request->idTuyen;
         $lichchay->idXe = $request->idXe;
+        $lichchay->TenLC = $TenLC;
         $lichchay->save();
         return redirect('admin/lichchay/them')->with('thongbao','Thêm thành công');
     }
