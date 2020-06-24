@@ -3,6 +3,8 @@ import Axios from "axios";
 import { connect } from "react-redux";
 import swal from "sweetalert";
 import { Redirect } from "react-router-dom";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class TraoDoiVe extends Component {
   constructor(props) {
@@ -16,7 +18,8 @@ class TraoDoiVe extends Component {
       Gia: "",
       Email: "",
       SDT: "",
-      TrangThai_new:""
+      TrangThai_new:"",
+      show: false,
     };
   }
   idKhachHang = localStorage.getItem("idKH");
@@ -42,6 +45,12 @@ class TraoDoiVe extends Component {
         console.log(err);
       });
   }
+  showPhone(){
+    // console.log('ok');
+    this.setState({
+      show: true
+    })
+  }
   update(x) {
     const employee = {
       idKH_trade: x,
@@ -63,7 +72,6 @@ class TraoDoiVe extends Component {
         text: "Bạn đã yêu cầu đổi vé thành công!",
         icon: "success",
       });
-      
     });
   }
   getTTVe(id, HoTen, TieuDe, GioKH, NgayKH, Gia, Email, SDT,TrangThai_new) {
@@ -199,7 +207,7 @@ class TraoDoiVe extends Component {
                             </p>
                             <div className="btn btn-block btn-info">
                               <span>
-                                <i className="fa fa-phone" /> {this.state.SDT}
+                {this.state.show === false ? <div style={{cursor:'pointer'}} onClick={()=>this.showPhone()}><i className="fa fa-phone" />Bấm để xem SDT</div> : <div><i className="fa fa-phone" />{this.state.SDT}</div> }
                               </span>
                             </div>
                             <div className="btn btn-block btn-success text-lowercase">
@@ -207,7 +215,20 @@ class TraoDoiVe extends Component {
                             </div>
                             <button
                               className="btn btn-success"
-                              onClick={() => this.update(this.idKhachHang)}
+                              onClick={() =>
+                                confirmAlert({
+                                  title: 'Bạn có thực sự muốn đổi',
+                                  message: 'Chọn Yes để xác nhận',
+                                  buttons: [
+                                    {
+                                      label: 'Yes',
+                                      onClick: () => this.update(this.idKhachHang)
+                                    },
+                                    {
+                                      label: 'No'
+                                    }
+                                  ]
+                                })}
                             >
                               Đổi vé
                             </button>

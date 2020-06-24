@@ -453,3 +453,9 @@ label {
     box-shadow: none;
     border-width: 0;
 }
+div#ticketDetails {
+  z-index: 9;
+}
+.modal-backdrop {
+  z-index: 1;
+}

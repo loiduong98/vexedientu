@@ -4,6 +4,8 @@ import { Redirect } from "react-router-dom";
 import Axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import swal from "sweetalert";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class DanhSachVe extends Component {
   constructor(props) {
@@ -115,6 +117,11 @@ class DanhSachVe extends Component {
     Axios.delete("/api/news/" + x, axiosConfig).then((res) => {
       console.log(res.data);
       this.getDataAPI();
+      swal({
+        title: "Tuyệt vời!",
+        text: "Bạn đã hủy giao dịch!",
+        icon: "warning",
+      });
     });
   }
 
@@ -157,7 +164,20 @@ class DanhSachVe extends Component {
                 </button>{" "}
                 <button
                   className="btn btn-danger"
-                  onClick={() => this.delete(ticket.id)}
+                  onClick={() => 
+                      confirmAlert({
+                        title: 'Bạn có thực sự muốn hủy giao dịch',
+                        message: 'Chọn Yes để xác nhận',
+                        buttons: [
+                          {
+                            label: 'Yes',
+                            onClick: () => this.delete(ticket.id)
+                          },
+                          {
+                            label: 'No'
+                          }
+                        ]
+                      })}
                 >
                   Hủy
                 </button>
@@ -165,7 +185,20 @@ class DanhSachVe extends Component {
             ) : (
               <button
                 className="btn btn-primary"
-                onClick={() => this.update(ticket.id)}
+                onClick={() =>
+                  confirmAlert({
+                    title: 'Bạn có thực sự muốn thực hiện giao dịch',
+                    message: 'Chọn Yes để xác nhận',
+                    buttons: [
+                      {
+                        label: 'Yes',
+                        onClick: () => this.update(ticket.id)
+                      },
+                      {
+                        label: 'No'
+                      }
+                    ]
+                  })}
               >
                 Xác nhận
               </button>
