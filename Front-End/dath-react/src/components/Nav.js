@@ -39,6 +39,11 @@ class Nav extends Component {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link to="/tim-kiem" className="nav-link">
+                  <i className="material-icons">search</i> Tìm kiếm vé
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/trao-doi-ve" className="nav-link">
                   <i className="material-icons">compare_arrows</i> Trao đổi vé
                 </Link>

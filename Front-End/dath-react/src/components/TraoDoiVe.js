@@ -163,7 +163,7 @@ class TraoDoiVe extends Component {
                   <div className="modal-header text-center">
                     <h3 className="modal-title card-title">
                       {this.state.TieuDe}
-                      {this.state.id_new}
+                      {/* {this.state.id_new} */}
                     </h3>
                   </div>
                   <div className="modal-body">

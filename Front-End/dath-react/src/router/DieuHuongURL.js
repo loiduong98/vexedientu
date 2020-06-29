@@ -11,6 +11,7 @@ import TraoDoiVe from "../components/TraoDoiVe";
 import News from "../components/News";
 import DanhSachVe from "../components/DanhSachVe";
 import DatVeThanhCong from "../components/DatVeThanhCong";
+import TimKiem from "../components/TimKiem";
 
 class DieuHuongURL extends Component {
   render() {
@@ -27,6 +28,7 @@ class DieuHuongURL extends Component {
         <Route path="/news" component={News} />
         <Route path="/danh-sach-ve" component={DanhSachVe} />
         <Route path="/dat-ve-thanh-cong" component={DatVeThanhCong} />
+        <Route path="/tim-kiem" component={TimKiem} />
       </Switch>
     );
   }
