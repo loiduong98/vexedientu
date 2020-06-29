@@ -39,6 +39,7 @@ class LichChayController extends Controller
         $lichchay->Gia = $request->Gia;
         $lichchay->idTuyen = $request->idTuyen;
         $lichchay->idXe = $request->idXe;
+        $lichchay->TenLC = $request->TenLC;
         $lichchay->save();
         return redirect('admin/lichchay/them')->with('thongbao','Thêm thành công');
     }

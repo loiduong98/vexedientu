@@ -44,7 +44,15 @@
                                     <option value="{{$x['id']}}">{{$x->BSXe}}</option>
                                     @endforeach
                                 </select>
-                            </div>                           
+                            </div>   
+                            <div class="form-group">
+                                <label>Tên lịch chạy</label>
+                                <select class="form-control" name="TenLC">
+                                    @foreach($tuyen as $t)
+                                    <option value="{{$t['TenTuyen']}}">{{$t['TenTuyen']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>                        
                             <button type="submit" class="btn btn-default">Thêm Lịch chạy</button>
                             <button type="reset" class="btn btn-default">Làm mới</button>
                         <form>

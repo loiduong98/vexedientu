@@ -12,7 +12,6 @@ export default class ThanhToan extends Component {
       isGoNext: false,
     };
   }
-
   postDatVe() {
     // dữ liệu đẩy xuống backend xử lý
     var postData = this.state;
@@ -32,7 +31,9 @@ export default class ThanhToan extends Component {
           icon: "success",
         }).then(() => {
           this.setState({ isGoNext: true });
+          
         });
+        
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
@@ -112,7 +113,7 @@ export default class ThanhToan extends Component {
     );
     var pay = this.state.tongtienUSD;
     if (this.state.isGoNext === true) {
-      return <Redirect to="/" />;
+      return <Redirect to="dat-ve-thanh-cong" />;
     }
 
     return (

@@ -186,7 +186,7 @@ class DatVeController extends Controller
         $khachhang      = khachhang::all();
         $tuyen          = tuyen::all();
         $xe             = xe::all();
-        $NgayDatVe      = now();
+        $NgayDatVe      = date("d-m-Y H:i:s", strtotime(now()));
 
         $DiaChi         = $request->diachi;       
         $Email          = $request->email;
@@ -199,8 +199,8 @@ class DatVeController extends Controller
         $tongtien       = $request->tongtien;
         $tongtienUSD    = $request->tongtienUSD;
         $tuyen_xe       = $request->tuyen;
-        $ngaydatve      = $request->ngaydi;
-        $ngaydatve      = date("d-m-Y H:i:s", strtotime($ngaydatve));    
+        $ngaykhoihanh   = date("d-m-Y", strtotime($request->ngaydi));    
+        $giokhoihanh    = date("H:i:s", strtotime($request->ngaydi));
 
         foreach($lichchay as $keyLC){
             $LC_id = $keyLC->id;
@@ -213,6 +213,13 @@ class DatVeController extends Controller
                 $gia_lc     = $LC_gia;
                 $id_xelc    = $LC_xe;
                 $id_tuyenlc = $LC_tuyen; 
+            }
+        }
+
+        foreach ($xe as $value_xe) {
+            if($id_xelc == ($value_xe->id)){
+                $str_random = str_random(10);
+                $ma_ve = (substr($value_xe->BSXe, 6)).'-'.$str_random;
             }
         }
 
@@ -279,15 +286,16 @@ class DatVeController extends Controller
         $id_HD = $hoadon->id;
 
         // Tao ve
-        $ve = new ve;
-        $ve->NgayDatVe = $NgayDatVe;
-        $ve->idKH = $id_KH;
-        $ve->idLC = $idLC;
-        $ve->idHD = $id_HD;
-        $ve->NgayKhoiHanh = $ngaydatve;
-        $ve->GioKhoiHanh = $NgayDatVe;
-        $ve->TrangThai = '0';
-        $ve->idXe = $id_xe;
+        $ve                 = new ve;
+        $ve->NgayDatVe      = $NgayDatVe;
+        $ve->idKH           = $id_KH;
+        $ve->idLC           = $idLC;
+        $ve->idHD           = $id_HD;
+        $ve->NgayKhoiHanh   = $ngaykhoihanh;
+        $ve->GioKhoiHanh    = $giokhoihanh;
+        $ve->TrangThai      = '0';
+        $ve->idXe           = $id_xe;
+        $ve->maVe           = $ma_ve;
         $ve->save();
 
         if(($ve->save()) !== true){

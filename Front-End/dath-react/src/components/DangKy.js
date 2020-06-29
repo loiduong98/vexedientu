@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import Axios from "axios";
 import * as yup from "yup";
 import swal from "sweetalert";
+import { Redirect } from "react-router-dom";
 
 const UserSchema = yup.object().shape({
   name: yup.string().required("(*) Bạn chưa nhập họ tên"),
@@ -16,6 +17,12 @@ const UserSchema = yup.object().shape({
 });
 
 class DangKy extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isGoNext: false,
+    };
+  }
   _handleSubmit = (values) => {
 
     var postData = values;
@@ -35,13 +42,16 @@ class DangKy extends Component {
           icon: "success",
         });
         console.log(res);
+        setInterval(this.setState({ isGoNext: true }), 3000)
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(values);
   };
   render() {
+    if (this.state.isGoNext === true) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="signup-page">
         <div

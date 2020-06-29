@@ -137,6 +137,7 @@ class DanhSachVe extends Component {
           <td>{ticket.TenLC}</td>
           <td>{ticket.NgayKhoiHanh.substr(0, 10)}</td>
           <td>{ticket.GioKhoiHanh}</td>
+          <td>{ticket.maVe}</td>
           <td>
             {ticket.TrangThai == 0 ? (
               <button
@@ -306,7 +307,6 @@ class DanhSachVe extends Component {
     }
     return (
       <div className="container" style={{ marginTop: "100px" }}>
-        <h3>Danh sách vé</h3>
         <button
           className="cheat-ok"
           onMouseOver={() => this.componentDidMount()}
@@ -314,7 +314,12 @@ class DanhSachVe extends Component {
           
         </button>
         <div className="row">
-          <table class="table">
+        <div class="card">
+        <div class="card-header card-header-danger">
+            <h4 class="card-title">Danh sách vé</h4>
+        </div>
+        <div class="card-body">
+        <table class="table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -322,11 +327,15 @@ class DanhSachVe extends Component {
                 <th>Tuyến</th>
                 <th>Ngày khởi hành</th>
                 <th>Giờ khởi hành</th>
+                <th>Mã vé</th>
                 <th>Trạng thái</th>
               </tr>
             </thead>
             <tbody>{this.renderDSVE()}</tbody>
           </table>
+        </div>
+    </div>
+        
         </div>
       </div>
     );
